@@ -27,6 +27,12 @@
       layer=".interfaces.IThemeSpecific"
     />
 
+    <browser:resourceDirectory
+      name="plonetheme.zmcms.images"
+      directory="images"
+      layer=".interfaces.IThemeSpecific"
+    />
+
     <browser:jbot directory="overrides" />
 
     <!-- Navigation feature -->

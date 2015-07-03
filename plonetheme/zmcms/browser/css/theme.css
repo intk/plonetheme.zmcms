@@ -3653,7 +3653,7 @@ body.portaltype-formthankspage #content blockquote > * {
     height: 22%;
     background-color: red;
     margin: 0 auto;
-    background: url("++resource++plonetheme.zm.css/play.svg") no-repeat;
+    background: url("++resource++plonetheme.museumbase.css/play.svg") no-repeat;
     background-size: 100% 100%;
     opacity: 0.75;
 }
@@ -4056,13 +4056,13 @@ body.portaltype-portlet-page .slick-prev:hover, body.portaltype-portlet-page .sl
 /* NEW SLIDESHOW */
 
 .slick-prev {
-    background: url("++resource++plonetheme.zm.css/arrow-left.svg") no-repeat 27px !important;
+    background: url("++resource++plonetheme.museumbase.css/arrow-left.svg") no-repeat 27px !important;
     background-position: 50% 50%;
     background-size: 20px 20px;
 }
 
 .slick-next {
-    background: url("++resource++plonetheme.zm.css/arrow-right.svg") no-repeat 30px !important;
+    background: url("++resource++plonetheme.museumbase.css/arrow-right.svg") no-repeat 30px !important;
     background-position: 50% 50%;
     background-size: 20px 20px;
 }
@@ -4157,13 +4157,13 @@ body.portaltype-portlet-page .slick-prev:hover, body.portaltype-portlet-page .sl
     }
 
     .slick-prev {
-        background: url("++resource++plonetheme.zm.css/arrow-left.svg") no-repeat 10px !important;
+        background: url("++resource++plonetheme.museumbase.css/arrow-left.svg") no-repeat 10px !important;
         background-position: 50% 50%;
         background-size: 20px 20px;
     }
 
     .slick-next {
-        background: url("++resource++plonetheme.zm.css/arrow-right.svg") no-repeat 10px !important;
+        background: url("++resource++plonetheme.museumbase.css/arrow-right.svg") no-repeat 10px !important;
         background-position: 50% 50%;
         background-size: 20px 20px;
     }
@@ -4792,7 +4792,7 @@ body.template-book_view .slideshow {
 }
 
 body.template-double_view #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
 .portaltype-object #slickslideshow,
@@ -6160,10 +6160,6 @@ body.template-search #search-page-header .documentFirstHeading, body.template-se
 
 #search-page-header {
     position: relative;
-    /*background-image: url('++resource++plonetheme.zm.css/bibliotheek_large.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;*/
     background: none;
 }
 
@@ -7222,7 +7218,7 @@ body.portaltype-portlet-page.userrole-authenticated #edit-content-views {
 }
 
 body.portaltype-portlet-page.userrole-authenticated #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important; 
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important; 
 }
 
 .template-document form[class^="kssattr-formname"] {
@@ -7391,18 +7387,18 @@ body.template-edit.portaltype-book #content-core {
 }
 
 body.template-edit.portaltype-object #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png');
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png');
 }
 
 body.template-edit.portaltype-book #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png');
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png');
 }
 
 body.template-collective-object-object #portal-logo img,
 body.template-collective-exhibition-exhibition #portal-logo img,
 body.template-collective-personorinstitution-personorinstitution #portal-logo img,
 body.template-collective-treatment-treatment #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png');
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png');
 }
 
 
@@ -7600,7 +7596,7 @@ body:not(.userrole-authenticated) .slick-init .video-play-btn {
     left: 50%;
     width: 100px;
     height: 100px;
-    background: url("++resource++plonetheme.zm.css/play.svg") no-repeat;
+    background: url("++resource++plonetheme.museumbase.css/play.svg") no-repeat;
     background-size: 100% 100%;
     z-index: 10;
     margin-left: -50px;
@@ -9216,7 +9212,7 @@ body.no-img-slideshow #slickslideshow {
 }
 
 body.no-img-slideshow #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
 body.no-img-slideshow #edit-content-views {
@@ -9321,7 +9317,7 @@ body.template-login_form {
 
 body.template-login_form #portal-logo img,
 body.template-logged_out #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }   
 
 body.template-login_form #portal-header,
@@ -9394,12 +9390,12 @@ body.template-logged_out #content-core a {
 }
 
 body.template-login_success #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
 
 body.template-logged_out #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
 body.template-login_success #content-core > p {
@@ -9468,7 +9464,7 @@ body.template-logged_out #portal-header {
 }
 
 body.template-default_error_message #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
 .btn-info {
@@ -9627,7 +9623,7 @@ body.template-default_error_message #portal-logo img {
 }
 
 body.template-edit #portal-logo img {
-    content: url('++resource++plonetheme.zm.css/logo-preto.png') !important;
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
 body.template-content_view .info-btn {
