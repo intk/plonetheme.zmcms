@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- This file holds the setup configuration for the portal_javascripts tool.
+     -->
+
+<object name="portal_javascripts">
+	<javascript
+	    id="++resource++plonetheme.zmcms.js/menu.js"
+	    cacheable="True" compression="safe" cookable="False"
+	    enabled="True" expression=""  inline="False"/>
+
+	 <javascript
+	    id="++resource++plonetheme.zmcms.js/slideshow.js"
+	    cacheable="True" compression="safe" cookable="False"
+	    enabled="True" expression=""  inline="False"/>
+
+	<javascript
+	    id="++resource++plonetheme.zmcms.js/theme.js"
+	    cacheable="True" compression="safe" cookable="False"
+	    enabled="True" expression=""  inline="False"/>
+
+  	
+
+</object>

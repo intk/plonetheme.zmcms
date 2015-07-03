@@ -1,0 +1,78 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    i18n_domain="plonetheme.zmcms">
+
+    <include package="z3c.jbot" file="meta.zcml" />
+
+    <browser:resourceDirectory
+      name="plonetheme.zmcms.css"
+      directory="css"
+      layer=".interfaces.IThemeSpecific"
+    />
+
+    <browser:resourceDirectory
+      name="plonetheme.zmcms.js"
+      directory="js"
+      layer=".interfaces.IThemeSpecific"
+    />
+    
+    <browser:resourceDirectory
+      name="plonetheme.zmcms.fonts"
+      directory="fonts"
+      layer=".interfaces.IThemeSpecific"
+    />
+
+    <browser:jbot directory="overrides" />
+
+    <!-- Navigation feature -->
+    <browser:page
+      name="zm_get_nav_objects"
+      for="*"
+      class=".slideshow.slideshow.get_nav_objects"
+      template="slideshow/templates/get_nav_objects.pt"
+      layer=".interfaces.IThemeSpecific"
+      permission="zope2.View"
+    />
+
+    <browser:page
+      name="zm_get_fields"
+      for="*"
+      class=".slideshow.slideshow.get_fields"
+      template="slideshow/templates/get_fields.pt"
+      layer=".interfaces.IThemeSpecific"
+      permission="zope2.View"
+    />
+
+    <browser:page
+      name="zm_get_collection_items"
+      for="*"
+      class=".slideshow.slideshow.CollectionSlideshow"
+      template="slideshow/templates/get_collection_items.pt"
+      layer=".interfaces.IThemeSpecific"
+      permission="zope2.View"
+    />
+
+    <browser:page
+      name="zm_get_next_objects"
+      for="*"
+      class=".slideshow.slideshow.get_nav_objects"
+      template="slideshow/templates/get_next_objects.pt"
+      layer=".interfaces.IThemeSpecific"
+      permission="zope2.View"
+    />
+
+    <browser:page
+      name="zm_get_slideshow_items"
+      for="*"
+      class=".slideshow.slideshow.get_nav_objects"
+      template="slideshow/templates/get_slideshow_items.pt"
+      layer=".interfaces.IThemeSpecific"
+      permission="zope2.View"
+    />
+
+</configure>
