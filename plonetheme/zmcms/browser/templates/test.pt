@@ -1,0 +1,4 @@
+
+<tal:test tal:define="has_media python: view.catalog_test()">
+
+</tal:test>
