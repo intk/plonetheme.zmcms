@@ -80,6 +80,14 @@ $(document).ready(function() {
     FastClick.attach(document.body);
   });
 
+  $('#images-only-filter').change(function(){
+     if ($(this).attr('checked')){
+          $(this).val('True');
+    } else { 
+          $(this).val('False');
+    }
+  });
+
   $(function() {
     $(".share-btn").popover({ trigger: "click focus", html: true, animation:false,
       content: function() {
