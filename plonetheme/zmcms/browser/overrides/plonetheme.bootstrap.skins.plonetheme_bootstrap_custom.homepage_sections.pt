@@ -1,0 +1,89 @@
+<tal:master define="level options/level|python:0;
+                    children options/children | nothing;
+                    bottomLevel options/bottomLevel | nothing;
+                    portal_tabs options/portal_tabs| nothing;
+                    selected_tabs options/selected_tabs | nothing;
+                    selected_portal_tab options/selected_portal_tab;
+                    normalizeString nocall:context/plone_utils/normalizeString;
+                    viewActions context/portal_properties/site_properties/typesUseViewActionInListings|python:();
+                    member context/@@plone_portal_state/member;
+                    member_id member/getId|nothing;
+                    plone_view context/@@plone">
+
+
+<tal:sections i18n:domain="plone"
+    tal:define="lang python: context.language">
+    
+    <div class="page-overlay"></div>
+    
+    <div class="menu_wrapper" data-toggle="offcanvas" data-target="#nav_menu" data-canvas="body">
+        <a class="bt-menu-trigger"><span>Menu</span></a>
+    </div>
+
+    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation" id="nav_menu">
+            
+            <div class="menu_wrapper" data-toggle="offcanvas" data-target="#nav_menu" data-canvas="body">
+                <a class="bt-menu-trigger"><span>Menu</span></a>
+            </div>
+
+            
+
+            <ul class="nav navmenu-nav main-menu">
+
+                <form class="navbar-form" role="search" tal:attributes="action python: '/'+lang+'/@@search'">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="SearchableText" id="srch-term" 
+                        i18n:attributes="title title_search_site;
+                        placeholder title_search_site"/>
+                        <i class="fa fa-search"></i>
+                    <input type="submit" value="" id="input-search-menu" class="submit-search"/>  
+                </div>
+                </form>
+
+                <metal:main define-macro="nav_main">
+                <tal:navitem repeat="node children">
+                <li tal:define="children   node/children;
+                                item       node/item;
+                                useView    python:item.portal_type in viewActions;
+                                item_icon  python:plone_view.getIcon(item);
+                                itemUrl    python:test(useView, item.getURL() + '/view', item.getURL());
+                                linkRemote item/getRemoteUrl;
+                                isCurrent  node/currentItem;
+                                liLevel    level;
+                                excluded_from_nav python: getattr(item, 'exclude_from_nav', False);
+                                main_menu  python:liLevel == 1;
+                                portal_type python: getattr(item, 'portal_type', False);
+                                show_lower python:children and level+3 < bottomLevel;
+                                item_type_class string:itemtype-${item/portal_type};
+                                css_class_active python:(isCurrent or item.id==selected_portal_tab) and 'active' or '';
+                                css_class_submenu python:show_lower and 'dropdown' or '';
+                                css_class_dropdown python:show_lower and 'dropdown' or '';
+                                css_class_submenu python:not main_menu and css_class_submenu or css_class_dropdown;
+                                css_class_to_show python:(css_class_active + css_class_submenu).strip() or None"
+                    tal:attributes="class css_class_to_show"
+                    tal:condition="python: bottomLevel &lt;= 0 or level &lt; bottomLevel-1 and not excluded_from_nav and portal_type == 'Folder'">
+
+                    <tal:level define="item_wf_state_class python: 'state-' + normalizeString(item.review_state);
+                                    ">
+                        <a tal:attributes="href python:test(linkRemote, item.getRemoteUrl, itemUrl);
+                                           title item/Description|nothing;
+                                           id string:${node/id}-${liLevel}"
+                                           >
+                            <span tal:replace="item/Title">Selected Item Title</span>
+                        </a>
+
+                    <ul tal:define="last_class string:;
+                                    level python:level+1;"
+                        tal:condition="python:(show_lower and children) and item.id in ['collectie', 'bibliotheek', 'bezoek-het-museum']"
+                        class="nav navmenu-nav submenu">
+                        <metal:recurse use-macro="context/homepage_sections/macros/nav_main"/>
+                    </ul>
+
+                    </tal:level>
+                </li>
+                </tal:navitem>
+                </metal:main>
+            </ul>
+    </div>
+</tal:sections>
+</tal:master>

@@ -4243,7 +4243,7 @@ body.portaltype-portlet-page .slick-prev:hover, body.portaltype-portlet-page .sl
 }
 
 .menu_wrapper {
-    position: absolute;
+    position: fixed;
     width: 80px;
     height: 80px;
     background-color: #000000;

@@ -312,16 +312,29 @@ $(document).ready(function() {
 
   /* OVERLAY */
   var menu = document.querySelector('.menu_wrapper');
-  
+
   function toggleOverlay() {
-    if (menu != undefined) {
-      if (classie.has(menu, 'open')) {
-        classie.remove(menu, 'open');
-        classie.add(menu, 'closed');
-      } else {
-        classie.remove(menu, 'closed');
-        classie.add(menu, 'open');
-        slickSlideshow.pauseCurrentSlide();
+    if (typeof classie != "undefined") {
+      if (menu != undefined) {
+        if (classie.has(menu, 'open')) {
+          classie.remove(menu, 'open');
+          classie.add(menu, 'closed');
+        } else {
+          classie.remove(menu, 'closed');
+          classie.add(menu, 'open');
+          slickSlideshow.pauseCurrentSlide();
+        }
+      }
+    } else {
+      if (menu != undefined) {
+        if ($(menu).hasClass('open')) {
+          $(menu).removeClass('open');
+          $(menu).addClass('closed');
+        } else {
+          $(menu).removeClass('closed');
+          $(menu).addClass('open');
+          slickSlideshow.pauseCurrentSlide();
+        }
       }
     }
   };

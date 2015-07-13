@@ -136,8 +136,8 @@
 
 #nav_menu .navbar-form {
 	padding: 0px;
-	padding-left: 40px;
-	padding-right: 40px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #nav_menu .navbar-form input.form-control:focus {
@@ -429,7 +429,7 @@ body {
 }
 
 .navmenu .input-group {
-	margin-bottom: 50px;
+	margin-bottom: 10px;
 }
 
 .navmenu .input-group label {
