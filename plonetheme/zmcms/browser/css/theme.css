@@ -9133,7 +9133,7 @@ td.datagridwidget-manipulator.delete-row img {
 }
 
 #content .field input[type="text"] {
-    font-size: 1.000em !important;
+    font-size: 1.000em;
 }
 
 #content .form-horizontal .pattern-pickadate-date-wrapper {
