@@ -76,9 +76,9 @@ $(document).ready(function() {
   $("#portal-languageselector").show(100);
   
   /* FASTCLICK */
-  $(function() {
+  /*$(function() {
     FastClick.attach(document.body);
-  });
+  });*/
 
   $('#images-only-filter').change(function(){
      if ($(this).attr('checked')){

@@ -7990,7 +7990,7 @@ body.template-collective-treatment-treatment .datagridwidget-table-view th {
 body.template-edit .datagridwidget-table-view th {
     display: table-cell;
     background: #ffffff !important;
-    font-size: 0.850em !important;
+    font-size: 0.875em !important;
     color: #333333 !important;
     padding-left: 0px !important;
 }
@@ -8314,7 +8314,8 @@ body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwid
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
     font-size: 1.00em;
-    font-family: "Source Sans Pro", Calibri, Candara, Arial, serif !important;
+    font-family: "Merriweather", serif;
+    font-weight: 400;
 }
 
 body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
