@@ -8933,11 +8933,12 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 #formfield-form-widgets-linkedObjects_linkedObjects input[type="text"][name$=".title"],
 #formfield-form-widgets-exhibitionsDetails_exhibition_title input[type="text"][name$=".title"],
 #formfield-form-widgets-exhibitionsDetails_exhibition_altTitle input[type="text"][name$=".title"] {
-    font-family: "Source Sans Pro", Calibri, Candara, Arial, serif !important;
+    font-family: "Merriweather", serif !important;
     color: #333333 !important;
     letter-spacing: inherit !important;
-    font-size: 15px !important;
+    font-size: 0.875em !important;
     font-weight: inherit !important;
+    font-weight: 400 !important;
 }
 
 
