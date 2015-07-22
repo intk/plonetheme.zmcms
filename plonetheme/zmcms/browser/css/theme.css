@@ -8637,13 +8637,13 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name label,
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType div.label,
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name div.label {
-    width: 45.5% !important;
+    width: 45.5%;
     float: left;
 }
 
 
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-nameType input {
-    width: 54% !important;
+    width: 54%;
     float: left;
 }
 
@@ -8662,7 +8662,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-name input {
-    width: 74.5% !important;
+    width: 69.5% !important;
     float: left;
 }
 
