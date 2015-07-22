@@ -8590,7 +8590,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 
 
 #formfield-form-widgets-inscriptionsMarkings_inscriptionsMarkings .datagridwidget-widget-creator input {
-    width: 60% !important;
+    width: 60%;
     float: left;
 }
 
@@ -8609,7 +8609,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 #formfield-form-widgets-inscriptionsMarkings_inscriptionsMarkings .datagridwidget-widget-role input {
-    width: 74.5% !important;
+    width: 74.5%;
     float: left;
 }
 
