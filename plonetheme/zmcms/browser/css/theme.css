@@ -8318,8 +8318,8 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
     font-weight: 400;
 }
 
-body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input,
+body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
+body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell input {
@@ -8914,10 +8914,10 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 
 #fieldset-numbers_relationships .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 #fieldset-numbers_relationships .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
-    width: 27.3% !important;
+    width: 27.3%;
 }
 
-#fieldset-numbers_relationships .datagridwidget-body .datagridwidget-block-edit-cell input {
+#fieldset-numbers_relationships .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton):not(.ac_input):not(.contenttree-widget) {
     width: 70% !important;
 }
 
