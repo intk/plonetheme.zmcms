@@ -8329,11 +8329,11 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 
 /* Value & Insurance */
 #formfield-form-widgets-valueInsurance_insurance div.label label {
-    width: 30% !important;
+    width: 27.4% !important;
 }
 
 #formfield-form-widgets-valueInsurance_insurance input {
-    width: 69% !important;
+    width: 70% !important;
 }
 
 
@@ -8558,7 +8558,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
-    width: 49.5% !important;
+    width: 45.5% !important;
 }
 
 
