@@ -8323,7 +8323,7 @@ body.template-collective-object-object .datagridwidget-body .datagridwidget-bloc
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell input {
-    width: 70% !important;
+    width: 70%;
 }
 
 
