@@ -1089,7 +1089,7 @@ class get_nav_objects(BrowserView):
         fields = getFieldsInOrder(schema)
 
         identification_tab = [('identification_identification_collections', None), ('identification_identification_objectNumber', None),
-                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectName', 'name'),
+                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectName', None),
                                 ('title', None), ('identification_taxonomy', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
@@ -1097,7 +1097,7 @@ class get_nav_objects(BrowserView):
         physical_characteristics_tab = [('physicalCharacteristics_techniques', 'technique', None), ('physicalCharacteristics_materials', 'material', None),
                                         ('physicalCharacteristics_dimensions', None, None)]
 
-        associations_tab = [('associations_associatedPersonInstitution', 'name', None), ('associations_associatedSubject', 'subject', None)]
+        associations_tab = [('associations_associatedPersonInstitution', None, None), ('associations_associatedSubject', None, None)]
 
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
 
