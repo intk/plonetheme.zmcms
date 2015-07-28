@@ -641,18 +641,21 @@ class get_nav_objects(BrowserView):
             new_val = []
             if choice == None:
                 for val in field_value:
-                    for key, value in val.iteritems():
-                        if key not in not_show:
-                            if value != "" and value != None:
-                                if restriction != None:
-                                    if value != restriction:
-                                        if key in "name" and name != 'exhibitions_exhibition':
+                    if type(val) is unicode:
+                        new_val.append(val)
+                    else:
+                        for key, value in val.iteritems():
+                            if key not in not_show:
+                                if value != "" and value != None:
+                                    if restriction != None:
+                                        if value != restriction:
+                                            if key in "name" and name != 'exhibitions_exhibition':
+                                                value = self.create_maker(value)
+                                            new_val.append(value)
+                                    else:
+                                        if key == "name" and name != 'exhibitions_exhibition':
                                             value = self.create_maker(value)
                                         new_val.append(value)
-                                else:
-                                    if key == "name" and name != 'exhibitions_exhibition':
-                                        value = self.create_maker(value)
-                                    new_val.append(value)
             else:
                 for val in field_value:
                     if val[choice] != "" and val[choice] != None:
@@ -1085,7 +1088,7 @@ class get_nav_objects(BrowserView):
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
 
-        identification_tab = [('identification_identification_collection', None), ('identification_identification_objectNumber', None),
+        identification_tab = [('identification_identification_collections', None), ('identification_identification_objectNumber', None),
                                 ('identification_objectName_objectCategory', None), ('identification_objectName_objectName', 'name'),
                                 ('title', None), ('identification_taxonomy', None)]
 
