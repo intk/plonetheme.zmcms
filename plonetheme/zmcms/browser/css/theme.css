@@ -7238,7 +7238,7 @@ body.portaltype-portlet-page.userrole-authenticated #portal-logo img {
 
 body.template-edit #content-core {
     padding-top: 50px;
-    width: 880px;
+    width: 980px;
     margin: 0 auto;
 }
 
@@ -7284,7 +7284,8 @@ body.template-collective-object-object textarea.form-control,
 body.template-collective-exhibition-exhibition textarea.form-control,
 body.template-collective-personorinstitution-personorinstitution textarea.form-control,
 body.template-collective-treatment-treatment textarea.form-control {
-    height: 75px !important;
+    min-height: 75px !important;
+    width: 100% !important;
 }
 
 .field select {
@@ -8258,7 +8259,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
 .fieldset-input select {
     vertical-align: middle;
     width: 100%;
-    height: 44px;
+    height: 35px;
 }
 
 .label {

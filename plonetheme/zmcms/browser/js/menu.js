@@ -33,7 +33,7 @@ $(document).ready(function() {
       $("div.pfg-form button[name='form_submit']").hide();
     }
 
-    var current_limit = $("input#limit_subscriptions").attr("placeholder");
+  var current_limit = $("input#limit_subscriptions").attr("placeholder");
     if (current_limit != undefined) {
       if (current_limit < 5) {
         $("body.portaltype-formfolder select option").each(function() {
@@ -45,56 +45,6 @@ $(document).ready(function() {
     }
   }
 
-  $("div[id$='autocomplete']").each(function() {
-
-    $autocompleteDiv = $(this);
-
-    if ($autocompleteDiv.find("span.option").length > 0) {
-      $($autocompleteDiv.find("div.querySelectSearch")).addClass('hidden'); 
-    }
-  });
-
-  $('div.autocompleteInputWidget').each(function() {
-    $(this).bind("DOMSubtreeModified", function() {
-
-      $divParent = $($(this).closest("div[id$='autocomplete']"));
-      if ($divParent.find("span.option").length > 0) {
-        $($divParent.find("div.querySelectSearch")).addClass('hidden'); 
-      }
-
-      $(this).find('input.contenttree-widget').change(function() {
-        if ($(this).is(":checked") == false) {
-          $parent = $($(this).closest("div[id$='autocomplete']"));
-          $querySelector = $parent.find('div.querySelectSearch')
-          if ($querySelector.hasClass('hidden')) {
-            $querySelector.removeClass('hidden')
-          }
-        } else {
-          $parent = $($(this).closest("div[id$='autocomplete']"));
-          $querySelector = $parent.find('div.querySelectSearch')
-          if (!$querySelector.hasClass('hidden')) {
-            $querySelector.addClass('hidden')
-          }
-        }
-      });
-    });
-  });
-
-  $("input.contenttree-widget").change(function() {
-    if ($(this).is(":checked") == false) {
-      $parent = $($(this).closest("div[id$='autocomplete']"));
-      $querySelector = $parent.find('div.querySelectSearch')
-      if ($querySelector.hasClass('hidden')) {
-        $querySelector.removeClass('hidden')
-      }
-    } else {
-      $parent = $($(this).closest("div[id$='autocomplete']"));
-      $querySelector = $parent.find('div.querySelectSearch')
-      if (!$querySelector.hasClass('hidden')) {
-        $querySelector.addClass('hidden')
-      }
-    }
-  });
 
   var $default_res_container = $('#search-results');
   $default_res_container.delegate('.listingBar a', 'click', function (e) {
