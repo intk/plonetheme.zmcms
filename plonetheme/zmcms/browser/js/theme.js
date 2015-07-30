@@ -82,7 +82,7 @@
 $(document).ready(function() {
     /* AUTOCOMPLETE WIDGET */
 
-    $("body.template-edit fieldset.formPanel:not(#fieldset-default) textarea").autogrow();
+    $("body.template-edit fieldset:not(#fieldset-default) textarea").autogrow();
 
     function hideSelectQuerySearch(autocompleteDiv) {
         if (autocompleteDiv.find("span.option").length > 0) {
