@@ -73,6 +73,8 @@
 
             $self.change(update).keyup(update).keydown({event:'keydown'},update);
             $(window).resize(update);
+
+            update();
         });
     };
 })(jQuery);
