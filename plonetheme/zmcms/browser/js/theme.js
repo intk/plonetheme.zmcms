@@ -59,7 +59,7 @@
                 shadow.css('width', $self.width());
                 shadow.html(val + (noFlickerPad === 0 ? '...' : '')); // Append '...' to resize pre-emptively.
                 
-                var newHeight=Math.max(shadow.height() + noFlickerPad, minHeight);
+                var newHeight=Math.max(shadow.height() + noFlickerPad - 20, minHeight);
                 if(settings.preGrowCallback!=null){
                   newHeight=settings.preGrowCallback($self,shadow,newHeight,minHeight);
                 }
@@ -73,8 +73,6 @@
 
             $self.change(update).keyup(update).keydown({event:'keydown'},update);
             $(window).resize(update);
-
-            update();
         });
     };
 })(jQuery);
@@ -83,6 +81,7 @@ $(document).ready(function() {
     /* AUTOCOMPLETE WIDGET */
 
     $("body.template-edit fieldset:not(#fieldset-default) textarea").autogrow();
+    $("textarea").keydown();
 
     function hideSelectQuerySearch(autocompleteDiv) {
         if (autocompleteDiv.find("span.option").length > 0) {
