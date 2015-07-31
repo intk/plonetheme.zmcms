@@ -7870,6 +7870,15 @@ label[for="form-widgets-dimension"] {
     padding-top: 10px !important;
 }
 
+
+#content-core .datagridwidget-table-view-block tr:not(:first-child) td.datagridwidget-manipulator {
+    padding-top: 40px !important;
+}
+
+#content-core .datagridwidget-table-view tr:not(:first-child) td.datagridwidget-block-edit-cell {
+    padding-top: 40px !important;
+}
+
 .datagridwidget-cell {
     vertical-align: top !important;
     padding: 0px !important;

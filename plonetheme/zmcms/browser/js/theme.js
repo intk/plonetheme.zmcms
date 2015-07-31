@@ -59,7 +59,7 @@
                 shadow.css('width', $self.width());
                 shadow.html(val + (noFlickerPad === 0 ? '...' : '')); // Append '...' to resize pre-emptively.
                 
-                var newHeight=Math.max(shadow.height() + noFlickerPad - 20, minHeight);
+                var newHeight=Math.max(shadow.height() + noFlickerPad - 12, minHeight);
                 if(settings.preGrowCallback!=null){
                   newHeight=settings.preGrowCallback($self,shadow,newHeight,minHeight);
                 }
