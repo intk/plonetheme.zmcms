@@ -9875,4 +9875,15 @@ body.template-edit.portaltype-object #portal-header {
     height: 0;
 }
 
+textarea {
+    background-image: none !important;
+}
+
+#content .field input[type="text"] {
+    background-image: none !important;
+}
+
+.select2-container-multi .select2-choices {
+    background-image: none !important;
+}
 
