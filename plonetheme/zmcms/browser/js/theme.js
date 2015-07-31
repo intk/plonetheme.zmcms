@@ -5,7 +5,7 @@
 
 $(document).ready(function() {
     /* AUTOCOMPLETE WIDGET */
-    
+
     function hideSelectQuerySearch(autocompleteDiv) {
         if (autocompleteDiv.find("span.option").length > 0) {
           $(autocompleteDiv.find("div.querySelectSearch")).addClass('hidden'); 
