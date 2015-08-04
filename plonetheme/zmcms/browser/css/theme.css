@@ -7945,7 +7945,7 @@ body.template-edit .tooltip-inner {
 }
 
 .div-50 .control-label {
-    width: 52.5% !important;
+    width: 52.2% !important;
 }
 
 .div-50-triple .control-label {
@@ -8468,7 +8468,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-valuer input,
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date input {
-    width: 37.2% !important;
+
 }
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-date input {
@@ -8476,14 +8476,13 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 /* Confirmation date and renewal_date */
-#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date {
+/*#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date {
     width: 60%;
     float: left;
 }
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date {
-    width: 40%;
-    float: left;
+
 }
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date label,
@@ -8512,9 +8511,9 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-reference {
     clear: both;
-}
+}*/
 
-#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date input,
+/*#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date input,
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
     width: 37.2% !important;
 }
@@ -8560,16 +8559,16 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-policy_number {
     clear: both;
-}
+}*/
 
-#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date input,
+/*#formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-confirmation_date input,
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
     width: 37.2% !important;
 }
 
 #formfield-form-widgets-valueInsurance_insurance .datagridwidget-widget-renewal_date input {
     width: 45.5% !important;
-}
+}*/
 
 
 
