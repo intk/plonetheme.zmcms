@@ -643,10 +643,12 @@ class get_nav_objects(BrowserView):
                 for val in field_value:
                     if type(val) is unicode:
                         new_val.append(val)
+                    elif type(val) is str:
+                        new_val.append(val)
                     else:
                         for key, value in val.iteritems():
                             if key not in not_show:
-                                if value != "" and value != None:
+                                if value != "" and value != None and value != " ":
                                     if restriction != None:
                                         if value != restriction:
                                             if key in "name" and name != 'exhibitions_exhibition':
@@ -658,7 +660,7 @@ class get_nav_objects(BrowserView):
                                         new_val.append(value)
             else:
                 for val in field_value:
-                    if val[choice] != "" and val[choice] != None:
+                    if val[choice] != "" and val[choice] != None and val[choice] != " ":
                         if restriction != None:
                             if val[choice] != restriction:
                                 if choice == "name" and name != 'exhibitions_exhibition':
@@ -693,7 +695,7 @@ class get_nav_objects(BrowserView):
             # Title field
             if field in ['title']:
                 value = getattr(object, field, "")
-                if value != "" and value != None:
+                if value != "" and value != None and value != " ":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Title')), "value": value})
             
             # Regular fields
@@ -705,7 +707,7 @@ class get_nav_objects(BrowserView):
 
                     schema_value = self.transform_schema_field(field, value, choice)
 
-                    if schema_value != "":
+                    if schema_value != "" and schema_value != " ":
                         object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
             # Taxonomy special case
@@ -716,9 +718,9 @@ class get_nav_objects(BrowserView):
                     scientific_name = taxonomy_elem['scientific_name']
                     common_name = taxonomy_elem['common_name']
 
-                    if scientific_name != "":
+                    if scientific_name != "" and scientific_name != " ":
                         object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
-                    if common_name != "":
+                    if common_name != "" and common_name != " ":
                         object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
 
 
@@ -746,13 +748,13 @@ class get_nav_objects(BrowserView):
 
         production = self.create_maker(maker)
 
-        if qualifier != "" and qualifier != None:
+        if qualifier != "" and qualifier != None and qualifier != " ":
             production = "%s, %s" %(qualifier, production)
 
-        if role != "" and role != None:
+        if role != "" and role != None and qualifier != " ":
             production = "(%s) %s" %(role, production)
 
-        if place != "" and place != None:
+        if place != "" and place != None and qualifier != " ":
             production = "%s, %s" %(production, place)
 
         return production
@@ -790,7 +792,7 @@ class get_nav_objects(BrowserView):
         production = []
         for field in production_field:
             result = self.create_production_field(field)
-            if result != "" and result != None:
+            if result != "" and result != None and result != " ":
                 production.append(result)
 
         if len(production) > 0:
@@ -1768,13 +1770,13 @@ class get_fields(BrowserView):
 
         production = self.create_maker(maker)
 
-        if qualifier != "" and qualifier != None:
+        if qualifier != "" and qualifier != None and qualifier != " ":
             production = "%s, %s" %(qualifier, production)
 
-        if role != "" and role != None:
+        if role != "" and role != None and role != " ":
             production = "(%s) %s" %(role, production)
 
-        if place != "" and place != None:
+        if place != "" and place != None and place != " ":
             production = "%s, %s" %(production, place)
 
         return production
