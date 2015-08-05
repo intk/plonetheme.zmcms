@@ -71,7 +71,7 @@ $(document).ready(function() {
     });
 
     /* Action when options is selected/unselected */
-    $("input.contenttree-widget").change(function() {
+    $("table.datagridwidget-table-view input.contenttree-widget").change(function() {
         optionChangeAction($(this));
     });
 
