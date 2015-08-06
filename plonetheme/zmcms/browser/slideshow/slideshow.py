@@ -1006,16 +1006,19 @@ class get_nav_objects(BrowserView):
             docs = []
 
             for doc in documentation:
-                if doc['title'] != "":
-                    new_doc = "%s" %(doc['title'])
+                try:
+                    if doc['title'] != "":
+                        new_doc = "%s" %(doc['title'])
 
-                    if doc['pageMark'] != "":
-                        new_doc = "%s, %s" %(new_doc, doc['pageMark'])
+                        if doc['pageMark'] != "":
+                            new_doc = "%s, %s" %(new_doc, doc['pageMark'])
 
-                    if doc['notes'] != "":
-                        new_doc = "%s, %s" %(new_doc, doc['notes'])
+                        if doc['notes'] != "":
+                            new_doc = "%s, %s" %(new_doc, doc['notes'])
 
-                    docs.append(new_doc)
+                        docs.append(new_doc)
+                except:
+                    pass
 
             if len(docs) > 0:
                 schema_value = '<p>'.join(docs)

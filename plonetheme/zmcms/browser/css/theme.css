@@ -8698,13 +8698,11 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate label,
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate div.label,
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate div.label {
-    width: 55.5% !important;
     float: left;
 }
 
 
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-startDate input {
-    width: 44% !important;
     float: left;
 }
 
@@ -8723,17 +8721,12 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-endDate input {
-    width: 69.5% !important;
     float: left;
 }
 
 #formfield-form-widgets-associations_associatedPersonInstitution .datagridwidget-widget-notes {
     clear: both;
 }
-
-
-
-
 
 body.template-edit .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-object-object .datagridwidget-body select.select-widget.choice-field,
@@ -8747,6 +8740,14 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 #formfield-form-widgets-valueInsurance_insurance select.select-widget.choice-field {
     width: 69% !important;
     vertical-align: middle !important;
+}
+
+#fieldset-associations .datagridwidget-table-view-block .select2-container {
+    width: 70% !important;
+}
+
+#fieldset-associations .datagridwidget-widget-identifier {
+    display: none;
 }
 
 
