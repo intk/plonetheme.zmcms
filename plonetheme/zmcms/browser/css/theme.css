@@ -9866,3 +9866,10 @@ textarea {
     background-image: none !important;
 }
 
+#search-results p.no-results {
+    padding-bottom: 200px;
+}
+
+#fieldset-exhibitions .datagridwidget-widget-notes {
+    clear: both;
+}

@@ -651,27 +651,40 @@ class get_nav_objects(BrowserView):
                                 if value != "" and value != None and value != " ":
                                     if restriction != None:
                                         if value != restriction:
-                                            if key in "name" and name != 'exhibitions_exhibition':
+                                            if key in "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
                                                 value = self.create_maker(value)
-                                            new_val.append(value)
+                                            if type(value) is list: 
+                                                new_val.append(value[0])
+                                            else:
+                                                new_val.append(value)
                                     else:
-                                        if key == "name" and name != 'exhibitions_exhibition':
+                                        if key == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
                                             value = self.create_maker(value)
-                                        new_val.append(value)
+                                        if type(value) is list: 
+                                            new_val.append(value[0])
+                                        else:
+                                            new_val.append(value)
             else:
                 for val in field_value:
                     if val[choice] != "" and val[choice] != None and val[choice] != " ":
                         if restriction != None:
                             if val[choice] != restriction:
-                                if choice == "name" and name != 'exhibitions_exhibition':
+                                if choice == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
                                     new_val.append(self.create_maker(val[choice]))
                                 else:
-                                    new_val.append(val[choice])
+                                    
+                                    if type(val[choice]) is list: 
+                                        new_val.append(val[choice][0])
+                                    else:
+                                        new_val.append(val[choice])
                         else:
-                            if choice in ["name", "author"] and name != 'exhibitions_exhibition':
+                            if choice in ["name", "author"] and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
                                 new_val.append(self.create_maker(val[choice]))
                             else:
-                                new_val.append(val[choice])
+                                if type(val[choice]) is list: 
+                                    new_val.append(val[choice][0])
+                                else:
+                                    new_val.append(val[choice])
 
             if len(new_val) > 0:
                 if name in ["exhibitions_exhibition", "productionDating_production", "labels", "seriesNotesISBN_notes_bibliographicalNotes",
@@ -751,10 +764,10 @@ class get_nav_objects(BrowserView):
         if qualifier != "" and qualifier != None and qualifier != " ":
             production = "%s, %s" %(qualifier, production)
 
-        if role != "" and role != None and qualifier != " ":
+        if role != "" and role != None and role != " ":
             production = "(%s) %s" %(role, production)
 
-        if place != "" and place != None and qualifier != " ":
+        if place != "" and place != None and place != " ":
             production = "%s, %s" %(production, place)
 
         return production
@@ -768,20 +781,33 @@ class get_nav_objects(BrowserView):
 
         result = ""
 
-        if period != "" and period != None:
+        if period != "" and period != None and period != " ":
             result = "%s" %(period)
 
-        if start_date != "":
-            if start_date_precision != "":
-                result = "%s, %s %s" %(result, start_date_precision, start_date)
+        if start_date != "" and start_date != " ":
+            if result:
+                if start_date_precision != "" and start_date_precision != " ":
+                    result = "%s, %s %s" %(result, start_date_precision, start_date)
+                else:
+                    result = "%s, %s" %(result, start_date)
             else:
-                result = "%s, %s" %(result, start_date)
+                if start_date_precision != "" and start_date_precision != " ":
+                    result = "%s %s" %(start_date_precision, start_date)
+                else:
+                    result = "%s" %(start_date)
+    
 
-        if end_date != "":
-            if end_date_precision != "":
-                result = "%s - %s %s" %(result, end_date_precision, start_date)
+        if end_date != "" and end_date != " ":
+            if result:
+                if end_date_precision != "" and end_date_precision != " ":
+                    result = "%s - %s %s" %(result, end_date_precision, start_date)
+                else:
+                    result = "%s - %s" %(result, end_date)
             else:
-                result = "%s - %s" %(result, end_date)
+                if end_date_precision != "" and end_date_precision != " ":
+                    result = "%s %s" %(end_date_precision, start_date)
+                else:
+                    result = "%s" %(end_date)
 
         return result
 
@@ -805,7 +831,7 @@ class get_nav_objects(BrowserView):
         period = []
         for field in period_field:
             result = self.create_period_field(field)
-            if result != "" and result != None:
+            if result != "" and result != None and result != " ":
                 period.append(result)
 
         if len(period) > 0:
@@ -820,10 +846,10 @@ class get_nav_objects(BrowserView):
             dimension = ""
             if val['value'] != "":
                 dimension = "%s" %(val['value'])
-            if val['unit'] != "":
-                dimension = "%s %s" %(dimension, val['unit'])
-            if val['dimension'] != "":
-                dimension = "%s: %s" %(val['dimension'], dimension)
+            if val['units'] != "":
+                dimension = "%s %s" %(dimension, val['units'])
+            if val['dimension'] != "" and val['dimension'] != []:
+                dimension = "%s: %s" %(val['dimension'][0], dimension)
 
             new_dimension_val.append(dimension)
 
@@ -834,8 +860,8 @@ class get_nav_objects(BrowserView):
     def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object, field_schema):
         
         for field, choice, restriction in physical_characteristics_tab:
-            if field == 'physicalCharacteristics_dimensions':
-                dimension_field = getattr(object, 'physicalCharacteristics_dimensions', None)
+            if field == 'physicalCharacteristics_dimension':
+                dimension_field = getattr(object, 'physicalCharacteristics_dimension', None)
                 if dimension_field != None:
                     dimension = self.create_dimension_field(dimension_field)
                     ## add to schema
@@ -931,6 +957,49 @@ class get_nav_objects(BrowserView):
 
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+    def generate_exhibition_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+        relations = []
+        related_exhibitions = []
+
+        for field, choice, restriction, not_show in exhibitions_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+                if value:
+                    for val in value:
+                        exhibition = val['exhibitionName']
+                        if exhibition:
+                            rel_obj = exhibition[0]
+                            rel_url = rel_obj.absolute_url()
+                            rel_title = rel_obj.title
+                            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+
+                            rel_date_start = ""
+                            rel_date_end = ""
+                            if hasattr(rel_obj, 'start_date'):
+                                rel_date_start = rel_obj.start_date
+
+                            if hasattr(rel_obj, 'end_date'):
+                                rel_date_end = rel_obj.end_date
+
+                            if rel_date_start != "":
+                                date_start = rel_date_start.strftime('%Y-%m-%d')
+
+                            if rel_date_end != "":
+                                date_end = rel_date_start.strftime('%Y-%m-%d')
+
+                            final_date = ""
+                            if rel_date_start != "" and rel_date_end != "":
+                                final_date = "%s t/m %s" %(date_start, date_end)
+
+                            if final_date != "":
+                                related_exhibitions.append(final_date)
+
+        if len(related_exhibitions) > 0:
+            related_exhibitions_value = '<p>'.join(related_exhibitions)
+            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibitions')), 'value': related_exhibitions_value})
 
     def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
         intids = getUtility(IIntIds)
@@ -1094,15 +1163,15 @@ class get_nav_objects(BrowserView):
         fields = getFieldsInOrder(schema)
 
         identification_tab = [('identification_identification_collections', None), ('identification_identification_objectNumber', None),
-                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectName', None),
+                                ('identification_objectName_category', None), ('identification_objectName_objectname', 'name'),
                                 ('title', None), ('identification_taxonomy', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 
-        physical_characteristics_tab = [('physicalCharacteristics_techniques', 'technique', None), ('physicalCharacteristics_materials', 'material', None),
-                                        ('physicalCharacteristics_dimensions', None, None)]
+        physical_characteristics_tab = [('physicalCharacteristics_technique', 'technique', None), ('physicalCharacteristics_material', 'material', None),
+                                        ('physicalCharacteristics_dimension', None, None)]
 
-        associations_tab = [('associations_associatedPersonInstitution', None, None), ('associations_associatedSubject', None, None)]
+        associations_tab = [('associations_associatedPersonInstitution', None, None), ('associations_associatedSubjects', 'subject', None)]
 
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
 
@@ -1110,7 +1179,7 @@ class get_nav_objects(BrowserView):
 
         location_tab = [('location_current_location', 'location_type', None)]
 
-        fieldcollection_tab = [('fieldCollection_fieldCollection_place', None, None), ('fieldCollection_habitatStratigraphy_stratigraphy', 'unit', None)]
+        fieldcollection_tab = [('fieldCollection_fieldCollection_places', None, None), ('fieldCollection_habitatStratigraphy_stratigrafie', 'unit', None)]
 
         exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum', ['catObject'])]
 
@@ -1142,7 +1211,8 @@ class get_nav_objects(BrowserView):
         self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
 
         ## Exhibtions
-        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
+        #self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
+        self.generate_exhibition_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
 
         ## Labels
         self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
@@ -1677,11 +1747,11 @@ class get_fields(BrowserView):
                             if value != "" and value != None:
                                 if restriction != None:
                                     if value != restriction:
-                                        if key in "name" and name != 'exhibitions_exhibition':
+                                        if key in "name" and name not in ['exhibitions_exhibition', 'identification_objectName_objectname']:
                                             value = self.create_maker(value)
                                         new_val.append(value)
                                 else:
-                                    if key == "name" and name != 'exhibitions_exhibition':
+                                    if key == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
                                         value = self.create_maker(value)
                                     new_val.append(value)
             else:
@@ -1689,12 +1759,12 @@ class get_fields(BrowserView):
                     if val[choice] != "" and val[choice] != None:
                         if restriction != None:
                             if val[choice] != restriction:
-                                if choice == "name" and name != 'exhibitions_exhibition':
+                                if choice == "name" and name not in ['exhibitions_exhibition', 'identification_objectName_objectname']:
                                     new_val.append(self.create_maker(val[choice]))
                                 else:
                                     new_val.append(val[choice])
                         else:
-                            if choice in ["name", "author"] and name != 'exhibitions_exhibition':
+                            if choice in ["name", "author"] and name not in ['exhibitions_exhibition', 'identification_objectName_objectname']:
                                 new_val.append(self.create_maker(val[choice]))
                             else:
                                 new_val.append(val[choice])
@@ -2123,7 +2193,7 @@ class get_fields(BrowserView):
         fields = getFieldsInOrder(schema)
 
         identification_tab = [('identification_identification_collection', None), ('identification_identification_objectNumber', None),
-                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectName', 'name'),
+                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectname', 'name'),
                                 ('title', None), ('identification_taxonomy', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
