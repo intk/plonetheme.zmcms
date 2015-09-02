@@ -45,7 +45,6 @@ $(document).ready(function() {
     }
   }
 
-
   var $default_res_container = $('#search-results');
   $default_res_container.delegate('.listingBar a', 'click', function (e) {
     $("body,html").scrollTop(0);
