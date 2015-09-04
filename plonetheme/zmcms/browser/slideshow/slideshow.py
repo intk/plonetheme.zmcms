@@ -16,6 +16,7 @@ from zope.i18nmessageid import MessageFactory as msgfactory
 from zope.intid.interfaces import IIntIds
 from zc.relation.interfaces import ICatalog
 from zope.security import checkPermission
+from plone import api
 
 MessageFactory = msgfactory('collective.object')
 _book = msgfactory('collective.bibliotheek')
@@ -737,7 +738,7 @@ class get_nav_objects(BrowserView):
                         object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
 
 
-    def create_maker(self, name):
+    def create_maker(self, name, url=False):
         maker = []
         name_split = name.split(",")
 
@@ -749,9 +750,12 @@ class get_nav_objects(BrowserView):
                 maker.append(name_split[0])
 
         new_maker = ' '.join(maker)
+        if url:
+            new_maker = "<a href='%s'>%s</a>" %(url, new_maker)
+
         return new_maker
 
-    def create_production_field(self, field):
+    def create_production_field(self, field, url=False):
         production = ""
 
         maker = field['maker']
@@ -759,16 +763,25 @@ class get_nav_objects(BrowserView):
         role = field['role']
         place = field['place']
 
-        production = self.create_maker(maker)
+        production = self.create_maker(maker, url)
 
         if qualifier != "" and qualifier != None and qualifier != " ":
-            production = "%s, %s" %(qualifier, production)
+            if production:
+                production = "%s, %s" %(qualifier, production)
+            else:
+                production = "%s" %(qualifier)
 
         if role != "" and role != None and role != " ":
-            production = "(%s) %s" %(role, production)
+            if production:
+                production = "(%s) %s" %(role, production)
+            else:
+                production = "(%s)" %(role)
 
         if place != "" and place != None and place != " ":
-            production = "%s, %s" %(production, place)
+            if production:
+                production = "%s, %s" %(production, place)
+            else:
+                production = "%s" %(place)
 
         return production
 
@@ -810,6 +823,50 @@ class get_nav_objects(BrowserView):
                     result = "%s" %(end_date)
 
         return result
+
+    def get_url_by_uid(self, uid):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        
+        brains = catalog(UID=uid)
+        if brains:
+            obj = brains[0]
+            return obj.getURL()
+
+        return ""
+
+    def generate_production_dating(self, production_dating_tab, object_schema, fields, object, field_schema):
+        production_field = self.get_field_from_object('productionDating_productionDating', object)
+
+        production_result = []
+        # Generate production
+        url = ""
+        for field in production_field:
+            production = {}
+            if field['makers']:
+                production['maker'] = field["makers"][0].title
+                url = self.get_url_by_uid(field["makers"][0].UID())
+            else:
+                production['maker'] = ""
+
+            production['qualifier'] = field['qualifier']
+
+            if field['role']:
+                production['role'] = field['role'][0]
+            else:
+                production['role'] = ""
+
+            if field['place']:
+                production['place'] = field['place'][0]
+            else:
+                production['place'] = ""
+
+            result = self.create_production_field(production, url)
+            if result != "" and result != None and result != " ":
+                production_result.append(result)
+
+        if len(production_result) > 0:
+            production_value = '<p>'.join(production_result)
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
 
     def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object, field_schema):
 
@@ -881,15 +938,35 @@ class get_nav_objects(BrowserView):
 
     def generate_associations_tab(self, associations_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in associations_tab:
-            fieldvalue = self.get_field_from_schema(field, fields)
-            if fieldvalue != None:
-                title = fieldvalue.title
-                value = self.get_field_from_object(field, object)
+            if field == "associations_associatedPersonInstitutions":
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue:
+                    title = fieldvalue.title
+                    associations_field = self.get_field_from_object('associations_associatedPersonInstitutions', object)
 
-                schema_value = self.transform_schema_field(field, value, choice)
+                    result = []
+                    for line in associations_field:
+                        names = line["names"]
+                        if names:
+                            name = names[0].title
+                            url = self.get_url_by_uid(names[0].UID())
+                            new_name = self.create_maker(name, url)
+                            result.append(new_name)
 
-                if schema_value != "":
-                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    final_result = "<p>".join(result)
+                    if final_result != "":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": final_result})
+
+            else:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value, choice)
+
+                    if schema_value != "":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
     
     def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in reproductions_tab:
@@ -1171,7 +1248,7 @@ class get_nav_objects(BrowserView):
         physical_characteristics_tab = [('physicalCharacteristics_technique', 'technique', None), ('physicalCharacteristics_material', 'material', None),
                                         ('physicalCharacteristics_dimension', None, None)]
 
-        associations_tab = [('associations_associatedPersonInstitution', None, None), ('associations_associatedSubjects', 'subject', None)]
+        associations_tab = [('associations_associatedPersonInstitutions', 'names', None), ('associations_associatedSubjects', 'subject', None)]
 
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
 
@@ -1190,7 +1267,8 @@ class get_nav_objects(BrowserView):
         self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
 
         ## Vervaardiging & Datering tab
-        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
+        #self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
+        self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
 
         ## Physical Characteristics
         self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
@@ -1880,6 +1958,40 @@ class get_fields(BrowserView):
 
         return result
 
+
+    def generate_production_dating(self, production_dating_tab, object_schema, fields, object, field_schema):
+        print "generate production dating"
+        production_field = self.get_field_from_object('productionDating_productionDating', object)
+
+        production_result = []
+        # Generate production
+        for field in production_field:
+            production = {}
+            if production_field['makers']:
+                production['maker'] = production_field["makers"][0].title
+            else:
+                production['maker'] = ""
+
+            production['qualifier'] = production_field['qualifier']
+
+            if production_field['role']:
+                production['role'] = production_field['role'][0]
+            else:
+                production['role'] = ""
+
+            if production_field['place']:
+                production['place'] = production_field['place'][0]
+            else:
+                production['place'] = ""
+
+            result = self.create_production_field(production)
+            if result != "" and result != None and result != " ":
+                production_result.append(result)
+
+        if len(production_result) > 0:
+            production_value = '<p>'.join(production_result)
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
+
     def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object, field_schema):
 
         ## Generate Author
@@ -1887,7 +1999,7 @@ class get_fields(BrowserView):
         production = []
         for field in production_field:
             result = self.create_production_field(field)
-            if result != "" and result != None:
+            if result != "" and result != None and result != " ":
                 production.append(result)
 
         if len(production) > 0:
@@ -2221,6 +2333,7 @@ class get_fields(BrowserView):
 
         ## Vervaardiging & Datering tab
         self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
+        #self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
 
         ## Physical Characteristics
         self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")

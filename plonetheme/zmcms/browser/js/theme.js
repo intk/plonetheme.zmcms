@@ -83,9 +83,14 @@ function formwidget_autocomplete_ready(event, data, formatted) {
     (function($) { 
         var input_box = $(event.target);
         html = data[1];
+
+        var new_html = $('<div/>').text(html).html();
+
         var no_lt = html.replace(/&lt;/g, "<");
         var res = no_lt.replace(/&gt;/g, ">");
         var new_data = res;
+        //console.log(new_html);
+        //var new_data = new_html;
 
         formwidget_autocomplete_new_value(input_box,data[0],new_data);
     }(jQuery));
