@@ -5,7 +5,8 @@
 
 $(document).ready(function() {
     /* AUTOCOMPLETE WIDGET */
-    function hideSelectQuerySearch(autocompleteDiv) {
+
+    /*function hideSelectQuerySearch(autocompleteDiv) {
         if (autocompleteDiv.find("span.option").length > 0) {
           $(autocompleteDiv.find("div.querySelectSearch")).addClass('hidden'); 
         }
@@ -16,9 +17,9 @@ $(document).ready(function() {
         options.each(function() {
             span = $(this).closest('span.option');
             span.remove()
-            /*if (!span.hasClass("hidden")) {
-                span.addClass("hidden");
-            }*/
+            //if (!span.hasClass("hidden")) {
+            //    span.addClass("hidden");
+            //}
         });
     }
 
@@ -47,37 +48,37 @@ $(document).ready(function() {
                 $querySelector.addClass('hidden')
             }
         }
-    }
+    }*/
 
     /* Do not show search box if there's any option selected */
-    $("div[id$='autocomplete']").each(function() {
+    /*$("div[id$='autocomplete']").each(function() {
         $autocompleteDiv = $(this);
         hideSelectQuerySearch($autocompleteDiv);
-    });
+    });*/
 
     /* Action when item is added */
-    $('div.autocompleteInputWidget').each(function() {
+    /*$('div.autocompleteInputWidget').each(function() {
         $(this).bind("DOMSubtreeModified", function() {
 
             $divParent = $($(this).closest("div[id$='autocomplete']"));
             hideSelectQuerySearch($divParent);
 
-            /* Generate change actions for new options */
+            // Generate change actions for new options 
             $(this).find('input.contenttree-widget').change(function() {
                 optionChangeAction($(this));
             });
 
         });
-    });
+    });*/
 
     /* Action when options is selected/unselected */
-    $("table.datagridwidget-table-view input.contenttree-widget").change(function() {
+    /*$("table.datagridwidget-table-view input.contenttree-widget").change(function() {
         optionChangeAction($(this));
-    });
+    });*/
 
 });
 
-function formwidget_autocomplete_ready(event, data, formatted) {
+/*function formwidget_autocomplete_ready(event, data, formatted) {
     (function($) { 
         var input_box = $(event.target);
         html = data[1];
@@ -140,4 +141,5 @@ function formwidget_autocomplete_new_value(input_box,value,label) {
         widget_base.append(span);
     }(jQuery));
 }
+*/
 
