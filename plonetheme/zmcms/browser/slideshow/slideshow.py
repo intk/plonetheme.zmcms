@@ -762,7 +762,10 @@ class get_nav_objects(BrowserView):
 
         new_maker = ' '.join(maker)
         if url:
-            new_maker = "<a href='%s'>%s</a>" %(url, new_maker)
+            #language = self.context.language
+            #new_maker = "<a href='%s'>%s</a>" %(url, new_maker)
+            new_maker = new_maker
+            #new_maker = "<a href='/%s/search?SearchableText=%s'>%s</a>" %(language, new_maker, new_maker)
 
         return new_maker
 
@@ -1050,6 +1053,15 @@ class get_nav_objects(BrowserView):
         relations = []
         related_exhibitions = []
 
+        def get_url_by_uid(context, uid):
+            catalog = context.portal_catalog
+            brains = catalog(UID=uid)
+            if brains:
+                obj = brains[0]
+                return obj.getURL()
+
+            return ""
+
         for field, choice, restriction, not_show in exhibitions_tab:
             fieldvalue = self.get_field_from_schema(field, fields)
             if fieldvalue != None:
@@ -1060,7 +1072,7 @@ class get_nav_objects(BrowserView):
                         exhibition = val['exhibitionName']
                         if exhibition:
                             rel_obj = exhibition[0]
-                            rel_url = rel_obj.absolute_url()
+                            rel_url = get_url_by_uid(self.context, rel_obj.UID())
                             rel_title = rel_obj.title
                             related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
 
@@ -1092,9 +1104,49 @@ class get_nav_objects(BrowserView):
                             if final_date != "":
                                 related_exhibitions.append(final_date)
 
+                            # organisator
+                            orgs = []
+                            locations = []
+                            places = []
+                            organisators = rel_obj.exhibitionsDetails_organizingInstitutions
+
+                            if organisators:
+                                for organiser in organisators:
+                                    name = organiser['name']
+                                    if name:
+                                        if name != 'Zeeuws Museum':
+                                            orgs.append(name)
+
+                                    l = location['address']
+                                    if l:
+                                        if l != 'Zeeuws Museum':
+                                            locations.append(l)
+
+                                    p = place['place']
+                                    if p:
+                                        if p != 'Zeeuws Museum':
+                                            places.append(p)
+
+                                final_orgs = ', '.join(orgs)
+                                if final_orgs:
+                                    related_exhibitions.append(final_orgs)
+                                
+                                final_locations = ', '.join(locations)
+                                if final_locations:
+                                    related_exhibitions.append(final_locations)
+
+                                final_places = ', '.join(places)
+                                if final_places:
+                                    related_exhibitions.append(final_places)
+
+                                
+
+
+
+
         if len(related_exhibitions) > 0:
             related_exhibitions_value = '<p>'.join(related_exhibitions)
-            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibitions')), 'value': related_exhibitions_value})
+            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibition name')), 'value': related_exhibitions_value})
 
     def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
         intids = getUtility(IIntIds)
@@ -1988,7 +2040,7 @@ class get_fields(BrowserView):
 
 
     def generate_production_dating(self, production_dating_tab, object_schema, fields, object, field_schema):
-        print "generate production dating"
+
         production_field = self.get_field_from_object('productionDating_productionDating', object)
 
         production_result = []
@@ -2206,6 +2258,14 @@ class get_fields(BrowserView):
 
             if final_date != "":
                 related_exhibitions.append(final_date)
+
+
+            # Organisator
+
+            # Locatie
+
+            # Plaats
+
 
         if len(related_exhibitions) > 0:
             related_exhibitions_value = '<p>'.join(related_exhibitions)
