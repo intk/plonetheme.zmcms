@@ -716,7 +716,10 @@ class get_nav_objects(BrowserView):
 
             elif field in ['text']:
                 val = getattr(object, field, "")
-                value = val.output
+                if val:
+                    value = val.output
+                else:
+                    value = ""
                 if value != "" and value != None and value != " ":
                     object_schema[field_schema]['fields'].append({"title": "body", "value": value})
             
@@ -1881,7 +1884,11 @@ class get_fields(BrowserView):
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Title')), "value": value})
 
             elif field in ['text']:
-                value = val.output
+                val = getattr(object, field, "")
+                if val:
+                    value = val.output
+                else:
+                    value = ""
                 if value != "" and value != None and value != " ":
                     object_schema[field_schema]['fields'].append({"title": "body", "value": value})
             
