@@ -1073,10 +1073,17 @@ class get_nav_objects(BrowserView):
                                 rel_date_end = rel_obj.end_date
 
                             if rel_date_start != "":
-                                date_start = rel_date_start.strftime('%Y-%m-%d')
+                                try:
+                                    date_start = rel_date_start.strftime('%Y-%m-%d')
+                                except:
+                                    rel_date_start = ""
 
                             if rel_date_end != "":
-                                date_end = rel_date_start.strftime('%Y-%m-%d')
+                                try:
+                                    date_end = rel_date_end.strftime('%Y-%m-%d')
+                                except:
+                                    rel_date_end = ""
+
 
                             final_date = ""
                             if rel_date_start != "" and rel_date_end != "":
