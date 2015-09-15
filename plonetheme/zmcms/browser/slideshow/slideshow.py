@@ -675,7 +675,8 @@ class get_nav_objects(BrowserView):
                                 else:
                                     
                                     if type(val[choice]) is list: 
-                                        new_val.append(val[choice][0])
+                                        if val[choice]:
+                                            new_val.append(val[choice][0])
                                     else:
                                         new_val.append(val[choice])
                         else:
@@ -683,7 +684,8 @@ class get_nav_objects(BrowserView):
                                 new_val.append(self.create_maker(val[choice]))
                             else:
                                 if type(val[choice]) is list: 
-                                    new_val.append(val[choice][0])
+                                    if val[choice]:
+                                        new_val.append(val[choice][0])
                                 else:
                                     new_val.append(val[choice])
 
@@ -711,6 +713,12 @@ class get_nav_objects(BrowserView):
                 value = getattr(object, field, "")
                 if value != "" and value != None and value != " ":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Title')), "value": value})
+
+            elif field in ['text']:
+                val = getattr(object, field, "")
+                value = val.output
+                if value != "" and value != None and value != " ":
+                    object_schema[field_schema]['fields'].append({"title": "body", "value": value})
             
             # Regular fields
             elif field not in ['identification_taxonomy']:
@@ -1241,7 +1249,7 @@ class get_nav_objects(BrowserView):
 
         identification_tab = [('identification_identification_collections', None), ('identification_identification_objectNumber', None),
                                 ('identification_objectName_category', None), ('identification_objectName_objectname', 'name'),
-                                ('title', None), ('identification_taxonomy', None)]
+                                ('title', None), ('identification_taxonomy', None), ('text', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 
@@ -1865,11 +1873,17 @@ class get_fields(BrowserView):
 
     def generate_identification_tab(self, identification_tab, object_schema, fields, object, field_schema):
         for field, choice in identification_tab:
+            
             # Title field
             if field in ['title']:
                 value = getattr(object, field, "")
                 if value != "" and value != None:
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Title')), "value": value})
+
+            elif field in ['text']:
+                value = val.output
+                if value != "" and value != None and value != " ":
+                    object_schema[field_schema]['fields'].append({"title": "body", "value": value})
             
             # Regular fields
             elif field not in ['identification_taxonomy']:
@@ -2305,8 +2319,8 @@ class get_fields(BrowserView):
         fields = getFieldsInOrder(schema)
 
         identification_tab = [('identification_identification_collection', None), ('identification_identification_objectNumber', None),
-                                ('identification_objectName_objectCategory', None), ('identification_objectName_objectname', 'name'),
-                                ('title', None), ('identification_taxonomy', None)]
+                                ('identification_objectName_category', None), ('identification_objectName_objectname', 'name'),
+                                ('title', None), ('identification_taxonomy', None), ('text', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 

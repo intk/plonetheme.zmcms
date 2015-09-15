@@ -1319,8 +1319,8 @@ slickSlideshow.updateSchema = function(schema) {
 	
 	var jsBody = $($.parseHTML(body));
 	var htmlBody = $.parseHTML(jsBody.text());
-	$("#body-text").html('');
-	$("#body-text").html(htmlBody);
+	//$("#body-text").html('');
+	//$("#body-text").html(htmlBody);
 	$(".object-fieldset").html(res);
 };
 
@@ -1377,8 +1377,10 @@ slickSlideshow.getSchemaSlide = function(currentSlide) {
 	URL = data_url + "/" + request_url;
 
 	$.getJSON(URL, function(data) {
-		if (data.schema != undefined) {
-			slickSlideshow.updateSchemaSlide(data.schema);
+		if (data) {
+			if (data.schema != undefined) {
+				slickSlideshow.updateSchemaSlide(data.schema);
+			}
 		}
 	});
 };
