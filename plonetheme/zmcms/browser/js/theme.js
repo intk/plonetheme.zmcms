@@ -4,7 +4,7 @@
 --------------------------------------------------------------------------------- */
 
 $(document).ready(function() {
-    $("div.template-edit input, div.template-edit select, div.template-edit textarea, div.template-edit button").prop("disabled", true);
+    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
 });
 
 /*function formwidget_autocomplete_ready(event, data, formatted) {
