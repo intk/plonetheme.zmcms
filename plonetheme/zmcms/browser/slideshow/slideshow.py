@@ -1117,12 +1117,12 @@ class get_nav_objects(BrowserView):
                                         if name != 'Zeeuws Museum':
                                             orgs.append(name)
 
-                                    l = location['address']
+                                    l = organisators['address']
                                     if l:
                                         if l != 'Zeeuws Museum':
                                             locations.append(l)
 
-                                    p = place['place']
+                                    p = organisators['place']
                                     if p:
                                         if p != 'Zeeuws Museum':
                                             places.append(p)
@@ -2258,13 +2258,6 @@ class get_fields(BrowserView):
 
             if final_date != "":
                 related_exhibitions.append(final_date)
-
-
-            # Organisator
-
-            # Locatie
-
-            # Plaats
 
 
         if len(related_exhibitions) > 0:
