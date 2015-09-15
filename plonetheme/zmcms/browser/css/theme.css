@@ -5676,7 +5676,7 @@ body.template-content_view .slick-slideshow {
 @-webkit-keyframes uil-default-anim { 0% { opacity: 1} 100% {opacity: 0} }@keyframes uil-default-anim { 0% { opacity: 1} 100% {opacity: 0} }.uil-default-css > div:nth-of-type(1){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.5s;animation-delay: -0.5s;}.uil-default-css > div:nth-of-type(2){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.4166666666666667s;animation-delay: -0.4166666666666667s;}.uil-default-css > div:nth-of-type(3){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.33333333333333337s;animation-delay: -0.33333333333333337s;}.uil-default-css > div:nth-of-type(4){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.25s;animation-delay: -0.25s;}.uil-default-css > div:nth-of-type(5){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.16666666666666669s;animation-delay: -0.16666666666666669s;}.uil-default-css > div:nth-of-type(6){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: -0.08333333333333331s;animation-delay: -0.08333333333333331s;}.uil-default-css > div:nth-of-type(7){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0s;animation-delay: 0s;}.uil-default-css > div:nth-of-type(8){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.08333333333333337s;animation-delay: 0.08333333333333337s;}.uil-default-css > div:nth-of-type(9){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.16666666666666663s;animation-delay: 0.16666666666666663s;}.uil-default-css > div:nth-of-type(10){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.25s;animation-delay: 0.25s;}.uil-default-css > div:nth-of-type(11){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.33333333333333337s;animation-delay: 0.33333333333333337s;}.uil-default-css > div:nth-of-type(12){-webkit-animation: uil-default-anim 1s linear infinite;animation: uil-default-anim 1s linear infinite;-webkit-animation-delay: 0.41666666666666663s;animation-delay: 0.41666666666666663s;}
 
 
-body.template-edit.portaltype-portlet-page .documentFirstHeading {
+.template-edit.portaltype-portlet-page .documentFirstHeading {
     z-index: -1000 !important;
 }
 body.template-portlets .documentFirstHeading {
@@ -7236,7 +7236,7 @@ body.portaltype-portlet-page.userrole-authenticated #portal-logo img {
 
 /* EDIT PAGE */
 
-body.template-edit #content-core {
+.template-edit #content-core {
     padding-top: 50px;
     width: 980px;
     margin: 0 auto;
@@ -7252,17 +7252,17 @@ body.template-collective-treatment-treatment #content-core .form:first-child {
     padding-bottom: 50px;
 }
 
-body.template-edit,
+.template-edit,
 body.template-sharing {
     background-color: #ffffff !important;
 }
 
-body.template-edit #visual-portal-wrapper > .row:first-child,
+.template-edit #visual-portal-wrapper > .row:first-child,
 body.template-sharing #visual-portal-wrapper > .row:first-child {
     background-color: #f5f5f5;
 }
 
-body.template-edit .documentFirstHeading {
+.template-edit .documentFirstHeading {
     margin-bottom: 0px !important;
     padding-bottom: 300px !important;
     background-color: #f5f5f5;
@@ -7278,12 +7278,12 @@ body.template-sharing  #content .documentDescription {
     background-color: #f5f5f5;
 }
 
-body.template-edit textarea.form-control,
-body.template-sharing textarea.form-control,
-body.template-collective-object-object textarea.form-control,
-body.template-collective-exhibition-exhibition textarea.form-control,
-body.template-collective-personorinstitution-personorinstitution textarea.form-control,
-body.template-collective-treatment-treatment textarea.form-control {
+.template-edit textarea.text-field,
+body.template-sharing textarea.text-field,
+body.template-collective-object-object textarea.text-field,
+body.template-collective-exhibition-exhibition textarea.text-field,
+body.template-collective-personorinstitution-personorinstitution textarea.text-field,
+body.template-collective-treatment-treatment textarea.text-field {
     min-height: 37px !important;
     width: 100% !important;
 }
@@ -7372,26 +7372,26 @@ body.mobile .overlay-image {
     text-align: left;
 }
 
-body.template-edit.portaltype-object .kssattr-fieldname-form.widgets.text textarea.form-control,
-body.template-edit.portaltype-book .kssattr-fieldname-form.widgets.text textarea.form-control {
+.template-edit.portaltype-object .kssattr-fieldname-form.widgets.text textarea.text-field,
+.template-edit.portaltype-book .kssattr-fieldname-form.widgets.text textarea.text-field {
     height: 800px !important;
 }
 
-body.template-edit.portaltype-object #portal-header,
-body.template-edit.portaltype-book #portal-header {
+.template-edit.portaltype-object #portal-header,
+.template-edit.portaltype-book #portal-header {
     background-color: #ffffff;
 }
 
-body.template-edit.portaltype-object #content-core,
-body.template-edit.portaltype-book #content-core {
+.template-edit.portaltype-object #content-core,
+.template-edit.portaltype-book #content-core {
     padding-top: 150px;
 }
 
-body.template-edit.portaltype-object #portal-logo img {
+.template-edit.portaltype-object #portal-logo img {
     content: url('++resource++plonetheme.zmcms.images/logo-preto.png');
 }
 
-body.template-edit.portaltype-book #portal-logo img {
+.template-edit.portaltype-book #portal-logo img {
     content: url('++resource++plonetheme.zmcms.images/logo-preto.png');
 }
 
@@ -7907,7 +7907,7 @@ body.mceContentBody {
     padding-right: 20px;
 }
 
-body.template-edit .field input[type="text"]:not(.select2-input),
+.template-edit .field input[type="text"]:not(.select2-input),
 body.template-collective-exhibition-exhibition .field input[type="text"],
 body.template-collective-personorinstitution-personorinstitution .field input[type="text"],
 body.template-collective-treatment-treatment .field input[type="text"] {
@@ -7935,7 +7935,7 @@ body.template-collective-object-object .tooltip-inner,
 body.template-collective-exhibition-exhibition .tooltip-inner,
 body.template-collective-personorinstitution-personorinstitution .tooltip-inner,
 body.template-collective-treatment-treatment .tooltip-inner,
-body.template-edit .tooltip-inner {
+.template-edit .tooltip-inner {
     padding: 15px;
     text-align: left;
 }
@@ -7997,7 +7997,7 @@ body.template-collective-treatment-treatment .datagridwidget-table-view th {
     color: #333333 !important;
 }
 
-body.template-edit .datagridwidget-table-view th {
+.template-edit .datagridwidget-table-view th {
     display: table-cell;
     background: #ffffff !important;
     font-size: 0.875em !important;
@@ -8017,7 +8017,7 @@ body.template-edit .datagridwidget-table-view th {
     display: none !important;
 }
 
-body.template-edit .datagridwidget-table-view {
+.template-edit .datagridwidget-table-view {
     width: 100% !important;
 }
 
@@ -8032,7 +8032,7 @@ body.template-collective-treatment-treatment .datagridwidget-table-view {
     background: none repeat scroll 0 0 #ffffff !important;
 }
 
-body.template-edit #fieldset-default,
+.template-edit #fieldset-default,
 body.template-collective-object-object #fieldset-default,
 body.template-collective-treatment-treatment #fieldset-default,
 body.template-collective-personorinstitution-personorinstitution #fieldset-default,
@@ -8040,7 +8040,7 @@ body.template-collective-exhibition-exhibition #fieldset-default {
     padding-top: 40px;
 }
 
-body.template-edit #content .form ul.nav,
+.template-edit #content .form ul.nav,
 body.template-collective-object-object #content .form ul.nav,
 body.template-collective-exhibition-exhibition #content .form ul.nav,
 body.template-collective-personorinstitution-personorinstitution #content .form ul.nav,
@@ -8055,7 +8055,7 @@ body.template-collective-treatment-treatment #content .form ul.nav {
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body.template-collective-personorinstitution-personorinstitution #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
-    body.template-edit #content-core {
+    .template-edit #content-core {
         padding-left: 20px;
         padding-right: 20px;
         width: 100%;
@@ -8113,17 +8113,17 @@ body.template-collective-treatment-treatment #content .form ul.nav {
     }
 }
 
-body.template-edit.portaltype-object header {
+.template-edit.portaltype-object header {
     background: #ffffff;
 }
 
-body.template-edit.portaltype-book header {
+.template-edit.portaltype-book header {
     background: #ffffff;
 }
 
-body.template-edit div.formControls,
-body.template-edit.portaltype-object div.formControls,
-body.template-edit.portaltype-book div.formControls,
+.template-edit div.formControls,
+.template-edit.portaltype-object div.formControls,
+.template-edit.portaltype-book div.formControls,
 body.template-collective-object-object div.formControls,
 body.template-collective-object-object.portaltype-object div.formControls,
 body.template-collective-object-object.portaltype-book div.formControls,
@@ -8144,7 +8144,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body.template-collective-personorinstitution-personorinstitution #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
-    body.template-edit #content-core {
+    .template-edit #content-core {
         padding-left: 40px;
         padding-right: 40px;
         width: 100%;
@@ -8206,7 +8206,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body.template-collective-personorinstitution-personorinstitution #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
-    body.template-edit #content-core {
+    .template-edit #content-core {
         padding-left: 40px;
         padding-right: 40px;
         width: 100%;
@@ -8284,7 +8284,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
 }
 
 /* BlockDataGrid */
-body.template-edit .datagridwidget-block-edit-cell,
+.template-edit .datagridwidget-block-edit-cell,
 body.template-collective-object-object .datagridwidget-block-edit-cell,
 body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-block-edit-cell,
@@ -8292,7 +8292,7 @@ body.template-collective-treatment-treatment .datagridwidget-block-edit-cell {
     padding-left: 0px;
 }
 
-body.template-edit .datagridwidget-block-edit-cell .datagridwidget-block,
+.template-edit .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-object-object .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-block-edit-cell .datagridwidget-block,
@@ -8302,8 +8302,8 @@ body.template-collective-treatment-treatment .datagridwidget-block-edit-cell .da
     padding-top: 0.5em;
 }
 
-body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
@@ -8318,7 +8318,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
     font-size: 1.00em;
 }
 
-body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
@@ -8328,7 +8328,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
     font-weight: 400;
 }
 
-body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
+.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell input,
@@ -8728,7 +8728,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
     clear: both;
 }
 
-body.template-edit .datagridwidget-body select.select-widget.choice-field,
+.template-edit .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-object-object .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-exhibition-exhibition .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body select.select-widget.choice-field,
@@ -8818,8 +8818,8 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
     }
 
 
-    body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-    body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+    .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+    .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
     body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label,
     body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
@@ -8831,7 +8831,7 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
         width: 100% !important;
     }
 
-    body.template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
+    .template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell input,
@@ -9031,10 +9031,10 @@ body.template-collective-treatment-treatment #content-core #editing-bar ul#edit-
     margin-right: 0px !important;
 }
 
-body.template-edit.portaltype-object #portal-header,
-body.template-edit.portaltype-object header,
-body.template-edit.portaltype-book #portal-header,
-body.template-edit.portaltype-book header,
+.template-edit.portaltype-object #portal-header,
+.template-edit.portaltype-object header,
+.template-edit.portaltype-book #portal-header,
+.template-edit.portaltype-book header,
 body.template-collective-object-object #portal-header,
 body.template-collective-object-object header,
 body.template-collective-exhibition-exhibition #portal-header,
@@ -9047,11 +9047,11 @@ body.template-collective-treatment-treatment header {
 }
 
 
-body.template-edit.portaltype-object .documentFirstHeading {
+.template-edit.portaltype-object .documentFirstHeading {
     display: block;
 }
 
-body.template-edit.portaltype-book .documentFirstHeading {
+.template-edit.portaltype-book .documentFirstHeading {
     display: block;
 }
 
@@ -9063,11 +9063,11 @@ body.template-collective-treatment-treatment .documentFirstHeading {
     margin-bottom: 0px !important;
 }
 
-body.template-edit.portaltype-object #editing-bar {
+.template-edit.portaltype-object #editing-bar {
     display: none !important;
 }
 
-body.template-edit.portaltype-book #editing-bar {
+.template-edit.portaltype-book #editing-bar {
     display: none !important;
 }
 
@@ -9634,7 +9634,7 @@ body.template-default_error_message #portal-logo img {
     }
 }
 
-body.template-edit #portal-logo img {
+.template-edit #portal-logo img {
     content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
@@ -9772,11 +9772,11 @@ body[class^="template-image_"] #content div.title-description-wrapper {
     position: initial !important;
 }
 
-body.template-edit form fieldset {
+.template-edit form fieldset {
     padding-top: 40px !important;
 }
 
-body.template-edit form fieldset .page-header:first-child {
+.template-edit form fieldset .page-header:first-child {
     margin-top: 0px;
 }
 
@@ -9836,7 +9836,7 @@ body.template-folder_contents #content-core {
     background-color: #ffffff !important;
 }
 
-body.template-edit.portaltype-object #edit-header-wrapper {
+.template-edit.portaltype-object #edit-header-wrapper {
     position: relative;
     background-repeat: no-repeat;
     background-size: auto 100%;
@@ -9844,13 +9844,13 @@ body.template-edit.portaltype-object #edit-header-wrapper {
     width: 100%;
 }
 
-body.template-edit.portaltype-object #content h1.documentFirstHeading {
+.template-edit.portaltype-object #content h1.documentFirstHeading {
     background: transparent !important;
 }
 
-body.template-edit.portaltype-object header,
-body.template-edit.portaltype-object #portal-header-wrapper,
-body.template-edit.portaltype-object #portal-header {
+.template-edit.portaltype-object header,
+.template-edit.portaltype-object #portal-header-wrapper,
+.template-edit.portaltype-object #portal-header {
     height: 0;
 }
 
