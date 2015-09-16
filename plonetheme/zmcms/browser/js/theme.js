@@ -30,6 +30,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                         } 
                     });
                     $("body.template-edit select.formTabs").prop("disabled", false);
+                    dataGridField2Functions.init();
                 }
             });
         }
