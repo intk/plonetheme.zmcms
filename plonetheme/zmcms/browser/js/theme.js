@@ -29,6 +29,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                             $(document).trigger('readyAgain', [{fieldset_id: real_fieldset_id}]);
                         } 
                     });
+                    $(document).trigger('readyAgain', [{fieldset_id: "#fieldset-default"}]);
                     $("body.template-edit select.formTabs").prop("disabled", false);
                     dataGridField2Functions.init();
                 }
