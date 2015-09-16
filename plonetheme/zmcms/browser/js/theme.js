@@ -8,7 +8,12 @@ var ajaxLoadTabs = function(fieldset_id) {
     $("body.template-edit select.formTabs").prop("disabled", true);
 
     if ($("body").hasClass("template-edit")) {
-        $(document).trigger('readyAgain', [{fieldset_id: "#fieldset-default"}]);
+
+        //console.log($("#fieldset-default").find(".mce-container").length);
+        if ($("#fieldset-default").find(".mce-container").length <= 0) {
+            $(document).trigger('readyAgain', [{fieldset_id: "#fieldset-default"}]);
+        }
+
         if (fieldset_id != "default") {
             var query = "?fieldset=" + fieldset_id + "&ajax_load=true";
             var link = window.location.href;
