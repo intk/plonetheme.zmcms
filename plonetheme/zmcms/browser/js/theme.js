@@ -9,11 +9,6 @@ var ajaxLoadTabs = function(fieldset_id) {
 
     if ($("body").hasClass("template-edit")) {
 
-        //console.log($("#fieldset-default").find(".mce-container").length);
-        if ($("#fieldset-default").find(".mce-container").length <= 0) {
-            $(document).trigger('readyAgain', [{fieldset_id: "#fieldset-default"}]);
-        }
-
         if (fieldset_id != "default") {
             var query = "?fieldset=" + fieldset_id + "&ajax_load=true";
             var link = window.location.href;
@@ -39,6 +34,8 @@ var ajaxLoadTabs = function(fieldset_id) {
                 }
             });
         }
+
+
     }
 }
 
@@ -46,4 +43,8 @@ $(document).ready(function() {
     // Disable inputs in private view
     $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
     ajaxLoadTabs("all");
+    //console.log($("#fieldset-default").find(".mce-container").length);
+    if ($("#fieldset-default .mce-container").length <= 0) {
+        $(document).trigger('readyAgain', [{fieldset_id: "#fieldset-default"}]);
+    }
 });
