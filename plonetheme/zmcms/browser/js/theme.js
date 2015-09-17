@@ -5,7 +5,7 @@
 
 
 var ajaxLoadTabs = function(fieldset_id) {
-    $("div.template-edit select.formTabs").prop("disabled", true);
+    $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", true);
 
     if ($("body").hasClass("template-edit") || $("body div.template-edit").length > 0) {
 
@@ -26,7 +26,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                     fieldsets.each(function() {
                         var _id = $(this).attr("id");
                         if ($("body").hasClass("template-edit")) {
-                            if (_id != 'fieldset-default' && _id != 'fieldset-identification' && _id != 'fieldset-production_dating') {
+                            if (_id != 'fieldset-default') {
                                 var fieldset = $(this);
                                 var original_fieldset = $("fieldset#"+_id);
                                 fieldset.find('legend').remove();
@@ -56,7 +56,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                         }
                     }
 
-                    $("div.template-edit select.formTabs").prop("disabled", false);
+                    $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", false);
                     
                 }
             });
