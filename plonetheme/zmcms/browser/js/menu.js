@@ -182,7 +182,7 @@ $(document).ready(function() {
           $("body").css("overflow-y", "hidden");
         }
 
-        $("div.template-edit, #viewlet-above-content-body").hide();
+        //$("div.template-edit, #viewlet-above-content-body").hide();
 
       });
 
@@ -197,7 +197,7 @@ $(document).ready(function() {
       $(".portaltype-object #parent-fieldname-text").show();
       $(".container.object-container").show();
       $(".portaltype-object #portal-footer-wrapper").show();
-      $("div.template-edit, #viewlet-above-content-body").show();
+      //$("div.template-edit, #viewlet-above-content-body").show();
 
       if (slickSlideshow.isCollection) {
         $(".object-fields").show();
