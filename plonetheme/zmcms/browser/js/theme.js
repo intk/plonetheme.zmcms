@@ -32,7 +32,8 @@ var ajaxLoadTabs = function(fieldset_id) {
                                 fieldset.find('legend').remove();
                                 original_fieldset.html(fieldset.html());
                                 var real_fieldset_id = "fieldset#"+_id;
-                                //$(document).trigger('readyAgain', [{fieldset_id: real_fieldset_id}]);
+                                dataGridField2Functions.init();
+                                $(document).trigger('readyAgain', [{fieldset_id: real_fieldset_id}]);
                             } 
                         } else {
                             if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
@@ -42,15 +43,12 @@ var ajaxLoadTabs = function(fieldset_id) {
                                 original_fieldset.html(fieldset.html());
                                 var real_fieldset_id = "fieldset#"+_id;
                                 dataGridField2Functions.init();
-                                
+                                $(document).trigger('readyAgain', [{fieldset_id: real_fieldset_id}]);
                                 $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
                             } 
                         }
                     });
                     
-                    dataGridField2Functions.init();
-                    $(document).trigger('readyAgain', [{fieldset_id: "body"}]);
-
                     $(".tab-spinning").addClass('open');
                     if ($("body").hasClass("template-edit")) {
                         if ($("#fieldset-default .mce-container").length <= 0) {
