@@ -24,6 +24,10 @@ var ajaxLoadTabs = function(fieldset_id) {
             }
 
             var link = window.location.href;
+            if (window.location.search != "") {
+                link = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            } 
+
             url = link + query
 
             $.ajax({
