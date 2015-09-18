@@ -59,16 +59,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                             } 
                         }
                     });
-                    
-                    $(".tab-spinning").addClass('open');
-                    if ($("body").hasClass("template-edit")) {
-                        if ($("#fieldset-default .mce-container").length <= 0) {
-                            $(document).trigger('readyAgain', [{fieldset_id: "#fieldset-default"}]);
-                        }
-                    }
-
                     $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", false);
-                    
                 }
             });
         }
@@ -78,10 +69,13 @@ var ajaxLoadTabs = function(fieldset_id) {
 }
 
 $(document).ready(function() {
+    setTimeout(function() {
+        if (!$("body").hasClass("pat-plone-widgets")) {
+            $(document).trigger('readyAgain', [{fieldset_id: "body"}]);
+        }
+    }, 500);
+
     // Disable inputs in private view
     $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
     ajaxLoadTabs("all");
-    if ($("#fieldset-default .mce-container").length <= 0) {
-        $(document).trigger('readyAgain', [{fieldset_id: "#fieldset-default"}]);
-    }
 });
