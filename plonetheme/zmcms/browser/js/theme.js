@@ -4,6 +4,21 @@
 --------------------------------------------------------------------------------- */
 
 
+var createRelatedItemsLink = function(elem) {
+    setTimeout(function() {
+        all_relateditems = $(elem+' span.pattern-relateditems-item');
+        all_relateditems.each(function() {
+            var title_elem = $(this).find("span.pattern-relateditems-item-title");
+            var link_elem = $(this).find("span.pattern-relateditems-item-path");
+            var title = title_elem.html();
+            var link = link_elem.html();
+
+            var new_link = $("<a></a>").attr("href", link).html(title);
+            title_elem.html(new_link);
+        });
+    }, 3000);
+}
+
 var ajaxLoadTabs = function(fieldset_id) {
     $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", true);
 
@@ -45,6 +60,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                                 var real_fieldset_id = "fieldset#"+_id;
                                 dataGridField2Functions.init();
                                 $(document).trigger('readyAgain', [{fieldset_id: $(real_fieldset_id)}]);
+                                //createRelatedItemsLink(real_fieldset_id);
                             } 
                         } else {
                             if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
@@ -56,6 +72,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                                 dataGridField2Functions.init();
                                 $(document).trigger('readyAgain', [{fieldset_id: $(real_fieldset_id)}]);
                                 $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+                                createRelatedItemsLink(real_fieldset_id);
                             } 
                         }
                     });
@@ -73,7 +90,11 @@ $(document).ready(function() {
         if (!$("body").hasClass("pat-plone-widgets")) {
             $(document).trigger('readyAgain', [{fieldset_id: "body"}]);
         }
+        console.log("create related items link")
+        createRelatedItemsLink("#fieldset-identification");
     }, 500);
+
+    
 
     // Disable inputs in private view
     $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
