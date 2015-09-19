@@ -8,9 +8,9 @@ var ajaxLoadTabs = function(fieldset_id) {
     $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", true);
 
     $("body.template-edit select.formTabs, div.template-edit select.formTabs").change(function() {
-        $("textarea").attr("style", "height: 37.8px !important;");
+        $("textarea:not(#form-widgets-IBasic-description):not(.mce_editable)").attr("style", "height: 37.8px !important;");
         setTimeout(function(){  
-            $("textarea").attr("style", "height: 37px !important;");
+            $("textarea:not(#form-widgets-IBasic-description):not(.mce_editable)").attr("style", "height: 37px !important;");
         }, 100);
     });
 
