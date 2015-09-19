@@ -24,6 +24,9 @@ var createRelatedItemsLink = function(elem) {
             var link = link_elem.html();
 
             var new_link = $("<a></a>").attr("href", link).html(title);
+            new_link.click(function() {
+                window.location.href = window.location.protocol + "//" + window.location.host + $(this).attr("href");
+            });
             title_elem.html(new_link);
         });
     }, 3000);
