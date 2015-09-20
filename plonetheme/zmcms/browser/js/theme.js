@@ -32,10 +32,14 @@ var createRelatedItemsLink = function(elem, timeout) {
     }, timeout);
 }
 
-var ajaxLoadTabs = function(fieldset_id) {
-    $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", true);
+var init_widgets = function(data_id) {
+    var element = $(data_id);
+    $(document).trigger('readyAgain', [{fieldset_id: element}]);
+}
 
+var ajaxLoadTabs = function(fieldset_id) {
     if ($("body").hasClass("template-edit") || $("body div.template-edit").length > 0) {
+        $("select.formTabs").prop("disabled", true);
 
         if (fieldset_id != "default") {
             if ($("body").hasClass("template-edit")) {
@@ -54,6 +58,8 @@ var ajaxLoadTabs = function(fieldset_id) {
             $.ajax({
                 url: url,
                 success: function(data) {
+                    $("select.formTabs").removeAttr("disabled");
+
                     var fieldsets = $(data).find("fieldset");
                     fieldsets.each(function() {
                         var _id = $(this).attr("id");
@@ -62,23 +68,42 @@ var ajaxLoadTabs = function(fieldset_id) {
                             if (_id != 'fieldset-default') {
                                 var fieldset = $(this);
                                 var original_fieldset = $("fieldset#"+_id);
-                                //fieldset.find('legend').remove();
                                 original_fieldset.html(fieldset.html());
                             } 
                         } else {
                             if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
                                 var fieldset = $(this);
                                 var original_fieldset = $("fieldset#"+_id);
-                                //fieldset.find('legend').remove();
                                 original_fieldset.html(fieldset.html());
                             } 
                         }
                     });
+                    
+                    //dataGridField2Functions.init();
+                    if ($("body").hasClass("template-edit")) {
+                        init_widgets("fieldset#fieldset-identification");
+                    }
 
-                    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+                    init_widgets("fieldset#fieldset-production_dating");
+                    init_widgets('fieldset#fieldset-iconography');
+                    init_widgets('fieldset#fieldset-inscriptions_markings');
+                    init_widgets('fieldset#fieldset-associations');
+                    init_widgets('fieldset#fieldset-numbers_relationships');
+                    init_widgets('fieldset#fieldset-documentation');
+                    init_widgets('fieldset#fieldset-documentation_free_archive');
+                    init_widgets('fieldset#fieldset-condition_conservation');
+                    init_widgets('fieldset#fieldset-acquisition');
+                    init_widgets('fieldset#fieldset-disposal');
+                    init_widgets('fieldset#fieldset-ownership_history');
+                    init_widgets('fieldset#fieldset-field_collection');
+                    init_widgets('fieldset#fieldset-exhibitions');
+                    init_widgets('fieldset#fieldset-loans');
+                    init_widgets('fieldset#fieldset-transport');
+
                     //dataGridField2Functions.init();
                     //$(document).trigger('readyAgain', [{fieldset_id: $("fieldset:not(#fieldset-identification)")}]);
-                    $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", false);
+                    
+                    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
                 }
             });
         }
@@ -90,15 +115,16 @@ $(document).ready(function() {
     setTimeout(function() {
         if (!$("body").hasClass("pat-plone-widgets")) {
             if ($("body").hasClass('template-edit')) {
-                $(document).trigger('readyAgain', [{fieldset_id: "body"}]);
+                init_widgets('body');
             } else {
-                $(document).trigger('readyAgain', [{fieldset_id: "fieldset#fieldset-identification"}]);
+                init_widgets("fieldset#fieldset-identification");
             }
         }
-        createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+        //createRelatedItemsLink("fieldset#fieldset-identification", 3000);
     }, 900);
 
     $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+
     $("body.template-edit select.formTabs, div.template-edit select.formTabs").change(function() {
         
         if ($("body").hasClass("template-edit")) {
@@ -127,6 +153,6 @@ $(document).ready(function() {
     });
 
     // Disable inputs in private view
-    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+    
     ajaxLoadTabs("all");
 });
