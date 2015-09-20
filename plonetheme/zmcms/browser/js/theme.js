@@ -91,7 +91,7 @@ $(document).ready(function() {
             if ($("body").hasClass('template-edit')) {
                 $(document).trigger('readyAgain', [{fieldset_id: "body"}]);
             } else {
-                //$(document).trigger('readyAgain', [{fieldset_id: "fieldset#fieldset-identification"}]);
+                $(document).trigger('readyAgain', [{fieldset_id: "fieldset#fieldset-identification"}]);
             }
         }
         createRelatedItemsLink("fieldset#fieldset-identification", 3000);
