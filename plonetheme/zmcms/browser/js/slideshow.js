@@ -1086,6 +1086,7 @@ slickSlideshow.init = function() {
 	/* Collection slideshow */
 	if ($slick_slideshow != undefined) {
 		if ($slick_slideshow.hasClass('collection')) {
+			console.log("collection");
 			slickSlideshow.initCollection();
 			if (slickSlideshow.youtube_ready) {
 				slickSlideshow.initiated_youtube = true;
@@ -1295,6 +1296,10 @@ slickSlideshow.updateSchema = function(schema) {
 		return false;
 	}
 
+	if (slickSlideshow.editingMode) {
+		return false;
+	}
+
 	_logger.log("[Update schema] try to update");
 	$(".object-fieldset").html('');
 
@@ -1430,6 +1435,9 @@ slickSlideshow.beforeChange = function(event) {
 
 slickSlideshow.updateDOMTitle = function(body, title) {
 	/* Update title */
+	if (slickSlideshow.editingMode) {
+		return false;
+	}
 
 	var document_title = document.title.split('—');
 	document_title[0] = title;
@@ -1651,7 +1659,6 @@ slickSlideshow.updateSlideCollectionURL = function(slide) {
 };
 
 slickSlideshow.afterChange = function(event) {
-
 	//slickSlideshow.resizeImage(false);
 
 	var currentSlide = slickSlideshow.$obj.getSlick().currentSlide;
@@ -1681,7 +1688,7 @@ slickSlideshow.afterChange = function(event) {
 	/* ******************* */
 
 
-	if (slickSlideshow.regular || $("body").hasClass('template-book_view') || $("body").hasClass('template-instrument_view') ) {
+	if (slickSlideshow.regular || $("body").hasClass('template-book_view') || $("body").hasClass('template-instrument_view') || slickSlideshow.editingMode) {
 		var slide = slickSlideshow.slides[currentSlide];
 		var description = slide.description;
 
@@ -1701,7 +1708,7 @@ slickSlideshow.afterChange = function(event) {
 	/* ******************* */
 	/* Special slideshow    * 
 	/* ******************* */
-	if (reset == false && slickSlideshow.regular == false && !$("body").hasClass('template-book_view') && !$("body").hasClass('template-instrument_view')) {
+	if (reset == false && slickSlideshow.regular == false && !$("body").hasClass('template-book_view') && !$("body").hasClass('template-instrument_view') && !slickSlideshow.editingMode) {
 
 		// --- Update object details
 		$currentSlideObj = $($slides[currentSlide]);
@@ -1818,6 +1825,9 @@ slickSlideshow.getRegularContent = function() {
 		
 		if (data_len == 0) {
 			$(".slideshow-loader").fadeOut();
+			if (slickSlideshow.editingMode) {
+				$("body").addClass("no-img-slideshow");
+			}
 		}
 
 		$.each(data, function(index, item) {
@@ -1837,6 +1847,11 @@ slickSlideshow.getRegularContent = function() {
 slickSlideshow.getContentListing = function(object_number) {
 	var URL;	
 	var query = location.search;
+
+	if (slickSlideshow.editingMode && object_number == "") {
+		object_number = "regular";
+	}
+
 	if (object_number != "regular") {
 		// Get lead media first
 		if ($("body").hasClass('template-drawing_view') || $("body").hasClass('template-view') || $("body").hasClass('template-instruments_view')) {
