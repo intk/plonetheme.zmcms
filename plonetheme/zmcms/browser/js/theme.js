@@ -55,55 +55,58 @@ var ajaxLoadTabs = function(fieldset_id) {
 
             url = link + query
 
+
             $.ajax({
                 url: url,
                 success: function(data) {
                     $("select.formTabs").removeAttr("disabled");
 
-                    var fieldsets = $(data).find("fieldset");
-                    fieldsets.each(function() {
-                        var _id = $(this).attr("id");
+                    setTimeout(function() {
+                        var fieldsets = $(data).find("fieldset");
+                        fieldsets.each(function() {
+                            var _id = $(this).attr("id");
 
+                            if ($("body").hasClass("template-edit")) {
+                                if (_id != 'fieldset-default') {
+                                    var fieldset = $(this);
+                                    var original_fieldset = $("fieldset#"+_id);
+                                    original_fieldset.html(fieldset.html());
+                                } 
+                            } else {
+                                if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
+                                    var fieldset = $(this);
+                                    var original_fieldset = $("fieldset#"+_id);
+                                    original_fieldset.html(fieldset.html());
+                                } 
+                            }
+                        });
+                        
+                        //dataGridField2Functions.init();
                         if ($("body").hasClass("template-edit")) {
-                            if (_id != 'fieldset-default') {
-                                var fieldset = $(this);
-                                var original_fieldset = $("fieldset#"+_id);
-                                original_fieldset.html(fieldset.html());
-                            } 
-                        } else {
-                            if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
-                                var fieldset = $(this);
-                                var original_fieldset = $("fieldset#"+_id);
-                                original_fieldset.html(fieldset.html());
-                            } 
+                            init_widgets("fieldset#fieldset-identification");
                         }
-                    });
-                    
-                    //dataGridField2Functions.init();
-                    if ($("body").hasClass("template-edit")) {
-                        init_widgets("fieldset#fieldset-identification");
-                    }
 
-                    init_widgets("fieldset#fieldset-production_dating");
-                    init_widgets('fieldset#fieldset-iconography');
-                    init_widgets('fieldset#fieldset-inscriptions_markings');
-                    init_widgets('fieldset#fieldset-associations');
-                    init_widgets('fieldset#fieldset-numbers_relationships');
-                    init_widgets('fieldset#fieldset-documentation');
-                    init_widgets('fieldset#fieldset-documentation_free_archive');
-                    init_widgets('fieldset#fieldset-condition_conservation');
-                    init_widgets('fieldset#fieldset-acquisition');
-                    init_widgets('fieldset#fieldset-disposal');
-                    init_widgets('fieldset#fieldset-ownership_history');
-                    init_widgets('fieldset#fieldset-field_collection');
-                    init_widgets('fieldset#fieldset-exhibitions');
-                    init_widgets('fieldset#fieldset-loans');
-                    init_widgets('fieldset#fieldset-transport');
+                        init_widgets("fieldset#fieldset-production_dating");
+                        init_widgets('fieldset#fieldset-iconography');
+                        init_widgets('fieldset#fieldset-inscriptions_markings');
+                        init_widgets('fieldset#fieldset-associations');
+                        init_widgets('fieldset#fieldset-numbers_relationships');
+                        init_widgets('fieldset#fieldset-documentation');
+                        init_widgets('fieldset#fieldset-documentation_free_archive');
+                        init_widgets('fieldset#fieldset-condition_conservation');
+                        init_widgets('fieldset#fieldset-acquisition');
+                        init_widgets('fieldset#fieldset-disposal');
+                        init_widgets('fieldset#fieldset-ownership_history');
+                        init_widgets('fieldset#fieldset-field_collection');
+                        init_widgets('fieldset#fieldset-exhibitions');
+                        init_widgets('fieldset#fieldset-loans');
+                        init_widgets('fieldset#fieldset-transport');
 
-                    //dataGridField2Functions.init();
-                    //$(document).trigger('readyAgain', [{fieldset_id: $("fieldset:not(#fieldset-identification)")}]);
-                    
-                    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+                        //dataGridField2Functions.init();
+                        //$(document).trigger('readyAgain', [{fieldset_id: $("fieldset:not(#fieldset-identification)")}]);
+                        
+                        $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+                    }, 50);
                 }
             });
         }
