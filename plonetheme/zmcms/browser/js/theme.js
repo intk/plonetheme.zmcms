@@ -57,25 +57,26 @@ var ajaxLoadTabs = function(fieldset_id) {
                     var fieldsets = $(data).find("fieldset");
                     fieldsets.each(function() {
                         var _id = $(this).attr("id");
+
                         if ($("body").hasClass("template-edit")) {
                             if (_id != 'fieldset-default') {
                                 var fieldset = $(this);
                                 var original_fieldset = $("fieldset#"+_id);
-                                fieldset.find('legend').remove();
+                                //fieldset.find('legend').remove();
                                 original_fieldset.html(fieldset.html());
                             } 
                         } else {
                             if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
                                 var fieldset = $(this);
                                 var original_fieldset = $("fieldset#"+_id);
-                                fieldset.find('legend').remove();
+                                //fieldset.find('legend').remove();
                                 original_fieldset.html(fieldset.html());
-                                $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
                             } 
                         }
                     });
-                    
-                    dataGridField2Functions.init();
+
+                    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+                    //dataGridField2Functions.init();
                     //$(document).trigger('readyAgain', [{fieldset_id: $("fieldset:not(#fieldset-identification)")}]);
                     $("body.template-edit select.formTabs, div.template-edit select.formTabs").prop("disabled", false);
                 }
@@ -97,6 +98,7 @@ $(document).ready(function() {
         createRelatedItemsLink("fieldset#fieldset-identification", 3000);
     }, 900);
 
+    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
     $("body.template-edit select.formTabs, div.template-edit select.formTabs").change(function() {
         
         if ($("body").hasClass("template-edit")) {
