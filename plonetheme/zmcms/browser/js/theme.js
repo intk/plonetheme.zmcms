@@ -2,14 +2,35 @@
 /* ------------------------------------------------------------------------------
     C U S T O M
 --------------------------------------------------------------------------------- */
+var fix_textareas = function() {
+    $("textarea:not(#form-widgets-IBasic-description):not(.mce_editable)").attr("style", "height: 37.8px !important;");
+    setTimeout(function(){  
+        $("textarea:not(#form-widgets-IBasic-description):not(.mce_editable)").attr("style", "height: 37px !important;");
+    }, 100);
+};
+
+var disable_inputs = function() {
+    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+};
+
+var enable_inputs = function() {
+    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+}
+
+var disable_selecttab = function() {
+    $("select.formTabs").prop("disabled", true);
+};
+
+var enable_selecttab = function() {
+    $("select.formTabs").removeAttr("disabled");
+};
+
 (function(history){
     var replaceState = history.replaceState;
     history.replaceState = function(state, title, url) {
         if (typeof history.onpushstate == "function") {
             history.onpushstate({state: state, url: url});
         }
-        // whatever else you want to do
-        // maybe call onhashchange e.handler
         return replaceState.apply(history, arguments);
     }
 })(window.history);
@@ -30,17 +51,15 @@ var createRelatedItemsLink = function(elem, timeout) {
             title_elem.html(new_link);
         });
     }, timeout);
-}
+};
 
 var init_widgets = function(data_id) {
     var element = $(data_id);
     $(document).trigger('readyAgain', [{fieldset_id: element}]);
-}
+};
 
 var ajaxLoadTabs = function(fieldset_id) {
     if ($("body").hasClass("template-edit") || $("body div.template-edit").length > 0) {
-        $("select.formTabs").prop("disabled", true);
-
         if (fieldset_id != "default") {
             if ($("body").hasClass("template-edit")) {
                 var query = "?fieldset=" + fieldset_id + "&ajax_load=true";
@@ -53,13 +72,13 @@ var ajaxLoadTabs = function(fieldset_id) {
                 link = window.location.protocol + "//" + window.location.host + window.location.pathname;
             } 
 
-            url = link + query
-
+            url = link + query;
 
             $.ajax({
                 url: url,
                 success: function(data) {
-                    $("select.formTabs").removeAttr("disabled");
+                    // Enable select tab
+                    enable_selecttab();
 
                     setTimeout(function() {
                         var fieldsets = $(data).find("fieldset");
@@ -81,37 +100,18 @@ var ajaxLoadTabs = function(fieldset_id) {
                             }
                         });
                         
-                        //dataGridField2Functions.init();
+                        /* Init datagrid */
                         if ($("body").hasClass("template-edit")) {
-                            init_widgets("fieldset#fieldset-identification");
+                            dataGridField2Functions.init();
                         }
-
-                        init_widgets("fieldset#fieldset-production_dating");
-                        init_widgets('fieldset#fieldset-iconography');
-                        init_widgets('fieldset#fieldset-inscriptions_markings');
-                        init_widgets('fieldset#fieldset-associations');
-                        init_widgets('fieldset#fieldset-numbers_relationships');
-                        init_widgets('fieldset#fieldset-documentation');
-                        init_widgets('fieldset#fieldset-documentation_free_archive');
-                        init_widgets('fieldset#fieldset-condition_conservation');
-                        init_widgets('fieldset#fieldset-acquisition');
-                        init_widgets('fieldset#fieldset-disposal');
-                        init_widgets('fieldset#fieldset-ownership_history');
-                        init_widgets('fieldset#fieldset-field_collection');
-                        init_widgets('fieldset#fieldset-exhibitions');
-                        init_widgets('fieldset#fieldset-loans');
-                        init_widgets('fieldset#fieldset-transport');
-
-                        //dataGridField2Functions.init();
-                        //$(document).trigger('readyAgain', [{fieldset_id: $("fieldset:not(#fieldset-identification)")}]);
-                        
-                        $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+                        // Enable inputs
+                        enable_inputs();
                     }, 50);
                 }
             });
         }
     }
-}
+};
 
 
 $(document).ready(function() {
@@ -123,39 +123,36 @@ $(document).ready(function() {
                 init_widgets("fieldset#fieldset-identification");
             }
         }
-        //createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+        createRelatedItemsLink("fieldset#fieldset-identification", 3000);
     }, 900);
 
-    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+    // Disable inputs in private view
+    disable_inputs();
+    disable_selecttab();
+    
 
     $("body.template-edit select.formTabs, div.template-edit select.formTabs").change(function() {
-        
         if ($("body").hasClass("template-edit")) {
-            /*data_id = $(this).val().replace("fieldsetlegend-", "");
+            data_id = $(this).val().replace("fieldsetlegend-", "");
             element = $("fieldset#fieldset-"+data_id);
             
             if (!element.hasClass('widgets-init') && data_id != "default") {
-                $(document).trigger('readyAgain', [{fieldset_id: element}]);
+                init_widgets(element);
                 element.addClass('widgets-init');
-            }*/
-
-            $("textarea:not(#form-widgets-IBasic-description):not(.mce_editable)").attr("style", "height: 37.8px !important;");
-            setTimeout(function(){  
-                $("textarea:not(#form-widgets-IBasic-description):not(.mce_editable)").attr("style", "height: 37px !important;");
-            }, 100);
+            }
+            fix_textareas();
         } else {
-            /*data_id = $(this).val();
+            data_id = $(this).val();
             element = $("fieldset#"+data_id);
             
             if (!element.hasClass('widgets-init') && data_id != "fieldset_identification") {
-                $(document).trigger('readyAgain', [{fieldset_id: element}]);
+                init_widgets(element);
                 element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 1000);
-            }*/
+                createRelatedItemsLink("fieldset#"+data_id, 50);
+            }
         }
     });
 
-    // Disable inputs in private view
-    
+    // Load all tabs
     ajaxLoadTabs("all");
 });
