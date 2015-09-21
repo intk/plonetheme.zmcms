@@ -1086,7 +1086,6 @@ slickSlideshow.init = function() {
 	/* Collection slideshow */
 	if ($slick_slideshow != undefined) {
 		if ($slick_slideshow.hasClass('collection')) {
-			console.log("collection");
 			slickSlideshow.initCollection();
 			if (slickSlideshow.youtube_ready) {
 				slickSlideshow.initiated_youtube = true;

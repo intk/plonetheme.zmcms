@@ -130,7 +130,6 @@ $(document).ready(function() {
     disable_inputs();
     disable_selecttab();
     
-
     $("body.template-edit select.formTabs, div.template-edit select.formTabs").change(function() {
         if ($("body").hasClass("template-edit")) {
             data_id = $(this).val().replace("fieldsetlegend-", "");
