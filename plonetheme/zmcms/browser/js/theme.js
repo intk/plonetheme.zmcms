@@ -117,7 +117,7 @@ var ajaxLoadTabs = function(fieldset_id) {
 
 
 $(document).ready(function() {
-    if ($("body").hasClass("portaltype-object")) {
+    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book")) {
         setTimeout(function() {
             if (!$("body").hasClass("pat-plone-widgets")) {
                 if ($("body").hasClass('template-edit')) {
