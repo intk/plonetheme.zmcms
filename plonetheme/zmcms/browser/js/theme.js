@@ -14,7 +14,7 @@ var disable_inputs = function() {
 };
 
 var enable_inputs = function() {
-    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", false);
 }
 
 var disable_selecttab = function() {
@@ -54,7 +54,7 @@ var createRelatedItemsLink = function(elem, timeout) {
 };
 
 var init_widgets = function(data_id) {
-    var element = $(data_id);
+    var element = data_id;
     $(document).trigger('readyAgain', [{fieldset_id: element}]);
 };
 
@@ -99,13 +99,15 @@ var ajaxLoadTabs = function(fieldset_id) {
                                 } 
                             }
                         });
+
+                        // Enable inputs
+                        disable_inputs();
                         
                         /* Init datagrid */
                         if ($("body").hasClass("template-edit")) {
                             dataGridField2Functions.init();
                         }
-                        // Enable inputs
-                        enable_inputs();
+                        
                     }, 50);
                 }
             });
@@ -115,22 +117,20 @@ var ajaxLoadTabs = function(fieldset_id) {
 
 
 $(document).ready(function() {
-    setTimeout(function() {
-        if (!$("body").hasClass("pat-plone-widgets")) {
-            if ($("body").hasClass('template-edit')) {
-                init_widgets('body');
-            } else {
-                init_widgets("fieldset#fieldset-identification");
+    if ($("body").hasClass("portaltype-object")) {
+        setTimeout(function() {
+            if (!$("body").hasClass("pat-plone-widgets")) {
+                if ($("body").hasClass('template-edit')) {
+                    init_widgets($('body'));
+                } else {
+                    init_widgets($("fieldset#fieldset-identification"));
+                    createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+                }
             }
-        }
-        createRelatedItemsLink("fieldset#fieldset-identification", 3000);
-    }, 900);
+        }, 900);
+    }
 
-    // Disable inputs in private view
-    disable_inputs();
-    disable_selecttab();
-    
-    $("body.template-edit select.formTabs, div.template-edit select.formTabs").change(function() {
+    $("body.template-edit.portaltype-object select.formTabs, body.portaltype-object div.template-edit select.formTabs").change(function() {
         if ($("body").hasClass("template-edit")) {
             data_id = $(this).val().replace("fieldsetlegend-", "");
             element = $("fieldset#fieldset-"+data_id);
@@ -139,12 +139,12 @@ $(document).ready(function() {
                 init_widgets(element);
                 element.addClass('widgets-init');
             }
-            fix_textareas();
+            //fix_textareas();
         } else {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
             
-            if (!element.hasClass('widgets-init') && data_id != "fieldset_identification") {
+            if (!element.hasClass('widgets-init') && data_id != "fieldset-identification") {
                 init_widgets(element);
                 element.addClass('widgets-init');
                 createRelatedItemsLink("fieldset#"+data_id, 50);
@@ -153,5 +153,11 @@ $(document).ready(function() {
     });
 
     // Load all tabs
-    ajaxLoadTabs("all");
+    if ($("body").hasClass("portaltype-object")) {
+        disable_selecttab();
+        if (!$("body").hasClass("template-edit")) {
+            disable_inputs(); 
+        }
+        ajaxLoadTabs("all");
+    }
 });
