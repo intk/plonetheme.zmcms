@@ -655,8 +655,13 @@ slickSlideshow.getNavigationContent = function(query, object_id, init) {
 				title = title + "...";
 			}
 
+			if (slickSlideshow.total_items < 2) {
+				$("#slide-count").hide();
+			}
+
 			$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 			
+
 
 			if ((title != "") && (description != "")) {
 				// TEMP $("#slideshow-controls #slide-description").html(title + ", " + description);
@@ -736,12 +741,10 @@ slickSlideshow.findHashCollectionSlide = function(location_hash) {
 			}
 		}
 	};
-
 	return 0;
 };
 
 slickSlideshow.initSlick = function(object_idx) {
-	
 	if (slickSlideshow.$obj != undefined) {
 		
 		if (slickSlideshow.regular) {
@@ -778,8 +781,16 @@ slickSlideshow.initSlick = function(object_idx) {
 			});
 
 		} else {
-
 			var speed = 500;
+
+			if (slickSlideshow.editingMode == true) {
+				if (window.location.hash != "") {
+					slickSlideshow.initialSlide = slickSlideshow.findHashSlide(window.location.hash);
+					object_idx = slickSlideshow.initialSlide;
+					slickSlideshow.slideCount = slickSlideshow.initialSlide + 1;
+					$(".slideshowWrapper").addClass("slick-init");
+				}
+			}
 
 			if ($("body").hasClass('template-book_view')) {
 				if (window.location.hash != "") {
@@ -871,6 +882,8 @@ slickSlideshow.initSlick = function(object_idx) {
 			$(window).resize(function() {
 				slickSlideshow.resizeImage(true);
 			});
+
+			
 		}
 	}
 };
@@ -1046,17 +1059,18 @@ slickSlideshow.initCollection = function() {
 	if (slickSlideshow.total_items == 0) {
 		$(".slideshow-loader").fadeOut(200)
 	}
+	if (slickSlideshow.total_items < 2) {
+		$("#slide-count").hide();
+	}
 
 	$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 	$("#slideshow-controls #slide-description").html($(slickSlideshow.$obj.getSlick().$slides[slickSlideshow.initialSlide]).attr("data-description"));
-
 
 	// Check if front-page
 	/*var data_url = $("#slickslideshow").attr('data-url');
 	if (data_url != undefined) {
 		slickSlideshow.addNextSlidesCollection(data_url);
 	}*/
-
 
 	slickSlideshow.resizeWindow();
 	slickSlideshow.resizeImages();
@@ -1514,6 +1528,12 @@ slickSlideshow.updateSlideDetails = function(curr, currentSlide, title, descript
 	// Update description bar
 	/* **** */
 
+	if (slickSlideshow.total_items < 2) {
+		$("#slide-count").hide();
+	}
+
+
+
 	$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 	if (description != "") {
 		if ($currentSlideObj.hasClass("video-slide")) {
@@ -1695,8 +1715,33 @@ slickSlideshow.afterChange = function(event) {
 			description = "<a href='"+slide.relative_path+"'>"+slide.description+"</a>";
 		}
 
+		if (slickSlideshow.total_items < 2) {
+			$("#slide-count").hide();
+		}
+
+
+
 		$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 		
+		if (slickSlideshow.editingMode) {
+			var object_nr = $("#form-widgets-identification_identification_objectNumber");
+			if (object_nr.length) {
+				var title = document.title.split('—')[0];
+				object_number = object_nr.val();
+				if (object_number != "") {
+					var description = object_number + " - " + title;
+					$("#slideshow-controls #slide-description").html(description);
+				} else {
+					var description = title;
+					$("#slideshow-controls #slide-description").html(description);
+				}
+			} else {
+				var title = document.title.split('—')[0];
+				var description = title;
+				$("#slideshow-controls #slide-description").html(description);
+			}
+		}
+
 		if (!$("body").hasClass('template-book_view') && !$("body").hasClass('template-instrument_view')) {
 			$("#slideshow-controls #slide-description").html(description);
 		}
@@ -1988,6 +2033,29 @@ slickSlideshow.addSlides = function(slickInited) {
 	}
 
 	slickSlideshow.total_items = slickSlideshow.$obj.getSlick().$slides.length;
+	if (slickSlideshow.total_items < 2) {
+		$("#slide-count").hide();
+	}
+
+	if (slickSlideshow.editingMode) {
+		var object_nr = $("#form-widgets-identification_identification_objectNumber");
+		if (object_nr.length) {
+			var title = document.title.split('—')[0];
+			object_number = object_nr.val();
+			if (object_number != "") {
+				var description = object_number + " - " + title;
+				$("#slideshow-controls #slide-description").html(description);
+			} else {
+				var description = title;
+				$("#slideshow-controls #slide-description").html(description);
+			}
+		} else {
+			var title = document.title.split('—')[0];
+			var description = title;
+			$("#slideshow-controls #slide-description").html(description);
+		}
+	}
+
 	$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 };
 

@@ -25,6 +25,12 @@ var enable_selecttab = function() {
     $("select.formTabs").removeAttr("disabled");
 };
 
+var show_ajax_error = function(textStatus, errorThrown) {
+    var message = "<span>Status: "+textStatus+"<br>Error: "+errorThrown+"</span>"
+    $("#ajax-error-msg").html(message);
+    $("#ajax-error-msg").show();
+};
+
 (function(history){
     var replaceState = history.replaceState;
     history.replaceState = function(state, title, url) {
@@ -58,6 +64,28 @@ var init_widgets = function(data_id) {
     $(document).trigger('readyAgain', [{fieldset_id: element}]);
 };
 
+var init_datagrid = function(element) {
+    element.find('.datagridwidget-body').each(function() {
+        var $this = $(this);
+        
+        aa = $this.children(".auto-append").size() > 0;
+        $this.data("auto-append", aa);
+
+        // Hint CSS
+        if (aa) {
+            $this.addClass("datagridwidget-body-auto-append");
+        } else {
+            $this.addClass("datagridwidget-body-non-auto-append");
+        }
+
+        dataGridField2Functions.updateOrderIndex(this, false);
+
+        if (!aa) {
+            dataGridField2Functions.ensureMinimumRows(this);
+        }
+    }); 
+}
+
 var ajaxLoadTabs = function(fieldset_id) {
     if ($("body").hasClass("template-edit") || $("body div.template-edit").length > 0) {
         if (fieldset_id != "default") {
@@ -68,9 +96,17 @@ var ajaxLoadTabs = function(fieldset_id) {
             }
 
             var link = window.location.href;
-            if (window.location.search != "") {
+            if (window.location.search != "" || window.location.hash != "") {
                 link = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                
             } 
+
+            link_split = link.split('/');
+            last_member = link_split[link_split.length-1]
+            if (last_member == "view" || last_member == "view/") {
+                link_split[link_split.length-1] = "";
+                link = link_split.join('/');
+            }
 
             url = link + query;
 
@@ -115,14 +151,21 @@ var ajaxLoadTabs = function(fieldset_id) {
                         if ($("body").hasClass("template-edit") || $("body").hasClass("portaltype-book")) {
                             dataGridField2Functions.init();
                         }
-                        
                     }, 50);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    if (errorThrown == "") {
+                        errorThrown = "Unable to get tabs. Please <a href='+"+window.location.href+"+'>refresh</a> the page."
+                    } else {
+                        errorThrown = errorThrown + " - Unable to get tabs."
+                    }
+                    show_ajax_error(textStatus, errorThrown);
                 }
             });
+
         }
     }
 };
-
 
 $(document).ready(function() {
     if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book")) {
@@ -141,9 +184,9 @@ $(document).ready(function() {
                 }
             } else {
                 if ($("body").hasClass("portaltype-object")) {
-                    createRelatedItemsLink("fieldset#fieldset-identification", 1000);
+                    createRelatedItemsLink("fieldset#fieldset-identification", 2000);
                 } else if ($("body").hasClass("portaltype-book")) {
-                    createRelatedItemsLink("fieldset#fieldset-title_author", 1000);
+                    createRelatedItemsLink("fieldset#fieldset-title_author", 2000);
                 }
             }
         }, 900);
@@ -158,26 +201,25 @@ $(document).ready(function() {
                 init_widgets(element);
                 element.addClass('widgets-init');
             }
-            //fix_textareas();
-        }
-        else if ($("body").hasClass("portaltype-book")) {
+            fix_textareas();
+        } else if ($("body").hasClass("portaltype-book")) {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
             
             if (!element.hasClass('widgets-init') && data_id != "fieldset-title_author") {
                 init_widgets(element);
                 element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 50);
+                createRelatedItemsLink("fieldset#"+data_id, 300);
             }
-        }
-        else {
+        } else {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
             
             if (!element.hasClass('widgets-init') && data_id != "fieldset-identification") {
+                init_datagrid(element);
                 init_widgets(element);
                 element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 50);
+                createRelatedItemsLink("fieldset#"+data_id, 300);
             }
         }
     });
@@ -189,5 +231,7 @@ $(document).ready(function() {
             disable_inputs(); 
         }
         ajaxLoadTabs("all");
+    } else {
+
     }
 });
