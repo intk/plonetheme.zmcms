@@ -637,73 +637,75 @@ class get_nav_objects(BrowserView):
         return None
 
     def transform_schema_field(self, name, field_value, choice=None, restriction=None, not_show=[]):
-
-        if type(field_value) is list:
-            new_val = []
-            if choice == None:
-                for val in field_value:
-                    if type(val) is unicode:
-                        new_val.append(val)
-                    elif type(val) is str:
-                        new_val.append(val)
-                    else:
-                        for key, value in val.iteritems():
-                            if key not in not_show:
-                                if value != "" and value != None and value != " ":
-                                    if restriction != None:
-                                        if value != restriction:
-                                            if key in "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+        try:
+            if type(field_value) is list:
+                new_val = []
+                if choice == None:
+                    for val in field_value:
+                        if type(val) is unicode:
+                            new_val.append(val)
+                        elif type(val) is str:
+                            new_val.append(val)
+                        else:
+                            for key, value in val.iteritems():
+                                if key not in not_show:
+                                    if value != "" and value != None and value != " ":
+                                        if restriction != None:
+                                            if value != restriction:
+                                                if key in "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+                                                    value = self.create_maker(value)
+                                                if type(value) is list: 
+                                                    new_val.append(value[0])
+                                                else:
+                                                    new_val.append(value)
+                                        else:
+                                            if key == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
                                                 value = self.create_maker(value)
                                             if type(value) is list: 
                                                 new_val.append(value[0])
                                             else:
                                                 new_val.append(value)
+                else:
+                    for val in field_value:
+                        if val[choice] != "" and val[choice] != None and val[choice] != " ":
+                            if restriction != None:
+                                if val[choice] != restriction:
+                                    if choice == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+                                        new_val.append(self.create_maker(val[choice]))
                                     else:
-                                        if key == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
-                                            value = self.create_maker(value)
-                                        if type(value) is list: 
-                                            new_val.append(value[0])
+                                        
+                                        if type(val[choice]) is list: 
+                                            if val[choice]:
+                                                new_val.append(val[choice][0])
                                         else:
-                                            new_val.append(value)
-            else:
-                for val in field_value:
-                    if val[choice] != "" and val[choice] != None and val[choice] != " ":
-                        if restriction != None:
-                            if val[choice] != restriction:
-                                if choice == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+                                            new_val.append(val[choice])
+                            else:
+                                if choice in ["name", "author"] and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
                                     new_val.append(self.create_maker(val[choice]))
                                 else:
-                                    
                                     if type(val[choice]) is list: 
                                         if val[choice]:
                                             new_val.append(val[choice][0])
                                     else:
                                         new_val.append(val[choice])
-                        else:
-                            if choice in ["name", "author"] and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
-                                new_val.append(self.create_maker(val[choice]))
-                            else:
-                                if type(val[choice]) is list: 
-                                    if val[choice]:
-                                        new_val.append(val[choice][0])
-                                else:
-                                    new_val.append(val[choice])
 
-            if len(new_val) > 0:
-                if name in ["exhibitions_exhibition", "productionDating_production", "labels", "seriesNotesISBN_notes_bibliographicalNotes",
-                            "abstractAndSubjectTerms_notes", "abstractAndSubjectTerms_abstract_abstract",
-                            "exhibitionsAuctionsCollections_exhibition", "exhibitionsAuctionsCollections_auction",
-                            "exhibitionsAuctionsCollections_collection"]:
-                    return '<p>'.join(new_val)
+                if len(new_val) > 0:
+                    if name in ["exhibitions_exhibition", "productionDating_production", "labels", "seriesNotesISBN_notes_bibliographicalNotes",
+                                "abstractAndSubjectTerms_notes", "abstractAndSubjectTerms_abstract_abstract",
+                                "exhibitionsAuctionsCollections_exhibition", "exhibitionsAuctionsCollections_auction",
+                                "exhibitionsAuctionsCollections_collection"]:
+                        return '<p>'.join(new_val)
+                    else:
+                        for index, single_value in enumerate(new_val):
+                            single_value = "<a href='/%s/search?SearchableText=%s'>%s</a>" %(self.context.language, single_value, single_value)
+                            new_val[index] = single_value
+                        return ', '.join(new_val)
                 else:
-                    for index, single_value in enumerate(new_val):
-                        single_value = "<a href='/%s/search?SearchableText=%s'>%s</a>" %(self.context.language, single_value, single_value)
-                        new_val[index] = single_value
-                    return ', '.join(new_val)
+                    return ""
             else:
-                return ""
-        else:
-            return field_value
+                return field_value
+        except:
+            return ""
 
 
     def generate_identification_tab(self, identification_tab, object_schema, fields, object, field_schema):
