@@ -8335,7 +8335,7 @@ body.template-collective-object-object .datagridwidget-body .datagridwidget-bloc
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell input {
-    width: 70%;
+    width: 72.7%;
 }
 
 
@@ -8735,7 +8735,7 @@ body.template-collective-object-object .datagridwidget-body select.select-widget
 body.template-collective-exhibition-exhibition .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-personorinstitution-personorinstitution .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-treatment-treatment .datagridwidget-body select.select-widget.choice-field {
-    width: 70%;
+    width: 72.7%;
     vertical-align: middle !important;
 }
 
@@ -8745,7 +8745,7 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 }
 
 #fieldset-associations .datagridwidget-table-view-block .select2-container {
-    width: 70% !important;
+    width: 72.7% !important;
 }
 
 #fieldset-associations .datagridwidget-widget-identifier {

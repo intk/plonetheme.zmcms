@@ -88,6 +88,7 @@ var init_datagrid = function(element) {
 
 var ajaxLoadTabs = function(fieldset_id) {
     if ($("body").hasClass("template-edit") || $("body div.template-edit").length > 0) {
+        
         if (fieldset_id != "default") {
             if ($("body").hasClass("template-edit")) {
                 var query = "?fieldset=" + fieldset_id + "&ajax_load=true";
@@ -148,7 +149,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                         disable_inputs();
                         
                         /* Init datagrid */
-                        if ($("body").hasClass("template-edit") || $("body").hasClass("portaltype-book")) {
+                        if ($("body").hasClass("template-edit") || $("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-image")) {
                             dataGridField2Functions.init();
                         }
                     }, 50);
