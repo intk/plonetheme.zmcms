@@ -145,7 +145,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                             }
                         });
 
-                        // Enable inputs
+                        // Disable inputs
                         disable_inputs();
                         
                         /* Init datagrid */
@@ -185,9 +185,9 @@ $(document).ready(function() {
                 }
             } else {
                 if ($("body").hasClass("portaltype-object")) {
-                    createRelatedItemsLink("fieldset#fieldset-identification", 2000);
+                    createRelatedItemsLink("fieldset#fieldset-identification", 3000);
                 } else if ($("body").hasClass("portaltype-book")) {
-                    createRelatedItemsLink("fieldset#fieldset-title_author", 2000);
+                    createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
                 }
             }
         }, 900);
@@ -203,6 +203,7 @@ $(document).ready(function() {
                 element.addClass('widgets-init');
             }
             fix_textareas();
+
         } else if ($("body").hasClass("portaltype-book")) {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);

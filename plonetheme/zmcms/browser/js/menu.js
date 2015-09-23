@@ -4,10 +4,11 @@ function supportsSvg() {
 };
 
 $(document).ready(function() {
-  if ($("body.site-nl").length > 0) {
+  
+  /*if ($("body.site-nl").length > 0) {
     window.navigation_root_url = window.portal_url + "/nl";
 
-    (function(d, s, id) {
+  (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s); js.id = id;
@@ -24,9 +25,9 @@ $(document).ready(function() {
         js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=634764129875517&version=v2.0";
         fjs.parentNode.insertBefore(js, fjs);
       } (document, 'script', 'facebook-jssdk'));
-  }
+  }*/
 
-  if ($("body").hasClass('portaltype-formfolder')) {
+  /*if ($("body").hasClass('portaltype-formfolder')) {
     if ($("input[placeholder='0']").length > 0) {
       $("#pfg-fieldwrapper div:not(#archetypes-fieldname-limit_subscriptions)").hide();
       $("#pfg-fieldwrapper fieldset").hide();
@@ -43,7 +44,7 @@ $(document).ready(function() {
         });
       }
     }
-  }
+  }*/
 
   var $default_res_container = $('#search-results');
   $default_res_container.delegate('.listingBar a', 'click', function (e) {
