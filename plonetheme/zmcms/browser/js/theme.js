@@ -184,10 +184,12 @@ $(document).ready(function() {
                     }
                 }
             } else {
-                if ($("body").hasClass("portaltype-object")) {
-                    createRelatedItemsLink("fieldset#fieldset-identification", 3000);
-                } else if ($("body").hasClass("portaltype-book")) {
-                    createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                if (!$("body").hasClass('template-edit')) {
+                    if ($("body").hasClass("portaltype-object")) {
+                        createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+                    } else if ($("body").hasClass("portaltype-book")) {
+                        createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                    }
                 }
             }
         }, 900);
