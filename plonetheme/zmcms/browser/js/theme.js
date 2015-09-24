@@ -48,6 +48,9 @@ var in_allowed_portaltypes = function() {
     }
 })(window.history);
 
+
+
+
 var createRelatedItemsLink = function(elem, timeout) {
     setTimeout(function() {
         all_relateditems = $(elem+' span.pattern-relateditems-item');
@@ -182,7 +185,11 @@ var ajaxLoadTabs = function(fieldset_id) {
     }
 };
 
+// Set plone form max tabs
+ploneFormTabbing.max_tabs = 1;
+
 $(document).ready(function() {
+
     if (in_allowed_portaltypes()) {
         setTimeout(function() {
             if (!$("body").hasClass("pat-plone-widgets")) {
@@ -195,6 +202,9 @@ $(document).ready(function() {
                     } else if ($("body").hasClass("portaltype-book")) {
                         init_widgets($("fieldset#fieldset-title_author"));
                         createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                    } else if ($("body").hasClass("portaltype-personorinstitution")) {
+                        init_widgets($("fieldset#fieldset-name_information"));
+                        createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
                     }
                 }
             } else {
@@ -232,12 +242,9 @@ $(document).ready(function() {
                 createRelatedItemsLink("fieldset#"+data_id, 300);
             }
         } else if ($("body").hasClass("portaltype-personorinstitution")) {
-            console.log("person");
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
             if (!element.hasClass('widgets-init') && data_id != "fieldset-name_information") {
-                console.log("init");
-                console.log(element);
                 init_datagrid(element);
                 init_widgets(element);
                 element.addClass('widgets-init');
@@ -266,3 +273,5 @@ $(document).ready(function() {
 
     }
 });
+
+
