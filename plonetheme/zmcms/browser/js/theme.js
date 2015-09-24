@@ -31,6 +31,13 @@ var show_ajax_error = function(textStatus, errorThrown) {
     $("#ajax-error-msg").show();
 };
 
+var in_allowed_portaltypes = function() {
+    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution')) {
+        return true;
+    }
+    return false;
+};
+
 (function(history){
     var replaceState = history.replaceState;
     history.replaceState = function(state, title, url) {
@@ -129,7 +136,14 @@ var ajaxLoadTabs = function(fieldset_id) {
                                     original_fieldset.html(fieldset.html());
                                 } 
                             }
-                            else if ($("body").hasClass('portaltype-book')) {
+                            else if ($("body").hasClass('portaltype-personorinstitution')) {
+                                if (_id != 'fieldset-default' && _id != 'fieldset-name_information') {
+                                    var fieldset = $(this);
+                                    var original_fieldset = $("fieldset#"+_id);
+                                    original_fieldset.html(fieldset.html());
+                                } 
+                            }
+                            else if ($("body").hasClass('portaltype-person')) {
                                 if (_id != 'fieldset-default' && _id != 'fieldset-title_author') {
                                     var fieldset = $(this);
                                     var original_fieldset = $("fieldset#"+_id);
@@ -169,7 +183,7 @@ var ajaxLoadTabs = function(fieldset_id) {
 };
 
 $(document).ready(function() {
-    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book")) {
+    if (in_allowed_portaltypes()) {
         setTimeout(function() {
             if (!$("body").hasClass("pat-plone-widgets")) {
                 if ($("body").hasClass('template-edit')) {
@@ -189,6 +203,8 @@ $(document).ready(function() {
                         createRelatedItemsLink("fieldset#fieldset-identification", 3000);
                     } else if ($("body").hasClass("portaltype-book")) {
                         createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                    } else if ($("body").hasClass("portaltype-personorinstitution")) {
+                        createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
                     }
                 }
             }
@@ -209,8 +225,20 @@ $(document).ready(function() {
         } else if ($("body").hasClass("portaltype-book")) {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
-            
             if (!element.hasClass('widgets-init') && data_id != "fieldset-title_author") {
+                init_datagrid(element);
+                init_widgets(element);
+                element.addClass('widgets-init');
+                createRelatedItemsLink("fieldset#"+data_id, 300);
+            }
+        } else if ($("body").hasClass("portaltype-personorinstitution")) {
+            console.log("person");
+            data_id = $(this).val();
+            element = $("fieldset#"+data_id);
+            if (!element.hasClass('widgets-init') && data_id != "fieldset-name_information") {
+                console.log("init");
+                console.log(element);
+                init_datagrid(element);
                 init_widgets(element);
                 element.addClass('widgets-init');
                 createRelatedItemsLink("fieldset#"+data_id, 300);
@@ -218,7 +246,6 @@ $(document).ready(function() {
         } else {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
-            
             if (!element.hasClass('widgets-init') && data_id != "fieldset-identification") {
                 init_datagrid(element);
                 init_widgets(element);
