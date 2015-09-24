@@ -32,7 +32,7 @@ var show_ajax_error = function(textStatus, errorThrown) {
 };
 
 var in_allowed_portaltypes = function() {
-    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution')) {
+    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition')) {
         return true;
     }
     return false;
@@ -145,6 +145,12 @@ var ajaxLoadTabs = function(fieldset_id) {
                                     var original_fieldset = $("fieldset#"+_id);
                                     original_fieldset.html(fieldset.html());
                                 } 
+                            } else if ($("body").hasClass('portaltype-exhibition')) {
+                                if (_id != 'fieldset-default' && _id != 'fieldset-exhibitions_details') {
+                                    var fieldset = $(this);
+                                    var original_fieldset = $("fieldset#"+_id);
+                                    original_fieldset.html(fieldset.html());
+                                } 
                             }
                             else if ($("body").hasClass('portaltype-person')) {
                                 if (_id != 'fieldset-default' && _id != 'fieldset-title_author') {
@@ -205,6 +211,9 @@ $(document).ready(function() {
                     } else if ($("body").hasClass("portaltype-personorinstitution")) {
                         init_widgets($("fieldset#fieldset-name_information"));
                         createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
+                    } else if ($("body").hasClass("portaltype-exhibition")) {
+                        init_widgets($("fieldset#fieldset-exhibitions_details"));
+                        createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
                     }
                 }
             } else {
@@ -215,6 +224,8 @@ $(document).ready(function() {
                         createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
                     } else if ($("body").hasClass("portaltype-personorinstitution")) {
                         createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
+                    } else if ($("body").hasClass("portaltype-personorinstitution")) {
+                        createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
                     }
                 }
             }
@@ -245,6 +256,15 @@ $(document).ready(function() {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
             if (!element.hasClass('widgets-init') && data_id != "fieldset-name_information") {
+                init_datagrid(element);
+                init_widgets(element);
+                element.addClass('widgets-init');
+                createRelatedItemsLink("fieldset#"+data_id, 300);
+            }
+        } else if ($("body").hasClass("portaltype-exhibition")) {
+            data_id = $(this).val();
+            element = $("fieldset#"+data_id);
+            if (!element.hasClass('widgets-init') && data_id != "fieldset-exhibitions_details") {
                 init_datagrid(element);
                 init_widgets(element);
                 element.addClass('widgets-init');

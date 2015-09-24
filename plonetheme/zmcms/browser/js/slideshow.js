@@ -680,20 +680,20 @@ slickSlideshow.getNavigationContent = function(query, object_id, init) {
 };
 
 slickSlideshow.updateFacebook = function(url) {
-	$(".fb-like").attr("data-href", url);
-	FB.XFBML.parse();
+	/*$(".fb-like").attr("data-href", url);
+	FB.XFBML.parse();*/
 };
 
 slickSlideshow.updateTwitter = function(url, document_title) {
-	$(".twitter-row").html('');
+	/*$(".twitter-row").html('');
 	var structure = '<a href="https://twitter.com/share" class="twitter-share-button" data-url="'+url+'" data-text="'+document_title+'">Tweet</a>';
 	$(".twitter-row").html(structure);
-	$.getScript("http://platform.twitter.com/widgets.js");
+	$.getScript("http://platform.twitter.com/widgets.js");*/
 };
 
 slickSlideshow.updatePinterest = function(current) {
 	// TODO
-	var $slide = $(slickSlideshow.$obj.getSlick().$slides[current])
+	/*var $slide = $(slickSlideshow.$obj.getSlick().$slides[current])
 	var $img = $($slide.find('img')[0])
 
 	var url = $img.attr('data-lazy');
@@ -702,7 +702,7 @@ slickSlideshow.updatePinterest = function(current) {
 	}
 	var pinterest_href = $("#pinterest-btn").attr("href");
 	var pinterest_url = pinterest_href + url;
-	$("#pinterest-btn").attr("href", pinterest_url);
+	$("#pinterest-btn").attr("href", pinterest_url);*/
 };
 
 slickSlideshow.updateSocialButtons = function(current, document_title) {

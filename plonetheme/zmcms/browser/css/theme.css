@@ -9644,9 +9644,6 @@ body.template-content_view .info-btn {
     display: none !important;
 }
 
-.portaltype-exhibition #formfield-form-widgets-exhibitionsDetails_exhibition_altTitle thead {
-    display: none !important;
-}
 
 /* postal code and place */
 
