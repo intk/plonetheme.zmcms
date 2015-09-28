@@ -114,8 +114,8 @@ var ajaxLoadTabs = function(fieldset_id) {
 
             link_split = link.split('/');
             last_member = link_split[link_split.length-1]
-            if (last_member == "view" || last_member == "view/") {
-                link_split[link_split.length-1] = "";
+            if (last_member == "view" || last_member == "view/" || last_member == "contents_view" || last_member == "contents_view/") {
+                link_split[link_split.length-1] = ""; 
                 link = link_split.join('/');
             }
 
