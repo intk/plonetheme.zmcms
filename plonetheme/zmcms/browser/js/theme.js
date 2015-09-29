@@ -32,7 +32,7 @@ var show_ajax_error = function(textStatus, errorThrown) {
 };
 
 var in_allowed_portaltypes = function() {
-    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual')) {
+    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-treatment')) {
         return true;
     }
     return false;
@@ -47,8 +47,6 @@ var in_allowed_portaltypes = function() {
         return replaceState.apply(history, arguments);
     }
 })(window.history);
-
-
 
 
 var createRelatedItemsLink = function(elem, timeout) {
@@ -162,7 +160,13 @@ var ajaxLoadTabs = function(fieldset_id) {
                                     var original_fieldset = $("fieldset#"+_id);
                                     original_fieldset.html(fieldset.html());
                                 } 
-                            }  else {
+                            } else if ($("body").hasClass('portaltype-treatment')) {
+                                if (_id != 'fieldset-default' && _id != 'fieldset-treatment_details') {
+                                    var fieldset = $(this);
+                                    var original_fieldset = $("fieldset#"+_id);
+                                    original_fieldset.html(fieldset.html());
+                                } 
+                            } else {
                                 if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
                                     var fieldset = $(this);
                                     var original_fieldset = $("fieldset#"+_id);
@@ -217,6 +221,9 @@ $(document).ready(function() {
                     } else if ($("body").hasClass("portaltype-exhibition")) {
                         init_widgets($("fieldset#fieldset-exhibitions_details"));
                         createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
+                    } else if ($("body").hasClass("portaltype-treatment")) {
+                        init_widgets($("fieldset#fieldset-treatment_details"));
+                        createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
                     }
                 }
             } else {
@@ -229,6 +236,8 @@ $(document).ready(function() {
                         createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
                     } else if ($("body").hasClass("portaltype-exhibition")) {
                         createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
+                    } else if ($("body").hasClass("portaltype-treatment")) {
+                        createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
                     }
                 }
             }
@@ -268,6 +277,15 @@ $(document).ready(function() {
             data_id = $(this).val();
             element = $("fieldset#"+data_id);
             if (!element.hasClass('widgets-init') && data_id != "fieldset-exhibitions_details") {
+                init_datagrid(element);
+                init_widgets(element);
+                element.addClass('widgets-init');
+                createRelatedItemsLink("fieldset#"+data_id, 300);
+            }
+        } else if ($("body").hasClass("portaltype-treatment")) {
+            data_id = $(this).val();
+            element = $("fieldset#"+data_id);
+            if (!element.hasClass('widgets-init') && data_id != "fieldset-treatment_details") {
                 init_datagrid(element);
                 init_widgets(element);
                 element.addClass('widgets-init');

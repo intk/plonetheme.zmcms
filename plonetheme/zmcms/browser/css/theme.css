@@ -9123,7 +9123,7 @@ td.datagridwidget-manipulator.delete-row img {
 #formfield-form-widgets-treatmentDetails_progress_startDate input,
 #formfield-form-widgets-treatmentDetails_progress_endDate input,
 #formfield-form-widgets-treatmentDetails_progress_recallDate input {
-    width: auto !important;,
+    
 }
 
 #formfield-form-widgets-treatmentDetails_progress_startDate select,
