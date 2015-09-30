@@ -1407,7 +1407,7 @@ class get_nav_objects(BrowserView):
     def getJSON(self):
         pagesize = 33
         
-        buffer_size = 10
+        buffer_size = 5
         b_start = self.request.get('b_start')
         collection_id = self.request.get('collection_id')
         req_bulk = self.request.get('bulk')
