@@ -456,7 +456,11 @@ slickSlideshow.addSlideInIndex = function(slides, index) {
 		slickSlideshow.slides.splice((index+i+1), 0, slide_item);
 		
 		if (slickSlideshow.double_view == false) { 
-			slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].url+"' data-body='"+slides[i].body+"'><div class='inner-bg'><img data-lazy='"+slides[i].image_url+"'/></div></div>", (index+i));
+			if (slides[i].url != "") {
+				slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].url+"' data-body='"+slides[i].body+"'><div class='inner-bg'><img data-lazy='"+slides[i].image_url+"'/></div></div>", (index+i));
+			} else {
+				slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].url+"' data-body='"+slides[i].body+"' class='no-image-slide'><div class='title-description-wrapper'><h1 class='documentFirstHeading no-image'>"+slides[i].title+"</h1><div class='documentDescription description no-image'>"+slides[i].description+"</div></div></div>", (index+i));
+			}
 		} else if (slickSlideshow.view_type == "double_view") {
 			slide_w_images = "<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].url+"' data-body='"+slides[i].body+"'><div class='inner-bg'>";
 			for (var j = 0; j < slides[i].images.length; j++) {
@@ -904,12 +908,12 @@ slickSlideshow.initSlick = function(object_idx) {
 
 
 slickSlideshow.setLoadingProperties = function() {
-	slickSlideshow.bulk = 5;
+	slickSlideshow.bulk = 10;
 	slickSlideshow.lastItem = 0;
 	slickSlideshow.forward = true;
 	slickSlideshow.dangerous_entries = 1;
 	slickSlideshow.dangerous_item = slickSlideshow.bulk;
-	slickSlideshow.buffer = 1;
+	slickSlideshow.buffer = 4;
 	slickSlideshow.total = false;
 	slickSlideshow.reseted = false;
 	slickSlideshow.regular = false;

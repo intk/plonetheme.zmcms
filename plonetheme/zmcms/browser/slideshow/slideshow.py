@@ -386,6 +386,7 @@ class get_nav_objects(BrowserView):
         for obj in results:
             if obj != None:
                 obj_media = ICanContainMedia(obj.getObject()).getLeadMedia()
+                print obj
                 if obj_media != None:
                     items['list'].append({'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': ""})
 
@@ -480,8 +481,6 @@ class get_nav_objects(BrowserView):
                 _value += '<a href="/'+self.context.language+'/search?SearchableText=%s">%s</a>, ' % (mat, mat)
 
         return _value
-
-
 
 
     ## NEW FIELDS
@@ -1204,30 +1203,49 @@ class get_nav_objects(BrowserView):
 
 
         ## Identification tab
-        self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
-
+        try:
+            self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
+        except:
+            pass
+            
         ## Vervaardiging & Datering tab
         #self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
-        self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
-
+        try:
+            self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
+        except:
+            pass
+            
         ## Physical Characteristics
-        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
+        try:
+            self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
+        except:
+            pass
 
         ## Associations
-        self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
-
+        try:
+            self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
+        except:
+            pass
         ## Reproductions
-        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
-
+        try:
+            self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
+        except:
+            pass
         ## Recommendations
-        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
-
+        try:
+            self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
+        except:
+            pass
         ## Location
-        self.generate_location_tab(location_tab, object_schema, fields, object, "location")
-
+        try:
+            self.generate_location_tab(location_tab, object_schema, fields, object, "location")
+        except:
+            pass
         ## Field collection
-        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
-
+        try:
+            self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
+        except:
+            pass
         ## Exhibtions
         #self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
         try:
@@ -1236,13 +1254,22 @@ class get_nav_objects(BrowserView):
             pass
 
         ## Labels
-        self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
+        try:
+            self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
+        except:
+            pass
 
         ## Books
-        self.generate_related_books_tab(object_schema, fields, object, "books")
+        try:
+            self.generate_related_books_tab(object_schema, fields, object, "books")
+        except:
+            pass
 
         ## Documentation
-        self.generate_documentation_tab(object_schema, fields, object, "documentation")
+        try:
+            self.generate_documentation_tab(object_schema, fields, object, "documentation")
+        except:
+            pass
 
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
@@ -1407,7 +1434,7 @@ class get_nav_objects(BrowserView):
     def getJSON(self):
         pagesize = 33
         
-        buffer_size = 5
+        buffer_size = 10
         b_start = self.request.get('b_start')
         collection_id = self.request.get('collection_id')
         req_bulk = self.request.get('bulk')
