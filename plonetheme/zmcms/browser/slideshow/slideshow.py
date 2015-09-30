@@ -1332,7 +1332,7 @@ class get_nav_objects(BrowserView):
     Get bulk of prev items
     """
     def get_prev_objects(self):
-        bulk = 30
+        bulk = 10
         b_start = self.request.get('b_start')
         collection_id = self.request.get('collection_id')
         object_id = self.request.get('object_id')
@@ -1355,7 +1355,7 @@ class get_nav_objects(BrowserView):
     Get bulk of next items
     """
     def get_next_objects(self):
-        bulk = 30
+        bulk = 10
         b_start = self.request.get('b_start')
         collection_id = self.request.get('collection_id')
         object_id = self.request.get('object_id')
@@ -1407,7 +1407,7 @@ class get_nav_objects(BrowserView):
     def getJSON(self):
         pagesize = 33
         
-        buffer_size = 30
+        buffer_size = 10
         b_start = self.request.get('b_start')
         collection_id = self.request.get('collection_id')
         req_bulk = self.request.get('bulk')
