@@ -456,7 +456,7 @@ slickSlideshow.addSlideInIndex = function(slides, index) {
 		slickSlideshow.slides.splice((index+i+1), 0, slide_item);
 		
 		if (slickSlideshow.double_view == false) { 
-			if (slides[i].url != "") {
+			if (slides[i].image_url != "") {
 				slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].url+"' data-body='"+slides[i].body+"'><div class='inner-bg'><img data-lazy='"+slides[i].image_url+"'/></div></div>", (index+i));
 			} else {
 				slickSlideshow.$obj.slickAdd("<div data-title='"+slides[i].title+"' data-id='"+slides[i].object_id+"' data-description='"+slides[i].description+"' data-url='"+slides[i].url+"' data-body='"+slides[i].body+"' class='no-image-slide'><div class='title-description-wrapper'><h1 class='documentFirstHeading no-image'>"+slides[i].title+"</h1><div class='documentDescription description no-image'>"+slides[i].description+"</div></div></div>", (index+i));
