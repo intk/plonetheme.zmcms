@@ -1230,7 +1230,10 @@ class get_nav_objects(BrowserView):
 
         ## Exhibtions
         #self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
-        self.generate_exhibition_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
+        try:
+            self.generate_exhibition_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
+        except:
+            pass
 
         ## Labels
         self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")

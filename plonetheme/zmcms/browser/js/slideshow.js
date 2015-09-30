@@ -904,7 +904,7 @@ slickSlideshow.initSlick = function(object_idx) {
 
 
 slickSlideshow.setLoadingProperties = function() {
-	slickSlideshow.bulk = 30;
+	slickSlideshow.bulk = 10;
 	slickSlideshow.lastItem = 0;
 	slickSlideshow.forward = true;
 	slickSlideshow.dangerous_entries = 1;
