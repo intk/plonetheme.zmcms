@@ -236,7 +236,7 @@ var change_tab_event = function(tab) {
             init_datagrid(element);
             init_widgets(element);
             element.addClass('widgets-init');
-            createRelatedItemsLink("fieldset#"+data_id, 300);
+            //createRelatedItemsLink("fieldset#"+data_id, 300);
         }
     } else if ($("body").hasClass("portaltype-personorinstitution")) {
         var data_id = tab.val();
@@ -245,7 +245,7 @@ var change_tab_event = function(tab) {
             init_datagrid(element);
             init_widgets(element);
             element.addClass('widgets-init');
-            createRelatedItemsLink("fieldset#"+data_id, 300);
+            //createRelatedItemsLink("fieldset#"+data_id, 300);
         }
     } else if ($("body").hasClass("portaltype-exhibition")) {
         var data_id = tab.val();
@@ -254,7 +254,7 @@ var change_tab_event = function(tab) {
             init_datagrid(element);
             init_widgets(element);
             element.addClass('widgets-init');
-            createRelatedItemsLink("fieldset#"+data_id, 300);
+            //reateRelatedItemsLink("fieldset#"+data_id, 300);
         }
     } else if ($("body").hasClass("portaltype-treatment")) {
         var data_id = tab.val();
@@ -263,7 +263,7 @@ var change_tab_event = function(tab) {
             init_datagrid(element);
             init_widgets(element);
             element.addClass('widgets-init');
-            createRelatedItemsLink("fieldset#"+data_id, 300);
+            //createRelatedItemsLink("fieldset#"+data_id, 300);
         }
     } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
         var data_id = tab.val();
@@ -272,7 +272,7 @@ var change_tab_event = function(tab) {
             init_datagrid(element);
             init_widgets(element);
             element.addClass('widgets-init');
-            createRelatedItemsLink("fieldset#"+data_id, 300);
+            //createRelatedItemsLink("fieldset#"+data_id, 300);
         }
     } else {
         var data_id = tab.val();
@@ -281,7 +281,7 @@ var change_tab_event = function(tab) {
             init_datagrid(element);
             init_widgets(element);
             element.addClass('widgets-init');
-            createRelatedItemsLink("fieldset#"+data_id, 800);
+            //createRelatedItemsLink("fieldset#"+data_id, 800);
         }
     }
 }
@@ -294,38 +294,38 @@ var initiate_first_tab = function(timeout) {
             } else {
                 if ($("body").hasClass("portaltype-object")) {
                     init_widgets($("fieldset#fieldset-identification"));
-                    createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-identification", 3000);
                 } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
                     init_widgets($("fieldset#fieldset-title_author"));
-                    createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
                 } else if ($("body").hasClass("portaltype-personorinstitution")) {
                     init_widgets($("fieldset#fieldset-name_information"));
-                    createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
                 } else if ($("body").hasClass("portaltype-exhibition")) {
                     init_widgets($("fieldset#fieldset-exhibitions_details"));
-                    createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
                 } else if ($("body").hasClass("portaltype-treatment")) {
                     init_widgets($("fieldset#fieldset-treatment_details"));
-                    createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
                 } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
                     init_widgets($("fieldset#fieldset-loan_request"));
-                    createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
                 }
             }
         } else {
             if (!$("body").hasClass('template-edit')) {
                 if ($("body").hasClass("portaltype-object")) {
-                    createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-identification", 3000);
                 } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
-                    createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
                 } else if ($("body").hasClass("portaltype-personorinstitution")) {
-                    createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
                 } else if ($("body").hasClass("portaltype-exhibition")) {
-                    createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
                 } else if ($("body").hasClass("portaltype-treatment")) {
-                    createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
                 } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
-                    createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
+                    //createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
                 }
             }
         }
