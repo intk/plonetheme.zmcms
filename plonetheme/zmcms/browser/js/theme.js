@@ -2,6 +2,10 @@
 /* ------------------------------------------------------------------------------
     C U S T O M
 --------------------------------------------------------------------------------- */
+
+var SELECT_TAB_QUERY = "body.template-edit.portaltype-object select.formTabs, body:not(.template-edit) div.template-edit select.formTabs"
+var INPUTS_QUERY = "div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button"
+
 var fix_textareas = function() {
     $("textarea:not(#form-widgets-IBasic-description):not(.mce_editable)").attr("style", "height: 37.8px !important;");
     setTimeout(function(){  
@@ -10,11 +14,11 @@ var fix_textareas = function() {
 };
 
 var disable_inputs = function() {
-    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", true);
+    $(INPUTS_QUERY).prop("disabled", true);
 };
 
 var enable_inputs = function() {
-    $("div.template-edit input, div.template-edit select:not(.formTabs), div.template-edit textarea, div.template-edit button").prop("disabled", false);
+    $(INPUTS_QUERY).prop("disabled", false);
 }
 
 var disable_selecttab = function() {
@@ -48,22 +52,36 @@ var in_allowed_portaltypes = function() {
     }
 })(window.history);
 
+var createRelatedItemsLink = function(elem, timeout, shot) {
+    var shot = typeof shot !== 'undefined' ? shot : 1;
 
-var createRelatedItemsLink = function(elem, timeout) {
     setTimeout(function() {
-        all_relateditems = $(elem+' span.pattern-relateditems-item');
-        all_relateditems.each(function() {
-            var title_elem = $(this).find("span.pattern-relateditems-item-title");
-            var link_elem = $(this).find("span.pattern-relateditems-item-path");
-            var title = title_elem.html();
-            var link = link_elem.html();
+        all_relateditems = $(elem+' div.pattern-relateditems-container');
+        
+        if ((all_relateditems.length) > 0) {
+            all_relateditems.each(function() {
+                var title_elem = $(this).find("span.pattern-relateditems-item-title");
+                var link_elem = $(this).find("span.pattern-relateditems-item-path");
+                var title = title_elem.html();
+                var link = link_elem.html();
 
-            var new_link = $("<a></a>").attr("href", link).html(title);
-            new_link.click(function() {
-                window.location.href = window.location.protocol + "//" + window.location.host + $(this).attr("href");
+                var new_link = $("<a></a>").attr("href", link).html(title);
+                new_link.click(function() {
+                    window.location.href = window.location.protocol + "//" + window.location.host + $(this).attr("href");
+                });
+                title_elem.html(new_link);
             });
-            title_elem.html(new_link);
-        });
+        } else {
+            if ($(elem+' div.relationlist-field').length > 0) {
+                if (shot < 4) {
+                    shot = shot + 1;
+                    createRelatedItemsLink(elem, timeout, shot);
+                } else {
+                    show_ajax_error("Error", "Cannot create relation links for tab: "+elem);
+                }
+            }
+        }
+
     }, timeout);
 };
 
@@ -148,13 +166,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                                     var original_fieldset = $("fieldset#"+_id);
                                     original_fieldset.html(fieldset.html());
                                 } 
-                            } else if ($("body").hasClass('portaltype-book')) {
-                                if (_id != 'fieldset-default' && _id != 'fieldset-title_author') {
-                                    var fieldset = $(this);
-                                    var original_fieldset = $("fieldset#"+_id);
-                                    original_fieldset.html(fieldset.html());
-                                } 
-                            } else if ($("body").hasClass('portaltype-audiovisual')) {
+                            } else if ($("body").hasClass('portaltype-book') || $("body").hasClass('portaltype-audiovisual')) {
                                 if (_id != 'fieldset-default' && _id != 'fieldset-title_author') {
                                     var fieldset = $(this);
                                     var original_fieldset = $("fieldset#"+_id);
@@ -204,123 +216,133 @@ var ajaxLoadTabs = function(fieldset_id) {
     }
 };
 
+// EVENTS
+
+var change_tab_event = function(tab) {
+    if ($("body").hasClass("template-edit")) {
+        var data_id = tab.val().replace("fieldsetlegend-", "");
+        var element = $("fieldset#fieldset-"+data_id);
+        
+        if (!element.hasClass('widgets-init') && data_id != "default") {
+            init_widgets(element);
+            element.addClass('widgets-init');
+        }
+        fix_textareas();
+
+    } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
+        var data_id = tab.val();
+        var element = $("fieldset#"+data_id);
+        if (!element.hasClass('widgets-init') && data_id != "fieldset-title_author") {
+            init_datagrid(element);
+            init_widgets(element);
+            element.addClass('widgets-init');
+            createRelatedItemsLink("fieldset#"+data_id, 300);
+        }
+    } else if ($("body").hasClass("portaltype-personorinstitution")) {
+        var data_id = tab.val();
+        var element = $("fieldset#"+data_id);
+        if (!element.hasClass('widgets-init') && data_id != "fieldset-name_information") {
+            init_datagrid(element);
+            init_widgets(element);
+            element.addClass('widgets-init');
+            createRelatedItemsLink("fieldset#"+data_id, 300);
+        }
+    } else if ($("body").hasClass("portaltype-exhibition")) {
+        var data_id = tab.val();
+        var element = $("fieldset#"+data_id);
+        if (!element.hasClass('widgets-init') && data_id != "fieldset-exhibitions_details") {
+            init_datagrid(element);
+            init_widgets(element);
+            element.addClass('widgets-init');
+            createRelatedItemsLink("fieldset#"+data_id, 300);
+        }
+    } else if ($("body").hasClass("portaltype-treatment")) {
+        var data_id = tab.val();
+        var element = $("fieldset#"+data_id);
+        if (!element.hasClass('widgets-init') && data_id != "fieldset-treatment_details") {
+            init_datagrid(element);
+            init_widgets(element);
+            element.addClass('widgets-init');
+            createRelatedItemsLink("fieldset#"+data_id, 300);
+        }
+    } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
+        var data_id = tab.val();
+        var element = $("fieldset#"+data_id);
+        if (!element.hasClass('widgets-init') && data_id != "fieldset-loan_request") {
+            init_datagrid(element);
+            init_widgets(element);
+            element.addClass('widgets-init');
+            createRelatedItemsLink("fieldset#"+data_id, 300);
+        }
+    } else {
+        var data_id = tab.val();
+        var element = $("fieldset#"+data_id);
+        if (!element.hasClass('widgets-init') && data_id != "fieldset-identification") {
+            init_datagrid(element);
+            init_widgets(element);
+            element.addClass('widgets-init');
+            createRelatedItemsLink("fieldset#"+data_id, 800);
+        }
+    }
+}
+
+var initiate_first_tab = function(timeout) {
+    setTimeout(function() {
+        if (!$("body").hasClass("pat-plone-widgets")) {
+            if ($("body").hasClass('template-edit')) {
+                init_widgets($('body'));
+            } else {
+                if ($("body").hasClass("portaltype-object")) {
+                    init_widgets($("fieldset#fieldset-identification"));
+                    createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+                } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
+                    init_widgets($("fieldset#fieldset-title_author"));
+                    createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                } else if ($("body").hasClass("portaltype-personorinstitution")) {
+                    init_widgets($("fieldset#fieldset-name_information"));
+                    createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
+                } else if ($("body").hasClass("portaltype-exhibition")) {
+                    init_widgets($("fieldset#fieldset-exhibitions_details"));
+                    createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
+                } else if ($("body").hasClass("portaltype-treatment")) {
+                    init_widgets($("fieldset#fieldset-treatment_details"));
+                    createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
+                } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
+                    init_widgets($("fieldset#fieldset-loan_request"));
+                    createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
+                }
+            }
+        } else {
+            if (!$("body").hasClass('template-edit')) {
+                if ($("body").hasClass("portaltype-object")) {
+                    createRelatedItemsLink("fieldset#fieldset-identification", 3000);
+                } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
+                    createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
+                } else if ($("body").hasClass("portaltype-personorinstitution")) {
+                    createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
+                } else if ($("body").hasClass("portaltype-exhibition")) {
+                    createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
+                } else if ($("body").hasClass("portaltype-treatment")) {
+                    createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
+                } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
+                    createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
+                }
+            }
+        }
+    }, timeout);
+}
+
 // Set plone form max tabs
 ploneFormTabbing.max_tabs = 1;
 
 $(document).ready(function() {
 
     if (in_allowed_portaltypes()) {
-        setTimeout(function() {
-            if (!$("body").hasClass("pat-plone-widgets")) {
-                if ($("body").hasClass('template-edit')) {
-                    init_widgets($('body'));
-                } else {
-                    if ($("body").hasClass("portaltype-object")) {
-                        init_widgets($("fieldset#fieldset-identification"));
-                        createRelatedItemsLink("fieldset#fieldset-identification", 3000);
-                    } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
-                        init_widgets($("fieldset#fieldset-title_author"));
-                        createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
-                    } else if ($("body").hasClass("portaltype-personorinstitution")) {
-                        init_widgets($("fieldset#fieldset-name_information"));
-                        createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
-                    } else if ($("body").hasClass("portaltype-exhibition")) {
-                        init_widgets($("fieldset#fieldset-exhibitions_details"));
-                        createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
-                    } else if ($("body").hasClass("portaltype-treatment")) {
-                        init_widgets($("fieldset#fieldset-treatment_details"));
-                        createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
-                    } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
-                        init_widgets($("fieldset#fieldset-loan_request"));
-                        createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
-                    }
-                }
-            } else {
-                if (!$("body").hasClass('template-edit')) {
-                    if ($("body").hasClass("portaltype-object")) {
-                        createRelatedItemsLink("fieldset#fieldset-identification", 3000);
-                    } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
-                        createRelatedItemsLink("fieldset#fieldset-title_author", 3000);
-                    } else if ($("body").hasClass("portaltype-personorinstitution")) {
-                        createRelatedItemsLink("fieldset#fieldset-name_information", 3000);
-                    } else if ($("body").hasClass("portaltype-exhibition")) {
-                        createRelatedItemsLink("fieldset#fieldset-exhibitions_details", 3000);
-                    } else if ($("body").hasClass("portaltype-treatment")) {
-                        createRelatedItemsLink("fieldset#fieldset-treatment_details", 3000);
-                    } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
-                        createRelatedItemsLink("fieldset#fieldset-loan_request", 3000);
-                    }
-                }
-            }
-        }, 900);
+        initiate_first_tab(1000)
     }
 
-    $("body.template-edit.portaltype-object select.formTabs, body:not(.template-edit) div.template-edit select.formTabs").change(function() {
-        if ($("body").hasClass("template-edit")) {
-            data_id = $(this).val().replace("fieldsetlegend-", "");
-            element = $("fieldset#fieldset-"+data_id);
-            
-            if (!element.hasClass('widgets-init') && data_id != "default") {
-                init_widgets(element);
-                element.addClass('widgets-init');
-            }
-            fix_textareas();
-
-        } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual")) {
-            data_id = $(this).val();
-            element = $("fieldset#"+data_id);
-            if (!element.hasClass('widgets-init') && data_id != "fieldset-title_author") {
-                init_datagrid(element);
-                init_widgets(element);
-                element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 300);
-            }
-        } else if ($("body").hasClass("portaltype-personorinstitution")) {
-            data_id = $(this).val();
-            element = $("fieldset#"+data_id);
-            if (!element.hasClass('widgets-init') && data_id != "fieldset-name_information") {
-                init_datagrid(element);
-                init_widgets(element);
-                element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 300);
-            }
-        } else if ($("body").hasClass("portaltype-exhibition")) {
-            data_id = $(this).val();
-            element = $("fieldset#"+data_id);
-            if (!element.hasClass('widgets-init') && data_id != "fieldset-exhibitions_details") {
-                init_datagrid(element);
-                init_widgets(element);
-                element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 300);
-            }
-        } else if ($("body").hasClass("portaltype-treatment")) {
-            data_id = $(this).val();
-            element = $("fieldset#"+data_id);
-            if (!element.hasClass('widgets-init') && data_id != "fieldset-treatment_details") {
-                init_datagrid(element);
-                init_widgets(element);
-                element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 300);
-            }
-        } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
-            data_id = $(this).val();
-            element = $("fieldset#"+data_id);
-            if (!element.hasClass('widgets-init') && data_id != "fieldset-loan_request") {
-                init_datagrid(element);
-                init_widgets(element);
-                element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 300);
-            }
-        } else {
-            data_id = $(this).val();
-            element = $("fieldset#"+data_id);
-            if (!element.hasClass('widgets-init') && data_id != "fieldset-identification") {
-                init_datagrid(element);
-                init_widgets(element);
-                element.addClass('widgets-init');
-                createRelatedItemsLink("fieldset#"+data_id, 300);
-            }
-        }
+    $(SELECT_TAB_QUERY).change(function() {
+        change_tab_event($(this));
     });
 
     // Load all tabs
