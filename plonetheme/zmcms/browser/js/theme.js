@@ -52,6 +52,12 @@ var in_allowed_portaltypes = function() {
     }
 })(window.history);
 
+
+var click_on_generated_link = function(obj) {
+    var href = obj.getAttribute("href");
+    window.location.href = window.location.protocol + "//" + window.location.host + href;
+}
+
 var createRelatedItemsLink = function(elem, timeout, shot) {
     var shot = typeof shot !== 'undefined' ? shot : 1;
 
