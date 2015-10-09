@@ -36,7 +36,7 @@ var show_ajax_error = function(textStatus, errorThrown) {
 };
 
 var in_allowed_portaltypes = function() {
-    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-treatment') || $("body").hasClass('portaltype-outgoingloan') || $("body").hasClass("portaltype-incomingloan") || $("body").hasClass("portaltype-objectentry") || $("body").hasClass("portaltype-resource")) {
+    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-treatment') || $("body").hasClass('portaltype-outgoingloan') || $("body").hasClass("portaltype-incomingloan") || $("body").hasClass("portaltype-objectentry") || $("body").hasClass("portaltype-resource") || $("body").hasClass("portaltype-taxonomie")) {
         return true;
     }
     return false;
@@ -202,6 +202,12 @@ var ajaxLoadTabs = function(fieldset_id) {
                                     var original_fieldset = $("fieldset#"+_id);
                                     original_fieldset.html(fieldset.html());
                                 } 
+                            } else if ($("body").hasClass('portaltype-taxonomie')) {
+                                if (_id != 'fieldset-default' && _id != 'fieldset-taxonomic_term_details') {
+                                    var fieldset = $(this);
+                                    var original_fieldset = $("fieldset#"+_id);
+                                    original_fieldset.html(fieldset.html());
+                                } 
                             } else {
                                 if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
                                     var fieldset = $(this);
@@ -336,6 +342,8 @@ var initiate_first_tab = function(timeout) {
                     init_widgets($("fieldset#fieldset-general"));
                 } else if ($("body").hasClass("portaltype-resource")) {
                     init_widgets($("fieldset#fieldset-resource_dublin_core"));
+                } else if ($("body").hasClass("portaltype-taxonomie")) {
+                    init_widgets($("fieldset#fieldset-taxonomic_term_details"));
                 }
             }
         } else {
