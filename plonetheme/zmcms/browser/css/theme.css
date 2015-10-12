@@ -9872,3 +9872,11 @@ textarea {
 #fieldset-exhibitions .datagridwidget-widget-notes {
     clear: both;
 }
+
+body.template-collective-object-object #formfield-form-widgets-productionDating_productionDating textarea {
+    width: 72.7% !important;
+}
+
+.template-edit .datagridwidget-widget-makerController {
+    display: none !important;
+}

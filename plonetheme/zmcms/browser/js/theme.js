@@ -355,6 +355,16 @@ var initiate_first_tab = function(timeout) {
 // Set plone form max tabs
 ploneFormTabbing.max_tabs = 1;
 
+var change_maker_path = function(option) {
+    var value = option.val();
+    var parent = $(option).parents('.datagridwidget-block-edit-cell');
+    var crumbs = parent.find('a.crumb');
+    var last_href = crumbs[crumbs.length-1];
+    $(last_href).attr('href', '/nl/intern/personen-en-instellingen/'+value);
+    $(last_href).html(value);
+    $(last_href).click();
+}
+
 $(document).ready(function() {
 
     if (in_allowed_portaltypes()) {
@@ -375,6 +385,11 @@ $(document).ready(function() {
     } else {
 
     }
+
+    $(".datagridwidget-widget-makerController select").change(function() {
+        change_maker_path($(this));
+    });
+
 });
 
 
