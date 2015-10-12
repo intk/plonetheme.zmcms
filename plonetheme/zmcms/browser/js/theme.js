@@ -386,9 +386,9 @@ $(document).ready(function() {
 
     }
 
-    $(".datagridwidget-widget-makerController select").change(function() {
+    /*$(".datagridwidget-widget-makerController select").change(function() {
         change_maker_path($(this));
-    });
+    });*/
 
 });
 
