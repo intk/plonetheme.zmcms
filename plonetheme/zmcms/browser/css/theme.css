@@ -9880,3 +9880,7 @@ body.template-collective-object-object #formfield-form-widgets-productionDating_
 .template-edit .datagridwidget-widget-makerController {
     display: none !important;
 }
+
+.template-edit #formfield-form-widgets-identification_taxonomy .datagridwidget-widget-scientific_name span.pattern-relateditems-path {
+    display: none !important;
+}
