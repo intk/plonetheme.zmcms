@@ -223,6 +223,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                         /* Init datagrid */
                         if ($("body").hasClass("template-edit")) {
                             dataGridField2Functions.init();
+                            create_taxonomic_events();
                         }
                     }, 50);
                 },
@@ -355,14 +356,37 @@ var initiate_first_tab = function(timeout) {
 // Set plone form max tabs
 ploneFormTabbing.max_tabs = 1;
 
-var change_maker_path = function(option) {
-    var value = option.val();
+
+var change_taxonomic_query = function(option) {
+    var rank_value = option.val();
+
     var parent = $(option).parents('.datagridwidget-block-edit-cell');
-    var crumbs = parent.find('a.crumb');
-    var last_href = crumbs[crumbs.length-1];
-    $(last_href).attr('href', '/nl/intern/personen-en-instellingen/'+value);
-    $(last_href).html(value);
-    $(last_href).click();
+    var related_input = parent.find('input.pat-relateditems');
+    var select_container = $(related_input).data();
+
+    var patternRelateditems = select_container.patternRelateditems;
+    var criterias = select_container.patternRelateditems.query.getCriterias();
+    var attributes = select_container.patternRelateditems.options.attributes;
+
+    select_container.select2.opts.ajax.data = function(term, page) {
+        var data = {
+            query: JSON.stringify({
+              criteria: criterias
+            }),
+            attributes: JSON.stringify(attributes),
+            taxonomic_rank: rank_value
+        };
+        if (page) {
+            data.batch = JSON.stringify(patternRelateditems.query.getBatch(page));
+        }
+        return data;
+    };
+}
+
+var create_taxonomic_events = function() {
+    $("#formfield-form-widgets-identification_taxonomy .datagridwidget-widget-rank select").change(function() {
+        change_taxonomic_query($(this));
+    });
 }
 
 $(document).ready(function() {
@@ -385,11 +409,6 @@ $(document).ready(function() {
     } else {
 
     }
-
-    /*$(".datagridwidget-widget-makerController select").change(function() {
-        change_maker_path($(this));
-    });*/
-
 });
 
 
