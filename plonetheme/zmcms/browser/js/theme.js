@@ -371,10 +371,10 @@ var change_taxonomic_query = function(option) {
     select_container.select2.opts.ajax.data = function(term, page) {
         var data = {
             query: JSON.stringify({
-              criteria: criterias
+              criteria: criterias,
+              taxonomic_rank: rank_value
             }),
             attributes: JSON.stringify(attributes),
-            taxonomic_rank: rank_value
         };
         if (page) {
             data.batch = JSON.stringify(patternRelateditems.query.getBatch(page));
