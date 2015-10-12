@@ -409,6 +409,10 @@ $(document).ready(function() {
     } else {
 
     }
+
+    if (!$("body").hasClass('template-edit')) {
+        create_taxonomic_events();
+    }
 });
 
 
