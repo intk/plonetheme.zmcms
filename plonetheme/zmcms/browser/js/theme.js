@@ -36,7 +36,7 @@ var show_ajax_error = function(textStatus, errorThrown) {
 };
 
 var in_allowed_portaltypes = function() {
-    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-treatment') || $("body").hasClass('portaltype-outgoingloan') || $("body").hasClass("portaltype-incomingloan") || $("body").hasClass("portaltype-objectentry") || $("body").hasClass("portaltype-resource") || $("body").hasClass("portaltype-taxonomie") || $("body").hasClass("portaltype-serial")) {
+    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-treatment') || $("body").hasClass('portaltype-outgoingloan') || $("body").hasClass("portaltype-incomingloan") || $("body").hasClass("portaltype-objectentry") || $("body").hasClass("portaltype-resource") || $("body").hasClass("portaltype-taxonomie") || $("body").hasClass("portaltype-serial") || $("body").hasClass("portaltype-article")) {
         return true;
     }
     return false;
@@ -172,7 +172,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                                     var original_fieldset = $("fieldset#"+_id);
                                     original_fieldset.html(fieldset.html());
                                 } 
-                            } else if ($("body").hasClass('portaltype-book') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-serial')) {
+                            } else if ($("body").hasClass('portaltype-book') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-serial') || $("body").hasClass("portaltype-article")) {
                                 if (_id != 'fieldset-default' && _id != 'fieldset-title_author') {
                                     var fieldset = $(this);
                                     var original_fieldset = $("fieldset#"+_id);
@@ -254,7 +254,7 @@ var change_tab_event = function(tab) {
         }
         fix_textareas();
 
-    } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial')) {
+    } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial') || $("body").hasClass("portaltype-article")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
         if (!element.hasClass('widgets-init') && data_id != "fieldset-title_author") {
@@ -329,7 +329,7 @@ var initiate_first_tab = function(timeout) {
             } else {
                 if ($("body").hasClass("portaltype-object")) {
                     init_widgets($("fieldset#fieldset-identification"));
-                } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial')) {
+                } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial') || $("body").hasClass("portaltype-article")) {
                     init_widgets($("fieldset#fieldset-title_author"));
                 } else if ($("body").hasClass("portaltype-personorinstitution")) {
                     init_widgets($("fieldset#fieldset-name_information"));
