@@ -221,9 +221,6 @@ class get_nav_objects(BrowserView):
         ## Museum objects
         self.generate_related_museum_objects(museum_objects_tab, object_schema, fields, object, "relations")
 
-        
-
-
         new_object_schema = []
         new_object_schema.append(object_schema['title_author'])
         new_object_schema.append(object_schema['series_notes_isbn'])
@@ -1206,70 +1203,70 @@ class get_nav_objects(BrowserView):
         try:
             self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
         except:
-            pass
+            raise
             
         ## Vervaardiging & Datering tab
         #self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
         try:
             self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
         except:
-            pass
+            raise
             
         ## Physical Characteristics
         try:
             self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
         except:
-            pass
+            raise
 
         ## Associations
         try:
             self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
         except:
-            pass
+            raise
         ## Reproductions
         try:
             self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
         except:
-            pass
+            raise
         ## Recommendations
         try:
             self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
         except:
-            pass
+            raise
         ## Location
         try:
             self.generate_location_tab(location_tab, object_schema, fields, object, "location")
         except:
-            pass
+            raise
         ## Field collection
         try:
             self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
         except:
-            pass
+            raise
         ## Exhibtions
         #self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
         try:
             self.generate_exhibition_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
         except:
-            pass
+            raise
 
         ## Labels
         try:
             self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
         except:
-            pass
+            raise
 
         ## Books
         try:
             self.generate_related_books_tab(object_schema, fields, object, "books")
         except:
-            pass
+            raise
 
         ## Documentation
         try:
             self.generate_documentation_tab(object_schema, fields, object, "documentation")
         except:
-            pass
+            raise
 
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
