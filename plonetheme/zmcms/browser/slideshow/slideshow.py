@@ -606,12 +606,12 @@ class get_nav_objects(BrowserView):
                 if len(taxonomy) > 0:
                     taxonomy_elem = taxonomy[0]
                     scientific_name = taxonomy_elem['scientific_name']
-                    common_name = taxonomy_elem['common_name']
+                    #common_name = taxonomy_elem['common_name']
 
                     if scientific_name != "" and scientific_name != " ":
                         object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
-                    if common_name != "" and common_name != " ":
-                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
+                    #if common_name != "" and common_name != " ":
+                    #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
 
 
     def create_maker(self, name, url=False):
@@ -1203,70 +1203,70 @@ class get_nav_objects(BrowserView):
         try:
             self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
         except:
-            raise
+            pass
             
         ## Vervaardiging & Datering tab
         #self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
         try:
             self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
         except:
-            raise
+            pass
             
         ## Physical Characteristics
         try:
             self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
         except:
-            raise
+            pass
 
         ## Associations
         try:
             self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
         except:
-            raise
+            pass
         ## Reproductions
         try:
             self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
         except:
-            raise
+            pass
         ## Recommendations
         try:
             self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
         except:
-            raise
+            pass
         ## Location
         try:
             self.generate_location_tab(location_tab, object_schema, fields, object, "location")
         except:
-            raise
+            pass
         ## Field collection
         try:
             self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
         except:
-            raise
+            pass
         ## Exhibtions
         #self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
         try:
             self.generate_exhibition_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
         except:
-            raise
+            pass
 
         ## Labels
         try:
             self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
         except:
-            raise
+            pass
 
         ## Books
         try:
             self.generate_related_books_tab(object_schema, fields, object, "books")
         except:
-            raise
+            pass
 
         ## Documentation
         try:
             self.generate_documentation_tab(object_schema, fields, object, "documentation")
         except:
-            raise
+            pass
 
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
@@ -1281,7 +1281,6 @@ class get_nav_objects(BrowserView):
         new_object_schema.append(object_schema['labels'])
         new_object_schema.append(object_schema['books'])
         new_object_schema.append(object_schema['documentation'])
-
         return new_object_schema
 
 
@@ -1633,7 +1632,6 @@ class get_fields(BrowserView):
 
 
     ## NEW FIELDS
-    
 
     def get_field_from_object(self, field, object):
         
@@ -1652,8 +1650,122 @@ class get_fields(BrowserView):
 
         return None
 
-    
-    def create_maker(self, name):
+    def transform_schema_field(self, name, field_value, choice=None, restriction=None, not_show=[]):
+        try:
+            if type(field_value) is list:
+                new_val = []
+                if choice == None:
+                    for val in field_value:
+                        if type(val) is unicode:
+                            new_val.append(val)
+                        elif type(val) is str:
+                            new_val.append(val)
+                        else:
+                            for key, value in val.iteritems():
+                                if key not in not_show:
+                                    if value != "" and value != None and value != " ":
+                                        if restriction != None:
+                                            if value != restriction:
+                                                if key in "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+                                                    value = self.create_maker(value)
+                                                if type(value) is list: 
+                                                    new_val.append(value[0])
+                                                else:
+                                                    new_val.append(value)
+                                        else:
+                                            if key == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+                                                value = self.create_maker(value)
+                                            if type(value) is list: 
+                                                new_val.append(value[0])
+                                            else:
+                                                new_val.append(value)
+                else:
+                    for val in field_value:
+                        if val[choice] != "" and val[choice] != None and val[choice] != " ":
+                            if restriction != None:
+                                if val[choice] != restriction:
+                                    if choice == "name" and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+                                        new_val.append(self.create_maker(val[choice]))
+                                    else:
+                                        
+                                        if type(val[choice]) is list: 
+                                            if val[choice]:
+                                                new_val.append(val[choice][0])
+                                        else:
+                                            new_val.append(val[choice])
+                            else:
+                                if choice in ["name", "author"] and name not in ['exhibitions_exhibition','identification_objectName_objectname']:
+                                    new_val.append(self.create_maker(val[choice]))
+                                else:
+                                    if type(val[choice]) is list: 
+                                        if val[choice]:
+                                            new_val.append(val[choice][0])
+                                    else:
+                                        new_val.append(val[choice])
+
+                if len(new_val) > 0:
+                    if name in ["exhibitions_exhibition", "productionDating_production", "labels", "seriesNotesISBN_notes_bibliographicalNotes",
+                                "abstractAndSubjectTerms_notes", "abstractAndSubjectTerms_abstract_abstract",
+                                "exhibitionsAuctionsCollections_exhibition", "exhibitionsAuctionsCollections_auction",
+                                "exhibitionsAuctionsCollections_collection"]:
+                        return '<p>'.join(new_val)
+                    else:
+                        for index, single_value in enumerate(new_val):
+                            single_value = "<a href='/%s/search?SearchableText=%s'>%s</a>" %(self.context.language, single_value, single_value)
+                            new_val[index] = single_value
+                        return ', '.join(new_val)
+                else:
+                    return ""
+            else:
+                return field_value
+        except:
+            return ""
+
+
+    def generate_identification_tab(self, identification_tab, object_schema, fields, object, field_schema):
+        for field, choice in identification_tab:
+            # Title field
+            if field in ['title']:
+                value = getattr(object, field, "")
+                if value != "" and value != None and value != " ":
+                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Title')), "value": value})
+
+            elif field in ['text']:
+                val = getattr(object, field, "")
+                if val:
+                    value = val.output
+                else:
+                    value = ""
+                if value != "" and value != None and value != " ":
+                    object_schema[field_schema]['fields'].append({"title": "body", "value": value})
+            
+            # Regular fields
+            elif field not in ['identification_taxonomy']:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value, choice)
+
+                    if schema_value != "" and schema_value != " ":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+
+            # Taxonomy special case
+            else:
+                taxonomy = self.get_field_from_object(field, object)
+                if len(taxonomy) > 0:
+                    taxonomy_elem = taxonomy[0]
+                    scientific_name = taxonomy_elem['scientific_name']
+                    #common_name = taxonomy_elem['common_name']
+
+                    if scientific_name != "" and scientific_name != " ":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
+                    #if common_name != "" and common_name != " ":
+                    #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
+
+
+    def create_maker(self, name, url=False):
         maker = []
         name_split = name.split(",")
 
@@ -1665,9 +1777,15 @@ class get_fields(BrowserView):
                 maker.append(name_split[0])
 
         new_maker = ' '.join(maker)
+        if url:
+            #language = self.context.language
+            #new_maker = "<a href='%s'>%s</a>" %(url, new_maker)
+            new_maker = new_maker
+            #new_maker = "<a href='/%s/search?SearchableText=%s'>%s</a>" %(language, new_maker, new_maker)
+
         return new_maker
 
-    def create_production_field(self, field):
+    def create_production_field(self, field, url=False):
         production = ""
 
         maker = field['maker']
@@ -1675,16 +1793,25 @@ class get_fields(BrowserView):
         role = field['role']
         place = field['place']
 
-        production = self.create_maker(maker)
+        production = self.create_maker(maker, url)
 
         if qualifier != "" and qualifier != None and qualifier != " ":
-            production = "%s, %s" %(qualifier, production)
+            if production:
+                production = "%s, %s" %(qualifier, production)
+            else:
+                production = "%s" %(qualifier)
 
         if role != "" and role != None and role != " ":
-            production = "(%s) %s" %(role, production)
+            if production:
+                production = "(%s) %s" %(role, production)
+            else:
+                production = "(%s)" %(role)
 
         if place != "" and place != None and place != " ":
-            production = "%s, %s" %(production, place)
+            if production:
+                production = "%s, %s" %(production, place)
+            else:
+                production = "%s" %(place)
 
         return production
 
@@ -1697,50 +1824,73 @@ class get_fields(BrowserView):
 
         result = ""
 
-        if period != "" and period != None:
+        if period != "" and period != None and period != " ":
             result = "%s" %(period)
 
-        if start_date != "":
-            if start_date_precision != "":
-                result = "%s, %s %s" %(result, start_date_precision, start_date)
+        if start_date != "" and start_date != " ":
+            if result:
+                if start_date_precision != "" and start_date_precision != " ":
+                    result = "%s, %s %s" %(result, start_date_precision, start_date)
+                else:
+                    result = "%s, %s" %(result, start_date)
             else:
-                result = "%s, %s" %(result, start_date)
+                if start_date_precision != "" and start_date_precision != " ":
+                    result = "%s %s" %(start_date_precision, start_date)
+                else:
+                    result = "%s" %(start_date)
+    
 
-        if end_date != "":
-            if end_date_precision != "":
-                result = "%s - %s %s" %(result, end_date_precision, start_date)
+        if end_date != "" and end_date != " ":
+            if result:
+                if end_date_precision != "" and end_date_precision != " ":
+                    result = "%s - %s %s" %(result, end_date_precision, start_date)
+                else:
+                    result = "%s - %s" %(result, end_date)
             else:
-                result = "%s - %s" %(result, end_date)
+                if end_date_precision != "" and end_date_precision != " ":
+                    result = "%s %s" %(end_date_precision, start_date)
+                else:
+                    result = "%s" %(end_date)
 
         return result
 
+    def get_url_by_uid(self, uid):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        
+        brains = catalog(UID=uid)
+        if brains:
+            obj = brains[0]
+            return obj.getURL()
+
+        return ""
 
     def generate_production_dating(self, production_dating_tab, object_schema, fields, object, field_schema):
-
         production_field = self.get_field_from_object('productionDating_productionDating', object)
 
         production_result = []
         # Generate production
+        url = ""
         for field in production_field:
             production = {}
-            if production_field['makers']:
-                production['maker'] = production_field["makers"][0].title
+            if field['makers']:
+                production['maker'] = field["makers"][0].title
+                url = self.get_url_by_uid(field["makers"][0].UID())
             else:
                 production['maker'] = ""
 
-            production['qualifier'] = production_field['qualifier']
+            production['qualifier'] = field['qualifier']
 
-            if production_field['role']:
-                production['role'] = production_field['role'][0]
+            if field['role']:
+                production['role'] = field['role'][0]
             else:
                 production['role'] = ""
 
-            if production_field['place']:
-                production['place'] = production_field['place'][0]
+            if field['place']:
+                production['place'] = field['place'][0]
             else:
                 production['place'] = ""
 
-            result = self.create_production_field(production)
+            result = self.create_production_field(production, url)
             if result != "" and result != None and result != " ":
                 production_result.append(result)
 
@@ -1768,7 +1918,7 @@ class get_fields(BrowserView):
         period = []
         for field in period_field:
             result = self.create_period_field(field)
-            if result != "" and result != None:
+            if result != "" and result != None and result != " ":
                 period.append(result)
 
         if len(period) > 0:
@@ -1783,10 +1933,10 @@ class get_fields(BrowserView):
             dimension = ""
             if val['value'] != "":
                 dimension = "%s" %(val['value'])
-            if val['unit'] != "":
-                dimension = "%s %s" %(dimension, val['unit'])
-            if val['dimension'] != "":
-                dimension = "%s: %s" %(val['dimension'], dimension)
+            if val['units'] != "":
+                dimension = "%s %s" %(dimension, val['units'])
+            if val['dimension'] != "" and val['dimension'] != []:
+                dimension = "%s: %s" %(val['dimension'][0], dimension)
 
             new_dimension_val.append(dimension)
 
@@ -1797,8 +1947,8 @@ class get_fields(BrowserView):
     def generate_physical_characteristics_tab(self, physical_characteristics_tab, object_schema, fields, object, field_schema):
         
         for field, choice, restriction in physical_characteristics_tab:
-            if field == 'physicalCharacteristics_dimensions':
-                dimension_field = getattr(object, 'physicalCharacteristics_dimensions', None)
+            if field == 'physicalCharacteristics_dimension':
+                dimension_field = getattr(object, 'physicalCharacteristics_dimension', None)
                 if dimension_field != None:
                     dimension = self.create_dimension_field(dimension_field)
                     ## add to schema
@@ -1818,15 +1968,35 @@ class get_fields(BrowserView):
 
     def generate_associations_tab(self, associations_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in associations_tab:
-            fieldvalue = self.get_field_from_schema(field, fields)
-            if fieldvalue != None:
-                title = fieldvalue.title
-                value = self.get_field_from_object(field, object)
+            if field == "associations_associatedPersonInstitutions":
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue:
+                    title = fieldvalue.title
+                    associations_field = self.get_field_from_object('associations_associatedPersonInstitutions', object)
 
-                schema_value = self.transform_schema_field(field, value, choice)
+                    result = []
+                    for line in associations_field:
+                        names = line["names"]
+                        if names:
+                            name = names[0].title
+                            url = self.get_url_by_uid(names[0].UID())
+                            new_name = self.create_maker(name, url)
+                            result.append(new_name)
 
-                if schema_value != "":
-                    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
+                    final_result = "<p>".join(result)
+                    if final_result != "":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": final_result})
+
+            else:
+                fieldvalue = self.get_field_from_schema(field, fields)
+                if fieldvalue != None:
+                    title = fieldvalue.title
+                    value = self.get_field_from_object(field, object)
+
+                    schema_value = self.transform_schema_field(field, value, choice)
+
+                    if schema_value != "":
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
     
     def generate_reproductions_tab(self, reproductions_tab, object_schema, fields, object, field_schema):
         for field, choice, restriction in reproductions_tab:
@@ -1895,6 +2065,105 @@ class get_fields(BrowserView):
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
+    def generate_exhibition_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+        relations = []
+        related_exhibitions = []
+
+        def get_url_by_uid(context, uid):
+            catalog = context.portal_catalog
+            brains = catalog(UID=uid)
+            if brains:
+                obj = brains[0]
+                return obj.getURL()
+
+            return ""
+
+        for field, choice, restriction, not_show in exhibitions_tab:
+            fieldvalue = self.get_field_from_schema(field, fields)
+            if fieldvalue != None:
+                title = fieldvalue.title
+                value = self.get_field_from_object(field, object)
+                if value:
+                    for val in value:
+                        exhibition = val['exhibitionName']
+                        if exhibition:
+                            rel_obj = exhibition[0]
+                            rel_url = get_url_by_uid(self.context, rel_obj.UID())
+                            rel_title = rel_obj.title
+                            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+
+                            rel_date_start = ""
+                            rel_date_end = ""
+                            if hasattr(rel_obj, 'start_date'):
+                                rel_date_start = rel_obj.start_date
+
+                            if hasattr(rel_obj, 'end_date'):
+                                rel_date_end = rel_obj.end_date
+
+                            if rel_date_start != "":
+                                try:
+                                    date_start = rel_date_start.strftime('%Y-%m-%d')
+                                except:
+                                    rel_date_start = ""
+
+                            if rel_date_end != "":
+                                try:
+                                    date_end = rel_date_end.strftime('%Y-%m-%d')
+                                except:
+                                    rel_date_end = ""
+
+
+                            final_date = ""
+                            if rel_date_start != "" and rel_date_end != "":
+                                final_date = "%s t/m %s" %(date_start, date_end)
+
+                            if final_date != "":
+                                related_exhibitions.append(final_date)
+
+                            # organisator
+                            orgs = []
+                            locations = []
+                            places = []
+                            organisators = rel_obj.exhibitionsDetails_organizingInstitutions
+
+                            if organisators:
+                                for organiser in organisators:
+                                    name = organiser['name']
+                                    if name:
+                                        if name != 'Zeeuws Museum':
+                                            orgs.append(name)
+
+                                    l = organiser['address']
+                                    if l:
+                                        if l != 'Zeeuws Museum':
+                                            locations.append(l)
+
+                                    p = organiser['place']
+                                    if p:
+                                        if p != 'Zeeuws Museum':
+                                            places.append(p)
+
+                                final_orgs = ', '.join(orgs)
+                                if final_orgs:
+                                    related_exhibitions.append(final_orgs)
+                                
+                                final_locations = ', '.join(locations)
+                                if final_locations:
+                                    related_exhibitions.append(final_locations)
+
+                                final_places = ', '.join(places)
+                                if final_places:
+                                    related_exhibitions.append(final_places)
+
+                                
+
+
+
+
+        if len(related_exhibitions) > 0:
+            related_exhibitions_value = '<p>'.join(related_exhibitions)
+            object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibition name')), 'value': related_exhibitions_value})
+
     def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
         intids = getUtility(IIntIds)
         catalog = getUtility(ICatalog)
@@ -1926,15 +2195,8 @@ class get_fields(BrowserView):
             if rel_date_start != "" and rel_date_end != "":
                 final_date = "%s t/m %s" %(date_start, date_end)
 
-            if rel_date_start != "" and rel_date_end == "":
-                final_date = "%s" %(date_start)
-
-            if rel_date_end != "" and rel_date_start == "":
-                final_date = "%s" %(date_end)
-
             if final_date != "":
                 related_exhibitions.append(final_date)
-
 
         if len(related_exhibitions) > 0:
             related_exhibitions_value = '<p>'.join(related_exhibitions)
@@ -1951,8 +2213,6 @@ class get_fields(BrowserView):
 
                 if schema_value != "":
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
-
-    
 
     def generate_related_books_tab(self, object_schema, fields, object, field_schema):
         if checkPermission('cmf.ManagePortal', self.context):
@@ -1971,22 +2231,27 @@ class get_fields(BrowserView):
                 related_exhibitions_value = '<p>'.join(related_exhibitions)
                 object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Books')), 'value': related_exhibitions_value})
 
+
     def generate_documentation_tab(self, object_schema, fields, object, field_schema):
         if hasattr(object, 'documentation_documentation'):
             documentation = object.documentation_documentation
             docs = []
 
-            for doc in documentation:
-                if doc['title'] != "":
-                    new_doc = "%s" %(doc['title'])
+            if documentation:
+                for doc in documentation:
+                    try:
+                        if doc['title'] != "":
+                            new_doc = "%s" %(doc['title'])
 
-                    if doc['pageMark'] != "":
-                        new_doc = "%s, %s" %(new_doc, doc['pageMark'])
+                            if doc['pageMark'] != "":
+                                new_doc = "%s, %s" %(new_doc, doc['pageMark'])
 
-                    if doc['notes'] != "":
-                        new_doc = "%s, %s" %(new_doc, doc['notes'])
+                            if doc['notes'] != "":
+                                new_doc = "%s, %s" %(new_doc, doc['notes'])
 
-                    docs.append(new_doc)
+                            docs.append(new_doc)
+                    except:
+                        pass
 
             if len(docs) > 0:
                 schema_value = '<p>'.join(docs)
@@ -2061,16 +2326,16 @@ class get_fields(BrowserView):
         schema = getUtility(IDexterityFTI, name='Object').lookupSchema()
         fields = getFieldsInOrder(schema)
 
-        identification_tab = [('identification_identification_collection', None), ('identification_identification_objectNumber', None),
+        identification_tab = [('identification_identification_collections', None), ('identification_identification_objectNumber', None),
                                 ('identification_objectName_category', None), ('identification_objectName_objectname', 'name'),
                                 ('title', None), ('identification_taxonomy', None), ('text', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 
-        physical_characteristics_tab = [('physicalCharacteristics_techniques', 'technique', None), ('physicalCharacteristics_materials', 'material', None),
-                                        ('physicalCharacteristics_dimensions', None, None)]
+        physical_characteristics_tab = [('physicalCharacteristics_technique', 'technique', None), ('physicalCharacteristics_material', 'material', None),
+                                        ('physicalCharacteristics_dimension', None, None)]
 
-        associations_tab = [('associations_associatedPersonInstitution', 'name', None), ('associations_associatedSubject', 'subject', None)]
+        associations_tab = [('associations_associatedPersonInstitutions', 'names', None), ('associations_associatedSubjects', 'subject', None)]
 
         reproductions_tab = [('reproductions_reproduction', 'reference', None)]
 
@@ -2078,7 +2343,7 @@ class get_fields(BrowserView):
 
         location_tab = [('location_current_location', 'location_type', None)]
 
-        fieldcollection_tab = [('fieldCollection_fieldCollection_place', None, None), ('fieldCollection_habitatStratigraphy_stratigraphy', 'unit', None)]
+        fieldcollection_tab = [('fieldCollection_fieldCollection_places', None, None), ('fieldCollection_habitatStratigraphy_stratigrafie', 'unit', None)]
 
         exhibitions_tab = [('exhibitions_exhibition', None, 'Zeeuws Museum', ['catObject'])]
 
@@ -2086,41 +2351,73 @@ class get_fields(BrowserView):
 
 
         ## Identification tab
-        self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
-
+        try:
+            self.generate_identification_tab(identification_tab, object_schema, fields, object, "identification")
+        except:
+            pass
+            
         ## Vervaardiging & Datering tab
-        self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
-        #self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
-
+        #self.generate_production_dating_tab(production_dating_tab, object_schema, fields, object, "production_dating")
+        try:
+            self.generate_production_dating(production_dating_tab, object_schema, fields, object, "production_dating")
+        except:
+            pass
+            
         ## Physical Characteristics
-        self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
+        try:
+            self.generate_physical_characteristics_tab(physical_characteristics_tab, object_schema, fields, object, "physical_characteristics")
+        except:
+            pass
 
         ## Associations
-        self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
-
+        try:
+            self.generate_associations_tab(associations_tab, object_schema, fields, object, "associations")
+        except:
+            pass
         ## Reproductions
-        self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
-
+        try:
+            self.generate_reproductions_tab(reproductions_tab, object_schema, fields, object, "reproductions")
+        except:
+            pass
         ## Recommendations
-        self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
-
+        try:
+            self.generate_recommendations_tab(recommendations_tab, object_schema, fields, object, "recommendations_requirements")
+        except:
+            pass
         ## Location
-        self.generate_location_tab(location_tab, object_schema, fields, object, "location")
-
+        try:
+            self.generate_location_tab(location_tab, object_schema, fields, object, "location")
+        except:
+            pass
         ## Field collection
-        self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
-
+        try:
+            self.generate_fieldcollection_tab(fieldcollection_tab, object_schema, fields, object, "field_collection")
+        except:
+            pass
         ## Exhibtions
-        self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
+        #self.generate_exhibitions_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
+        try:
+            self.generate_exhibition_tab(exhibitions_tab, object_schema, fields, object, "exhibitions")
+        except:
+            pass
 
         ## Labels
-        self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
+        try:
+            self.generate_labels_tab(labels_tab, object_schema, fields, object, "labels")
+        except:
+            pass
 
         ## Books
-        self.generate_related_books_tab(object_schema, fields, object, "books")
+        try:
+            self.generate_related_books_tab(object_schema, fields, object, "books")
+        except:
+            pass
 
         ## Documentation
-        self.generate_documentation_tab(object_schema, fields, object, "documentation")
+        try:
+            self.generate_documentation_tab(object_schema, fields, object, "documentation")
+        except:
+            pass
 
         new_object_schema = []
         new_object_schema.append(object_schema['identification'])
