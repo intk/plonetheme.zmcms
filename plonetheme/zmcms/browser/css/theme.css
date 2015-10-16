@@ -7246,7 +7246,7 @@ body.portaltype-portlet-page.userrole-authenticated #portal-logo img {
 
 body.template-collective-object-object #content-core .form:first-child,
 body.template-collective-exhibition-exhibition #content-core .form:first-child,
-body.template-collective-personorinstitution-personorinstitution #content-core .form:first-child,
+body[class^="template-collective-"] #content-core .form:first-child,
 body.template-collective-treatment-treatment #content-core .form:first-child {
     padding-top: 50px;
     width: 980px;
@@ -7284,7 +7284,7 @@ body.template-sharing  #content .documentDescription {
 body.template-sharing textarea.text-field,
 body.template-collective-object-object textarea.text-field,
 body.template-collective-exhibition-exhibition textarea.text-field,
-body.template-collective-personorinstitution-personorinstitution textarea.text-field,
+body[class^="template-collective-"] textarea.text-field,
 body.template-collective-treatment-treatment textarea.text-field {
     min-height: 37px !important;
     width: 100% !important;
@@ -7399,7 +7399,7 @@ body.mobile .overlay-image {
 
 body.template-collective-object-object #portal-logo img,
 body.template-collective-exhibition-exhibition #portal-logo img,
-body.template-collective-personorinstitution-personorinstitution #portal-logo img,
+body[class^="template-collective-"] #portal-logo img,
 body.template-collective-treatment-treatment #portal-logo img {
     content: url('++resource++plonetheme.zmcms.images/logo-preto.png');
 }
@@ -7911,7 +7911,7 @@ body.mceContentBody {
 
 .template-edit .field input[type="text"]:not(.select2-input),
 body.template-collective-exhibition-exhibition .field input[type="text"],
-body.template-collective-personorinstitution-personorinstitution .field input[type="text"],
+body[class^="template-collective-"] .field input[type="text"],
 body.template-collective-treatment-treatment .field input[type="text"] {
     padding: 10px 18px !important;
     width: 100%;
@@ -7919,7 +7919,7 @@ body.template-collective-treatment-treatment .field input[type="text"] {
 
 body.template-collective-object-object .field input[type="text"],
 body.template-collective-exhibition-exhibition .field input[type="text"],
-body.template-collective-personorinstitution-personorinstitution .field input[type="text"],
+body[class^="template-collective-"] .field input[type="text"],
 body.template-collective-treatment-treatment .field input[type="text"]  {
     width: 100%;
 }
@@ -7935,7 +7935,7 @@ body.template-collective-treatment-treatment .field input[type="text"]  {
 
 body.template-collective-object-object .tooltip-inner,
 body.template-collective-exhibition-exhibition .tooltip-inner,
-body.template-collective-personorinstitution-personorinstitution .tooltip-inner,
+body[class^="template-collective-"] .tooltip-inner,
 body.template-collective-treatment-treatment .tooltip-inner,
 .template-edit .tooltip-inner {
     padding: 15px;
@@ -7991,7 +7991,7 @@ body.template-collective-treatment-treatment .tooltip-inner,
 
 body.template-collective-object-object .datagridwidget-table-view th,
 body.template-collective-exhibition-exhibition .datagridwidget-table-view th,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-table-view th,
+body[class^="template-collective-"] .datagridwidget-table-view th,
 body.template-collective-treatment-treatment .datagridwidget-table-view th {
     display: table-cell;
     background: #ffffff !important;
@@ -8025,7 +8025,7 @@ body.template-collective-treatment-treatment .datagridwidget-table-view th {
 
 body.template-collective-object-object .datagridwidget-table-view,
 body.template-collective-exhibition-exhibition .datagridwidget-table-view,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-table-view,
+body[class^="template-collective-"] .datagridwidget-table-view,
 body.template-collective-treatment-treatment .datagridwidget-table-view {
     width: 100% !important;
 }
@@ -8037,7 +8037,7 @@ body.template-collective-treatment-treatment .datagridwidget-table-view {
 .template-edit #fieldset-default,
 body.template-collective-object-object #fieldset-default,
 body.template-collective-treatment-treatment #fieldset-default,
-body.template-collective-personorinstitution-personorinstitution #fieldset-default,
+body[class^="template-collective-"] #fieldset-default,
 body.template-collective-exhibition-exhibition #fieldset-default {
     padding-top: 40px;
 }
@@ -8045,7 +8045,7 @@ body.template-collective-exhibition-exhibition #fieldset-default {
 .template-edit #content .form ul.nav,
 body.template-collective-object-object #content .form ul.nav,
 body.template-collective-exhibition-exhibition #content .form ul.nav,
-body.template-collective-personorinstitution-personorinstitution #content .form ul.nav,
+body[class^="template-collective-"] #content .form ul.nav,
 body.template-collective-treatment-treatment #content .form ul.nav {
     margin-left: 0px;
 }
@@ -8055,7 +8055,7 @@ body.template-collective-treatment-treatment #content .form ul.nav {
 @media (max-width: 480px) {
     body.template-collective-object-object #content-core .form:first-child,
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
-    body.template-collective-personorinstitution-personorinstitution #content-core .form:first-child,
+    body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
     .template-edit #content-core {
         padding-left: 20px;
@@ -8131,8 +8131,8 @@ body.template-collective-object-object.portaltype-object div.formControls,
 body.template-collective-object-object.portaltype-book div.formControls,
 body.template-collective-exhibition-exhibition div.formControls,
 body.template-collective-exhibition-exhibition.portaltype-exhibition div.formControls,
-body.template-collective-personorinstitution-personorinstitution div.formControls,
-body.template-collective-personorinstitution-personorinstitution.portaltype-personorinstitution div.formControls,
+body[class^="template-collective-"] div.formControls,
+body[class^="template-collective-"].portaltype-personorinstitution div.formControls,
 body.template-collective-treatment-treatment div.formControls,
 body.template-collective-treatment-treatment.portaltype-treatment div.formControls {
     margin: 0;
@@ -8144,7 +8144,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
 @media (min-width: 481px) and (max-width: 767px) {
     body.template-collective-object-object #content-core .form:first-child,
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
-    body.template-collective-personorinstitution-personorinstitution #content-core .form:first-child,
+    body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
     .template-edit #content-core {
         padding-left: 40px;
@@ -8206,7 +8206,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
 @media (min-width: 768px) and (max-width: 991px) {
     body.template-collective-object-object #content-core .form:first-child,
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
-    body.template-collective-personorinstitution-personorinstitution #content-core .form:first-child,
+    body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
     .template-edit #content-core {
         padding-left: 40px;
@@ -8289,7 +8289,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
 .template-edit .datagridwidget-block-edit-cell,
 body.template-collective-object-object .datagridwidget-block-edit-cell,
 body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-block-edit-cell,
+body[class^="template-collective-"] .datagridwidget-block-edit-cell,
 body.template-collective-treatment-treatment .datagridwidget-block-edit-cell {
     padding-left: 0px;
 }
@@ -8297,7 +8297,7 @@ body.template-collective-treatment-treatment .datagridwidget-block-edit-cell {
 .template-edit .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-object-object .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell .datagridwidget-block,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-block-edit-cell .datagridwidget-block,
+body[class^="template-collective-"] .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-treatment-treatment .datagridwidget-block-edit-cell .datagridwidget-block {
     padding: 0px;
     padding-bottom: 0.5em;
@@ -8310,8 +8310,8 @@ body.template-collective-object-object .datagridwidget-body .datagridwidget-bloc
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
 
@@ -8323,7 +8323,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
     font-size: 1.00em;
     font-family: "Merriweather", serif;
@@ -8333,7 +8333,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 .template-edit .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
 body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell input,
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell input {
     width: 72.7%;
 }
@@ -8733,7 +8733,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 .template-edit .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-object-object .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-exhibition-exhibition .datagridwidget-body select.select-widget.choice-field,
-body.template-collective-personorinstitution-personorinstitution .datagridwidget-body select.select-widget.choice-field,
+body[class^="template-collective-"] .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-treatment-treatment .datagridwidget-body select.select-widget.choice-field {
     width: 72.7%;
     vertical-align: middle !important;
@@ -8826,8 +8826,8 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
     body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
-    body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-    body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+    body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+    body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
     body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell div.label,
     body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
         width: 100% !important;
@@ -8836,7 +8836,7 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
     .template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
-    body.template-collective-personorinstitution-personorinstitution .datagridwidget-body .datagridwidget-block-edit-cell input,
+    body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell input  {
         width: 100% !important;
     }
@@ -8977,7 +8977,7 @@ body.portaltype-object.template-edit #content-core #editing-bar,
 body.portaltype-book.template-edit #content-core #editing-bar,
 body.template-collective-object-object #content-core #editing-bar,
 body.template-collective-exhibition-exhibition #content-core #editing-bar,
-body.template-collective-personorinstitution-personorinstitution #content-core #editing-bar,
+body[class^="template-collective-"] #content-core #editing-bar,
 body.template-collective-treatment-treatment #content-core #editing-bar {
     display: block !important;
 }
@@ -8986,7 +8986,7 @@ body.portaltype-object.template-edit #content-core #editing-bar,
 body.portaltype-book.template-edit #content-core #editing-bar,
 body.template-collective-object-object #content-core #editing-bar,
 body.template-collective-exhibition-exhibition #content-core #editing-bar,
-body.template-collective-personorinstitution-personorinstitution #content-core #editing-bar,
+body[class^="template-collective-"] #content-core #editing-bar,
 body.template-collective-treatment-treatment #content-core #editing-bar {
     padding-top: 0px;
     padding-bottom: 40px;
@@ -9025,7 +9025,7 @@ body.portaltype-object.template-edit #content-core #editing-bar ul#edit-content-
 body.portaltype-book.template-edit #content-core #editing-bar ul#edit-content-views,
 body.template-collective-object-object #content-core #editing-bar ul#edit-content-views,
 body.template-collective-exhibition-exhibition #content-core #editing-bar ul#edit-content-views,
-body.template-collective-personorinstitution-personorinstitution #content-core #editing-bar ul#edit-content-views,
+body[class^="template-collective-"] #content-core #editing-bar ul#edit-content-views,
 body.template-collective-treatment-treatment #content-core #editing-bar ul#edit-content-views {
     padding-top: 0px;
     width: 100% !important;
@@ -9041,8 +9041,8 @@ body.template-collective-object-object #portal-header,
 body.template-collective-object-object header,
 body.template-collective-exhibition-exhibition #portal-header,
 body.template-collective-exhibition-exhibition header,
-body.template-collective-personorinstitution-personorinstitution #portal-header,
-body.template-collective-personorinstitution-personorinstitution header,
+body[class^="template-collective-"] #portal-header,
+body[class^="template-collective-"] header,
 body.template-collective-treatment-treatment #portal-header,
 body.template-collective-treatment-treatment header {
     background-color: #f5f5f5 !important;
@@ -9059,7 +9059,7 @@ body.template-collective-treatment-treatment header {
 
 body.template-collective-object-object .documentFirstHeading,
 body.template-collective-exhibition-exhibition .documentFirstHeading,
-body.template-collective-personorinstitution-personorinstitution .documentFirstHeading,
+body[class^="template-collective-"] .documentFirstHeading,
 body.template-collective-treatment-treatment .documentFirstHeading {
     padding-bottom: 300px !important;
     margin-bottom: 0px !important;
