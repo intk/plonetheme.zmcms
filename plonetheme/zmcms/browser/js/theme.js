@@ -354,7 +354,7 @@ var initiate_first_tab = function(timeout) {
 }
 
 // Set plone form max tabs
-ploneFormTabbing.max_tabs = 1;
+ploneFormTabbing.max_tabs = 0;
 
 
 var change_taxonomic_query = function(option) {
