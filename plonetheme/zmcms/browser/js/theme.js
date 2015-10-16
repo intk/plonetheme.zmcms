@@ -412,7 +412,7 @@ $(document).ready(function() {
     } else {
 
     }
-
+    // NEEDS FIX
     if ($("body").hasClass("template-collective-taxonomie-taxonomie") || $("body.template-edit.portaltype-collection").length > 0) {
         setTimeout(function() {
             if (!$("body").hasClass("pat-plone-widgets")) {

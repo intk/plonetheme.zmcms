@@ -605,11 +605,11 @@ class get_nav_objects(BrowserView):
                 taxonomy = self.get_field_from_object(field, object)
                 if len(taxonomy) > 0:
                     taxonomy_elem = taxonomy[0]
-                    scientific_name = taxonomy_elem['scientific_name']
+                    #scientific_name = taxonomy_elem['scientific_name']
                     #common_name = taxonomy_elem['common_name']
 
-                    if scientific_name != "" and scientific_name != " ":
-                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
+                    #if scientific_name != "" and scientific_name != " ":
+                    #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
                     #if common_name != "" and common_name != " ":
                     #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
 
@@ -1756,11 +1756,11 @@ class get_fields(BrowserView):
                 taxonomy = self.get_field_from_object(field, object)
                 if len(taxonomy) > 0:
                     taxonomy_elem = taxonomy[0]
-                    scientific_name = taxonomy_elem['scientific_name']
+                    #scientific_name = taxonomy_elem['scientific_name']
                     #common_name = taxonomy_elem['common_name']
 
-                    if scientific_name != "" and scientific_name != " ":
-                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
+                    #if scientific_name != "" and scientific_name != " ":
+                    #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
                     #if common_name != "" and common_name != " ":
                     #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
 
