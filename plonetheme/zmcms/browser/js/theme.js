@@ -413,6 +413,14 @@ $(document).ready(function() {
 
     }
 
+    if ($("body").hasClass("template-collective-taxonomie-taxonomie")) {
+        setTimeout(function() {
+            if (!$("body").hasClass("pat-plone-widgets")) {
+                init_widgets($("body"));
+            }
+        }, 1000);
+    }
+
     if (!$("body").hasClass('template-edit')) {
         create_taxonomic_events();
     }
