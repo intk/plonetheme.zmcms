@@ -7244,7 +7244,7 @@ body.portaltype-portlet-page.userrole-authenticated #portal-logo img {
     margin: 0 auto;
 }
 
-body.template-collective-object-object #content-core .form:first-child,
+body[class^="template-collective-"] #content-core .form:first-child,
 body.template-collective-exhibition-exhibition #content-core .form:first-child,
 body[class^="template-collective-"] #content-core .form:first-child,
 body.template-collective-treatment-treatment #content-core .form:first-child {
@@ -7282,7 +7282,7 @@ body.template-sharing  #content .documentDescription {
 
 .template-edit textarea.text-field,
 body.template-sharing textarea.text-field,
-body.template-collective-object-object textarea.text-field,
+body[class^="template-collective-"] textarea.text-field,
 body.template-collective-exhibition-exhibition textarea.text-field,
 body[class^="template-collective-"] textarea.text-field,
 body.template-collective-treatment-treatment textarea.text-field {
@@ -7397,7 +7397,7 @@ body.mobile .overlay-image {
     content: url('++resource++plonetheme.zmcms.images/logo-preto.png');
 }
 
-body.template-collective-object-object #portal-logo img,
+body[class^="template-collective-"] #portal-logo img,
 body.template-collective-exhibition-exhibition #portal-logo img,
 body[class^="template-collective-"] #portal-logo img,
 body.template-collective-treatment-treatment #portal-logo img {
@@ -7917,7 +7917,7 @@ body.template-collective-treatment-treatment .field input[type="text"] {
     width: 100%;
 }
 
-body.template-collective-object-object .field input[type="text"],
+body[class^="template-collective-"] .field input[type="text"],
 body.template-collective-exhibition-exhibition .field input[type="text"],
 body[class^="template-collective-"] .field input[type="text"],
 body.template-collective-treatment-treatment .field input[type="text"]  {
@@ -7933,7 +7933,7 @@ body.template-collective-treatment-treatment .field input[type="text"]  {
     text-align: left;
 }
 
-body.template-collective-object-object .tooltip-inner,
+body[class^="template-collective-"] .tooltip-inner,
 body.template-collective-exhibition-exhibition .tooltip-inner,
 body[class^="template-collective-"] .tooltip-inner,
 body.template-collective-treatment-treatment .tooltip-inner,
@@ -7989,7 +7989,7 @@ body.template-collective-treatment-treatment .tooltip-inner,
     padding-right: 10px;
 }
 
-body.template-collective-object-object .datagridwidget-table-view th,
+body[class^="template-collective-"] .datagridwidget-table-view th,
 body.template-collective-exhibition-exhibition .datagridwidget-table-view th,
 body[class^="template-collective-"] .datagridwidget-table-view th,
 body.template-collective-treatment-treatment .datagridwidget-table-view th {
@@ -8023,7 +8023,7 @@ body.template-collective-treatment-treatment .datagridwidget-table-view th {
     width: 100% !important;
 }
 
-body.template-collective-object-object .datagridwidget-table-view,
+body[class^="template-collective-"] .datagridwidget-table-view,
 body.template-collective-exhibition-exhibition .datagridwidget-table-view,
 body[class^="template-collective-"] .datagridwidget-table-view,
 body.template-collective-treatment-treatment .datagridwidget-table-view {
@@ -8035,7 +8035,7 @@ body.template-collective-treatment-treatment .datagridwidget-table-view {
 }
 
 .template-edit #fieldset-default,
-body.template-collective-object-object #fieldset-default,
+body[class^="template-collective-"] #fieldset-default,
 body.template-collective-treatment-treatment #fieldset-default,
 body[class^="template-collective-"] #fieldset-default,
 body.template-collective-exhibition-exhibition #fieldset-default {
@@ -8043,7 +8043,7 @@ body.template-collective-exhibition-exhibition #fieldset-default {
 }
 
 .template-edit #content .form ul.nav,
-body.template-collective-object-object #content .form ul.nav,
+body[class^="template-collective-"] #content .form ul.nav,
 body.template-collective-exhibition-exhibition #content .form ul.nav,
 body[class^="template-collective-"] #content .form ul.nav,
 body.template-collective-treatment-treatment #content .form ul.nav {
@@ -8053,7 +8053,7 @@ body.template-collective-treatment-treatment #content .form ul.nav {
 /* Object Backend */
 
 @media (max-width: 480px) {
-    body.template-collective-object-object #content-core .form:first-child,
+    body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
@@ -8126,9 +8126,9 @@ body.template-collective-treatment-treatment #content .form ul.nav {
 .template-edit div.formControls,
 .template-edit.portaltype-object div.formControls,
 .template-edit.portaltype-book div.formControls,
-body.template-collective-object-object div.formControls,
-body.template-collective-object-object.portaltype-object div.formControls,
-body.template-collective-object-object.portaltype-book div.formControls,
+body[class^="template-collective-"] div.formControls,
+body[class^="template-collective-"].portaltype-object div.formControls,
+body[class^="template-collective-"].portaltype-book div.formControls,
 body.template-collective-exhibition-exhibition div.formControls,
 body.template-collective-exhibition-exhibition.portaltype-exhibition div.formControls,
 body[class^="template-collective-"] div.formControls,
@@ -8142,7 +8142,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
   
 
 @media (min-width: 481px) and (max-width: 767px) {
-    body.template-collective-object-object #content-core .form:first-child,
+    body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
@@ -8204,7 +8204,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    body.template-collective-object-object #content-core .form:first-child,
+    body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-exhibition-exhibition #content-core .form:first-child,
     body[class^="template-collective-"] #content-core .form:first-child,
     body.template-collective-treatment-treatment #content-core .form:first-child,
@@ -8287,7 +8287,7 @@ body.template-collective-treatment-treatment.portaltype-treatment div.formContro
 
 /* BlockDataGrid */
 .template-edit .datagridwidget-block-edit-cell,
-body.template-collective-object-object .datagridwidget-block-edit-cell,
+body[class^="template-collective-"] .datagridwidget-block-edit-cell,
 body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell,
 body[class^="template-collective-"] .datagridwidget-block-edit-cell,
 body.template-collective-treatment-treatment .datagridwidget-block-edit-cell {
@@ -8295,7 +8295,7 @@ body.template-collective-treatment-treatment .datagridwidget-block-edit-cell {
 }
 
 .template-edit .datagridwidget-block-edit-cell .datagridwidget-block,
-body.template-collective-object-object .datagridwidget-block-edit-cell .datagridwidget-block,
+body[class^="template-collective-"] .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-exhibition-exhibition .datagridwidget-block-edit-cell .datagridwidget-block,
 body[class^="template-collective-"] .datagridwidget-block-edit-cell .datagridwidget-block,
 body.template-collective-treatment-treatment .datagridwidget-block-edit-cell .datagridwidget-block {
@@ -8306,8 +8306,8 @@ body.template-collective-treatment-treatment .datagridwidget-block-edit-cell .da
 
 .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label,
@@ -8321,7 +8321,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell div.label label {
@@ -8331,7 +8331,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 .template-edit .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
-body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
+body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell input:not(.searchButton),
 body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
 body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell input,
 body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell input {
@@ -8731,7 +8731,7 @@ body.template-collective-treatment-treatment .datagridwidget-body .datagridwidge
 }
 
 .template-edit .datagridwidget-body select.select-widget.choice-field,
-body.template-collective-object-object .datagridwidget-body select.select-widget.choice-field,
+body[class^="template-collective-"] .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-exhibition-exhibition .datagridwidget-body select.select-widget.choice-field,
 body[class^="template-collective-"] .datagridwidget-body select.select-widget.choice-field,
 body.template-collective-treatment-treatment .datagridwidget-body select.select-widget.choice-field {
@@ -8822,8 +8822,8 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 
     .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label,
     .template-edit .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
-    body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label,
-    body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
+    body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label,
+    body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell div.label label,
     body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell div.label,
@@ -8834,7 +8834,7 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
     }
 
     .template-edit .datagridwidget-body .datagridwidget-block-edit-cell input,
-    body.template-collective-object-object .datagridwidget-body .datagridwidget-block-edit-cell input,
+    body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-exhibition-exhibition .datagridwidget-body .datagridwidget-block-edit-cell input,
     body[class^="template-collective-"] .datagridwidget-body .datagridwidget-block-edit-cell input,
     body.template-collective-treatment-treatment .datagridwidget-body .datagridwidget-block-edit-cell input  {
@@ -8975,7 +8975,7 @@ body.template-collective-treatment-treatment .datagridwidget-body select.select-
 
 body.portaltype-object.template-edit #content-core #editing-bar,
 body.portaltype-book.template-edit #content-core #editing-bar,
-body.template-collective-object-object #content-core #editing-bar,
+body[class^="template-collective-"] #content-core #editing-bar,
 body.template-collective-exhibition-exhibition #content-core #editing-bar,
 body[class^="template-collective-"] #content-core #editing-bar,
 body.template-collective-treatment-treatment #content-core #editing-bar {
@@ -8984,7 +8984,7 @@ body.template-collective-treatment-treatment #content-core #editing-bar {
 
 body.portaltype-object.template-edit #content-core #editing-bar,
 body.portaltype-book.template-edit #content-core #editing-bar,
-body.template-collective-object-object #content-core #editing-bar,
+body[class^="template-collective-"] #content-core #editing-bar,
 body.template-collective-exhibition-exhibition #content-core #editing-bar,
 body[class^="template-collective-"] #content-core #editing-bar,
 body.template-collective-treatment-treatment #content-core #editing-bar {
@@ -9023,7 +9023,7 @@ body.portaltype-treatment.template-collective-treatment-treatment {
 
 body.portaltype-object.template-edit #content-core #editing-bar ul#edit-content-views,
 body.portaltype-book.template-edit #content-core #editing-bar ul#edit-content-views,
-body.template-collective-object-object #content-core #editing-bar ul#edit-content-views,
+body[class^="template-collective-"] #content-core #editing-bar ul#edit-content-views,
 body.template-collective-exhibition-exhibition #content-core #editing-bar ul#edit-content-views,
 body[class^="template-collective-"] #content-core #editing-bar ul#edit-content-views,
 body.template-collective-treatment-treatment #content-core #editing-bar ul#edit-content-views {
@@ -9037,8 +9037,8 @@ body.template-collective-treatment-treatment #content-core #editing-bar ul#edit-
 .template-edit.portaltype-object header,
 .template-edit.portaltype-book #portal-header,
 .template-edit.portaltype-book header,
-body.template-collective-object-object #portal-header,
-body.template-collective-object-object header,
+body[class^="template-collective-"] #portal-header,
+body[class^="template-collective-"] header,
 body.template-collective-exhibition-exhibition #portal-header,
 body.template-collective-exhibition-exhibition header,
 body[class^="template-collective-"] #portal-header,
@@ -9057,7 +9057,7 @@ body.template-collective-treatment-treatment header {
     display: block;
 }
 
-body.template-collective-object-object .documentFirstHeading,
+body[class^="template-collective-"] .documentFirstHeading,
 body.template-collective-exhibition-exhibition .documentFirstHeading,
 body[class^="template-collective-"] .documentFirstHeading,
 body.template-collective-treatment-treatment .documentFirstHeading {
@@ -9873,7 +9873,7 @@ textarea {
     clear: both;
 }
 
-body.template-collective-object-object #formfield-form-widgets-productionDating_productionDating textarea {
+body[class^="template-collective-"] #formfield-form-widgets-productionDating_productionDating textarea {
     width: 72.7% !important;
 }
 
