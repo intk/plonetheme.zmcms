@@ -390,6 +390,14 @@ var create_taxonomic_events = function() {
     $("#formfield-form-widgets-identification_taxonomy .datagridwidget-widget-rank select").change(function() {
         change_taxonomic_query($(this));
     });
+
+    $("#formfield-form-widgets-iconography_contentSubjects .datagridwidget-widget-taxonomicRank select").change(function() {
+        change_taxonomic_query($(this));
+    });
+
+    $("#formfield-form-widgets-associations_associatedSubjects .datagridwidget-widget-taxonomicRank select").change(function() {
+        change_taxonomic_query($(this));
+    });
 }
 
 $(document).ready(function() {

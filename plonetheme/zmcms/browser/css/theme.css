@@ -9884,3 +9884,12 @@ body[class^="template-collective-"] #formfield-form-widgets-productionDating_pro
 .template-edit #formfield-form-widgets-identification_taxonomy .datagridwidget-widget-scientific_name span.pattern-relateditems-path {
     display: none !important;
 }
+
+.template-edit #formfield-form-widgets-iconography_contentSubjects .datagridwidget-widget-scientificName span.pattern-relateditems-path {
+    display: none !important;
+}
+
+.template-edit #formfield-form-widgets-associations_associatedSubjects .datagridwidget-widget-scientificName span.pattern-relateditems-path {
+    display: none !important;
+}
+

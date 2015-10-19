@@ -287,7 +287,9 @@ class get_nav_objects(BrowserView):
 
     def get_batch(self, collection_object, start, pagesize=33):
         collection_obj = collection_object.getObject()
+
         results = collection_obj.queryCatalog(batch=True, b_start=int(start), b_size=pagesize)
+
         return results
 
     """
@@ -361,6 +363,8 @@ class get_nav_objects(BrowserView):
 
     def get_collection_from_catalog(self, collection_id):
         catalog = getToolByName(self.context, 'portal_catalog')
+        #collection_brain = catalog(UID=collection_id)
+        #collection_object = collection_brain.getObject()
         search_results = catalog.searchResults({'UID':collection_id})
         if len(search_results) > 0:
             collection_object = search_results[0]
@@ -383,7 +387,6 @@ class get_nav_objects(BrowserView):
         for obj in results:
             if obj != None:
                 obj_media = ICanContainMedia(obj.getObject()).getLeadMedia()
-                print obj
                 if obj_media != None:
                     items['list'].append({'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': ""})
 
