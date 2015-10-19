@@ -17,6 +17,8 @@ from zope.intid.interfaces import IIntIds
 from zc.relation.interfaces import ICatalog
 from zope.security import checkPermission
 from plone import api
+from plone.app.uuid.utils import uuidToCatalogBrain, uuidToObject
+
 
 MessageFactory = msgfactory('collective.object')
 _book = msgfactory('collective.bibliotheek')
@@ -276,6 +278,7 @@ class get_nav_objects(BrowserView):
             collection_obj = collection_object
         else:
             collection_obj = collection_object.getObject()
+
         if is_folder:
             folder_path = '/'.join(collection_obj.getPhysicalPath())
             results = catalog(path={'query': folder_path, 'depth': 1})
@@ -300,11 +303,9 @@ class get_nav_objects(BrowserView):
         
         if "/" not in start:
             object_id = self.context.getId()
-            catalog = getToolByName(self.context, 'portal_catalog')
-            search_results = catalog.searchResults({'UID':collection_id})
+            collection_object = uuidToCatalogBrain(collection_id)
 
-            if len(search_results) > 0:
-                collection_object = search_results[0]
+            if collection_object:
                 if collection_object.portal_type == "Collection":
                     ## Get Batch of collection
                     results = self.get_batch(collection_object, start, pagesize)
@@ -336,11 +337,9 @@ class get_nav_objects(BrowserView):
 
         if "/" not in start:
             object_id = self.context.getId()
-            catalog = getToolByName(self.context, 'portal_catalog')
-            search_results = catalog.searchResults({'UID':collection_id})
+            collection_object = uuidToCatalogBrain(collection_id)
 
-            if len(search_results) > 0:
-                collection_object = search_results[0]
+            if collection_object:
                 if collection_object.portal_type == "Collection":
                     results = self.get_batch(collection_object, start, pagesize)
                     object_idx = self.get_object_idx(results, object_id)
@@ -362,12 +361,9 @@ class get_nav_objects(BrowserView):
                             return first_element
 
     def get_collection_from_catalog(self, collection_id):
-        catalog = getToolByName(self.context, 'portal_catalog')
-        #collection_brain = catalog(UID=collection_id)
-        #collection_object = collection_brain.getObject()
-        search_results = catalog.searchResults({'UID':collection_id})
-        if len(search_results) > 0:
-            collection_object = search_results[0]
+        uuid = collection_id
+        collection_object = uuidToCatalogBrain(collection_id)
+        if collection_object:
             if collection_object.portal_type == "Collection":
                 return collection_object
 
@@ -386,6 +382,7 @@ class get_nav_objects(BrowserView):
 
         for obj in results:
             if obj != None:
+                print obj.leadMedia
                 obj_media = ICanContainMedia(obj.getObject()).getLeadMedia()
                 if obj_media != None:
                     items['list'].append({'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': ""})
@@ -707,13 +704,9 @@ class get_nav_objects(BrowserView):
         return result
 
     def get_url_by_uid(self, uid):
-        catalog = getToolByName(self.context, 'portal_catalog')
-        
-        brains = catalog(UID=uid)
+        brains = uuidToCatalogBrain(uid)
         if brains:
-            obj = brains[0]
-            return obj.getURL()
-
+            return brains.getURL()
         return ""
 
     def generate_production_dating(self, production_dating_tab, object_schema, fields, object, field_schema):
@@ -922,11 +915,9 @@ class get_nav_objects(BrowserView):
         related_exhibitions = []
 
         def get_url_by_uid(context, uid):
-            catalog = context.portal_catalog
-            brains = catalog(UID=uid)
+            brains = uuidToCatalogBrain(uid)
             if brains:
-                obj = brains[0]
-                return obj.getURL()
+                return brains.getURL()
 
             return ""
 
@@ -1858,14 +1849,12 @@ class get_fields(BrowserView):
         return result
 
     def get_url_by_uid(self, uid):
-        catalog = getToolByName(self.context, 'portal_catalog')
-        
-        brains = catalog(UID=uid)
+        brains = uuidToCatalogBrain(uid)
         if brains:
-            obj = brains[0]
-            return obj.getURL()
+            return brains.getURL()
 
         return ""
+
 
     def generate_production_dating(self, production_dating_tab, object_schema, fields, object, field_schema):
         production_field = self.get_field_from_object('productionDating_productionDating', object)
@@ -2073,11 +2062,9 @@ class get_fields(BrowserView):
         related_exhibitions = []
 
         def get_url_by_uid(context, uid):
-            catalog = context.portal_catalog
-            brains = catalog(UID=uid)
-            if brains:
-                obj = brains[0]
-                return obj.getURL()
+            brain = uuidToCatalogBrain(uid)
+            if brain:
+                return brain.getURL()
 
             return ""
 
@@ -2651,12 +2638,12 @@ class CollectionSlideshow(BrowserView):
     def getImageObject(self, item):
         if item.portal_type == "Image":
             return item.getObject()
+
         if item.hasMedia and item.leadMedia != None:
-            catalog = getToolByName(self.context, 'portal_catalog')
-            media_brains = catalog.queryCatalog({"UID": item.leadMedia})
-            media = media_brains[0]
-            media_object = media.getObject()
-            return "%s%s" %(media_object.absolute_url(), "/@@images/image/large")
+            uuid = item.leadMedia
+            media_object = uuidToObject(uuid)
+            if media_object:
+                return "%s%s" %(media_object.absolute_url(), "/@@images/image/large")
 
         return ""
 
