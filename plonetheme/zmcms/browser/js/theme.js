@@ -369,7 +369,7 @@ var change_taxonomic_query = function(option) {
     var attributes = select_container.patternRelateditems.options.attributes;
 
     $(related_input).val('');
-    parent.find('li.select2-search-choice').remove();
+    parent.find('.pattern-relateditems-container li.select2-search-choice').remove();
 
     select_container.select2.opts.ajax.data = function(term, page) {
         var data = {
