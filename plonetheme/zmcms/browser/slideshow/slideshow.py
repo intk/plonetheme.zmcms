@@ -382,7 +382,6 @@ class get_nav_objects(BrowserView):
 
         for obj in results:
             if obj != None:
-                print obj.leadMedia
                 obj_media = ICanContainMedia(obj.getObject()).getLeadMedia()
                 if obj_media != None:
                     items['list'].append({'url':obj.getURL(),'image_url': obj_media.absolute_url()+'/@@images/image/large', 'object_id': obj.getId(), 'title':obj.Title(), 'description': obj.Description(), 'body': ""})
@@ -1420,6 +1419,57 @@ class get_nav_objects(BrowserView):
             return object.text.output
         else:
             return ""
+
+
+    def _getJSON(self):
+        from plone.app.contenttypes.behaviors.collection import ICollection
+        buffer_size = 10
+
+        object_id = self.context.getId()
+
+        b_start = self.request.get('b_start')
+        b_start = int(b_start)
+        collection_id = self.request.get('collection_id')
+        req_buffer = self.request.get('bulk')
+        if req_buffer:
+            buffer_size = int(req_buffer)
+
+        collection_object = uuidToObject(collection_id)
+
+        if collection_object.portal_type == "Collection":
+            b_size = ICollection(collection_object).item_count
+            sort_on = ICollection(collection_object).sort_on
+
+            batch = collection_object.queryCatalog(batch=True, b_size=b_size, b_start=b_start, sort_on=sort_on)
+            results = list(batch._sequence)
+            collection_total_size = batch._sequence.actual_result_count
+            object_index = self.get_object_idx(results, object_id, False)
+            real_object_index = b_start + object_index
+
+            if real_object_index - buffer_size < 0:
+                new_size = buffer_size - abs(real_object_index-buffer_size)
+                prev_batch = collection_object.queryCatalog(batch=True, b_size=new_size, b_start=0, sort_on=sort_on)
+                prev_items = prev_batch._sequence
+
+            elif real_object_index - buffer_size >= 0:
+                new_start = real_object_index - buffer_size
+                prev_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=new_start, sort_on=sort_on)
+                prev_items = prev_batch._sequence
+
+            next_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=real_object_index, sort_on=sort_on)
+            next_items = next_batch._sequence
+
+            final_items = list(next_items) + list(reversed(prev_items))
+            items = self.build_json_with_list(final_items, 0, False, False, collection_total_size)
+            items['index_obj'] = real_object_index+1
+
+            return json.dumps(items)
+
+        return json.dumps([])
+
+
+
+
 
     def getJSON(self):
         pagesize = 33
