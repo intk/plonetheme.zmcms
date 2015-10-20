@@ -1264,7 +1264,7 @@ slickSlideshow.addBulkElements = function(index) {
 	current_url = location_query_split[0];
 
 	// Set request URL
-	var add_object = slickSlideshow.slides[index];
+	var add_object = slickSlideshow.slides[index-1];
 
 	if (slickSlideshow.query != "") {
 		URL = current_url + "/" + request_url + slickSlideshow.query + "&object_id="+add_object.object_id;
