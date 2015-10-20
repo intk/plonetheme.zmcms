@@ -1322,6 +1322,7 @@ slickSlideshow.updateSlideshowLoading = function(current) {
 				slickSlideshow.dangerous_entries += 1;
 				slickSlideshow.dangerous_item = slickSlideshow.bulk*slickSlideshow.dangerous_entries;
 			} else {
+				return false;
 				reset = true;
 				slickSlideshow.reseted = true;
 				slickSlideshow.resetSlideshow(dangerous_zone_end);
