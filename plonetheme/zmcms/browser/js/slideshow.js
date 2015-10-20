@@ -1287,6 +1287,7 @@ slickSlideshow.addBulkElements = function(index) {
 };
 
 slickSlideshow.resetSlideshow = function(item) {
+	return true;
 	var slide_count = slickSlideshow.slideCount;
 	slickSlideshow.$obj.html('');
 	slickSlideshow.$obj.unslick();
