@@ -1454,7 +1454,6 @@ class get_nav_objects(BrowserView):
             next_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=real_object_index, sort_on=sort_on)
             next_items = next_batch._sequence
             collection_total_size = next_items.actual_result_count
-
             final_items = list(next_items) + list(prev_items)
             items = self.build_json_with_list(final_items, 0, False, False, collection_total_size)
             items['index_obj'] = real_object_index+1
