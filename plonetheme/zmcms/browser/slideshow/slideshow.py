@@ -18,7 +18,7 @@ from zc.relation.interfaces import ICatalog
 from zope.security import checkPermission
 from plone import api
 from plone.app.uuid.utils import uuidToCatalogBrain, uuidToObject
-
+from plone.app.contenttypes.behaviors.collection import ICollection
 
 MessageFactory = msgfactory('collective.object')
 _book = msgfactory('collective.bibliotheek')
@@ -1422,7 +1422,7 @@ class get_nav_objects(BrowserView):
             return ""
 
     def _getJSON(self):
-        from plone.app.contenttypes.behaviors.collection import ICollection
+        
         buffer_size = 10
 
         object_id = self.context.getId()
