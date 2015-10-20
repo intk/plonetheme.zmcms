@@ -1420,7 +1420,6 @@ class get_nav_objects(BrowserView):
         else:
             return ""
 
-
     def _getJSON(self):
         from plone.app.contenttypes.behaviors.collection import ICollection
         buffer_size = 10
@@ -1439,12 +1438,7 @@ class get_nav_objects(BrowserView):
         if collection_object.portal_type == "Collection":
             b_size = ICollection(collection_object).item_count
             sort_on = ICollection(collection_object).sort_on
-
-            batch = collection_object.queryCatalog(batch=True, b_size=b_size, b_start=b_start, sort_on=sort_on)
-            results = list(batch._sequence)
-            collection_total_size = batch._sequence.actual_result_count
-            object_index = self.get_object_idx(results, object_id, False)
-            real_object_index = b_start + object_index
+            real_object_index = b_start
 
             if real_object_index - buffer_size < 0:
                 new_size = buffer_size - abs(real_object_index-buffer_size)
@@ -1458,6 +1452,7 @@ class get_nav_objects(BrowserView):
 
             next_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=real_object_index, sort_on=sort_on)
             next_items = next_batch._sequence
+            collection_total_size = next_items.actual_result_count
 
             final_items = list(next_items) + list(reversed(prev_items))
             items = self.build_json_with_list(final_items, 0, False, False, collection_total_size)
@@ -1466,10 +1461,7 @@ class get_nav_objects(BrowserView):
             return json.dumps(items)
 
         return json.dumps([])
-
-
-
-
+        
 
     def getJSON(self):
         pagesize = 33
