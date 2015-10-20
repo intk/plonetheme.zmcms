@@ -283,7 +283,8 @@ class get_nav_objects(BrowserView):
             folder_path = '/'.join(collection_obj.getPhysicalPath())
             results = catalog(path={'query': folder_path, 'depth': 1})
         else:
-            results = collection_obj.queryCatalog(batch=False)
+            sort_on = ICollection(collection_obj).sort_on
+            results = collection_obj.queryCatalog(batch=False, sort_on=sort_on)
 
         #print results
         return results
