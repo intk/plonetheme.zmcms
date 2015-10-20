@@ -1828,8 +1828,6 @@ slickSlideshow.afterChange = function(event) {
 			$(".actions-div").show();
 		}
 
-
-
 		if (slickSlideshow.isCollection) {
 			slickSlideshow.updateSlideCollectionURL($currentSlideObj);
 		}
