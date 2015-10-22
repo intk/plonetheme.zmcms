@@ -421,7 +421,7 @@ $(document).ready(function() {
 
     }
     // NEEDS FIX
-    if ($("body").hasClass("template-collective-taxonomie-taxonomie") || $("body[class^='template-collective-'']").length > 0 || $("body.template-edit.portaltype-collection").length > 0) {
+    if ($("body").hasClass("template-collective-taxonomie-taxonomie") || $("body[class^='template-collective-']").length > 0 || $("body.template-edit.portaltype-collection").length > 0) {
         setTimeout(function() {
             if (!$("body").hasClass("pat-plone-widgets")) {
                 init_widgets($("body"));
