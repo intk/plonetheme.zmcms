@@ -208,6 +208,13 @@ var ajaxLoadTabs = function(fieldset_id) {
                                     var original_fieldset = $("fieldset#"+_id);
                                     original_fieldset.html(fieldset.html());
                                 } 
+
+                            } else if ($("body").hasClass('portaltype-image')) {
+                                if (_id != 'fieldset-default' && _id != 'fieldset-reproduction_data') {
+                                    var fieldset = $(this);
+                                    var original_fieldset = $("fieldset#"+_id);
+                                    original_fieldset.html(fieldset.html());
+                                } 
                             } else {
                                 if (_id != 'fieldset-default' && _id != 'fieldset-identification') {
                                     var fieldset = $(this);
@@ -310,6 +317,14 @@ var change_tab_event = function(tab) {
             init_widgets(element);
             element.addClass('widgets-init');
         }
+    } else if ($("body").hasClass("portaltype-image")) {
+        var data_id = tab.val();
+        var element = $("fieldset#"+data_id);
+        if (!element.hasClass('widgets-init') && data_id != "fieldset-reproduction_data") {
+            init_datagrid(element);
+            init_widgets(element);
+            element.addClass('widgets-init');
+        }
     } else {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
@@ -345,6 +360,8 @@ var initiate_first_tab = function(timeout) {
                     init_widgets($("fieldset#fieldset-resource_dublin_core"));
                 } else if ($("body").hasClass("portaltype-taxonomie")) {
                     init_widgets($("fieldset#fieldset-taxonomic_term_details"));
+                } else if ($("body").hasClass("portaltype-image")) {
+                    init_widgets($("fieldset#fieldset-reproduction_data"));
                 }
             }
         } else {
