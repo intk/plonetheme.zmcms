@@ -254,16 +254,19 @@ var change_tab_event = function(tab) {
     if ($("body").hasClass("template-edit")) {
         var data_id = tab.val().replace("fieldsetlegend-", "");
         var element = $("fieldset#fieldset-"+data_id);
-        
+        fix_textareas_height("fieldset#fieldset-"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "default") {
             init_widgets(element);
             element.addClass('widgets-init');
         }
-        fix_textareas();
+        //fix_textareas();
 
     } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial') || $("body").hasClass("portaltype-article")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-title_author") {
             init_datagrid(element);
             init_widgets(element);
@@ -272,6 +275,8 @@ var change_tab_event = function(tab) {
     } else if ($("body").hasClass("portaltype-personorinstitution")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-name_information") {
             init_datagrid(element);
             init_widgets(element);
@@ -280,6 +285,8 @@ var change_tab_event = function(tab) {
     } else if ($("body").hasClass("portaltype-exhibition")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-exhibitions_details") {
             init_datagrid(element);
             init_widgets(element);
@@ -288,6 +295,8 @@ var change_tab_event = function(tab) {
     } else if ($("body").hasClass("portaltype-treatment")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-treatment_details") {
             init_datagrid(element);
             init_widgets(element);
@@ -296,6 +305,8 @@ var change_tab_event = function(tab) {
     } else if ($("body").hasClass("portaltype-outgoingloan") || $("body").hasClass("portaltype-incomingloan")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-loan_request") {
             init_datagrid(element);
             init_widgets(element);
@@ -304,6 +315,8 @@ var change_tab_event = function(tab) {
     } else if ($("body").hasClass("portaltype-objectentry")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-general") {
             init_datagrid(element);
             init_widgets(element);
@@ -312,6 +325,8 @@ var change_tab_event = function(tab) {
     } else if ($("body").hasClass("portaltype-resource")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-resource_dublin_core") {
             init_datagrid(element);
             init_widgets(element);
@@ -320,6 +335,8 @@ var change_tab_event = function(tab) {
     } else if ($("body").hasClass("portaltype-image")) {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-reproduction_data") {
             init_datagrid(element);
             init_widgets(element);
@@ -328,6 +345,8 @@ var change_tab_event = function(tab) {
     } else {
         var data_id = tab.val();
         var element = $("fieldset#"+data_id);
+        fix_textareas_height("fieldset#"+data_id);
+
         if (!element.hasClass('widgets-init') && data_id != "fieldset-identification") {
             init_datagrid(element);
             init_widgets(element);
@@ -417,6 +436,24 @@ var create_taxonomic_events = function() {
     });
 }
 
+var fix_textareas_height = function(elem) {
+    var textareas = $(elem+" textarea");
+    textareas.each(function() {
+        var height = $(this)[0].scrollHeight;
+
+        if (height != 0) {
+            if (height == 88) {
+                height = 37;
+            }
+
+            if (height != 37) {
+                height = height + 3;
+                $(this).attr("style", "height: "+height+"px;");
+            }
+        }
+    });
+}
+
 $(document).ready(function() {
 
     if (in_allowed_portaltypes()) {
@@ -432,6 +469,7 @@ $(document).ready(function() {
         disable_selecttab();
         if (!$("body").hasClass("template-edit")) {
             disable_inputs(); 
+            fix_textareas_height("body");
         }
         ajaxLoadTabs("all");
     } else {
