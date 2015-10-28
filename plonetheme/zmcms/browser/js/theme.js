@@ -36,7 +36,7 @@ var show_ajax_error = function(textStatus, errorThrown) {
 };
 
 var in_allowed_portaltypes = function() {
-    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-treatment') || $("body").hasClass('portaltype-outgoingloan') || $("body").hasClass("portaltype-incomingloan") || $("body").hasClass("portaltype-objectentry") || $("body").hasClass("portaltype-resource") || $("body").hasClass("portaltype-taxonomie") || $("body").hasClass("portaltype-serial") || $("body").hasClass("portaltype-article")) {
+    if ($("body").hasClass("portaltype-object") || $("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-image") || $("body").hasClass('portaltype-personorinstitution') || $("body").hasClass('portaltype-exhibition') || $("body").hasClass('portaltype-audiovisual') || $("body").hasClass('portaltype-treatment') || $("body").hasClass('portaltype-outgoingloan') || $("body").hasClass("portaltype-incomingloan") || $("body").hasClass("portaltype-objectentry") || $("body").hasClass("portaltype-resource") || $("body").hasClass("portaltype-taxonomie") || $("body").hasClass("portaltype-serial") || $("body").hasClass("portaltype-article")) {
         return true;
     }
     return false;
