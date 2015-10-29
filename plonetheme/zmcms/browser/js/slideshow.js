@@ -1133,7 +1133,7 @@ slickSlideshow.init = function() {
 
 	/* Single content slideshow */
 	if ($slick_slideshow.hasClass("regular")) {
-		console.log("regular");
+
 
 		_logger.log("==== INIT Regular slideshow ====");
 		slickSlideshow.$obj = $($('.slick-slideshow')[0]);
