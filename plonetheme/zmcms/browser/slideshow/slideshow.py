@@ -1493,8 +1493,6 @@ class get_nav_objects(BrowserView):
 
             next_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=real_object_index, sort_on=sort_on)
             next_items = next_batch._sequence
-            print len(next_items)
-            print len(prev_items)
 
             collection_total_size = next_items.actual_result_count
             final_items = list(next_items) + list(prev_items)
