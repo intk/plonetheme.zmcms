@@ -1133,6 +1133,8 @@ slickSlideshow.init = function() {
 
 	/* Single content slideshow */
 	if ($slick_slideshow.hasClass("regular")) {
+		console.log("regular");
+
 		_logger.log("==== INIT Regular slideshow ====");
 		slickSlideshow.$obj = $($('.slick-slideshow')[0]);
 		slickSlideshow.$contentListingObj = $($('.slick-slideshow a')[0]);
@@ -1150,8 +1152,6 @@ slickSlideshow.init = function() {
 		slickSlideshow.getContentListing("regular");
 		
 		$("#slickslideshow").toggleClass("fullscreen");
-
-		
 		return;
 	}
 
@@ -2112,6 +2112,7 @@ slickSlideshow.addSlides = function(slickInited) {
 		}
 	}
 
+	$(".slideshow").addClass("slideshow-loaded");
 	$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 };
 
