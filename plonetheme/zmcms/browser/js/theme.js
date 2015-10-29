@@ -446,18 +446,20 @@ var create_taxonomic_events = function() {
 var fix_textareas_height = function(elem) {
     var textareas = $(elem+" textarea");
     textareas.each(function() {
-        $(this).attr("style", "height:1px;");
-        var height = $(this)[0].scrollHeight;
+        if (!$(this).hasClass("mce_editable")) {
+            $(this).attr("style", "height:1px;");
+            var height = $(this)[0].scrollHeight;
 
-        if (height != 0) {
-            if (height != 37) {
-                height = height + 3;
-                $(this).attr("style", "height: "+height+"px;");
+            if (height != 0) {
+                if (height != 37) {
+                    height = height + 3;
+                    $(this).attr("style", "height: "+height+"px;");
+                } else {
+                    $(this).attr("style", "height: "+height+"px;");
+                }
             } else {
-                $(this).attr("style", "height: "+height+"px;");
+                $(this).attr("style", "height:37px;");
             }
-        } else {
-            $(this).attr("style", "height:37px;");
         }
     });
 }
