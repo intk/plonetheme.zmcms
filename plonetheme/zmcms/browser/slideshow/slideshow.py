@@ -1368,15 +1368,18 @@ class get_nav_objects(BrowserView):
 
         return json.dumps({'list':[], 'object_idx':0})
 
-    """
-    Get bulk of next items
-    """
+
+
+
     def get_next_objects(self):
+        print "get next objects"
         bulk = 10
         b_start = self.request.get('b_start')
         collection_id = self.request.get('collection_id')
         object_id = self.request.get('object_id')
         req_bulk = self.request.get('bulk')
+
+        print b_start, collection_id, object_id, req_bulk
 
         if req_bulk != None:
             buffer_size = int(req_bulk)
@@ -1421,6 +1424,33 @@ class get_nav_objects(BrowserView):
         else:
             return ""
 
+    """
+    Get bulk of next items
+    """
+
+    def _get_next_objects(self):
+        buffer_size = 10
+        b_start = self.request.get('b_start')
+        collection_id = self.request.get('collection_id')
+        object_id = self.request.get('object_id')
+        req_bulk = self.request.get('bulk')
+
+        dangerous_entries = int(object_id)
+
+        collection_object = uuidToObject(collection_id)
+
+        if collection_object.portal_type == "Collection":
+            new_start = dangerous_entries
+            sort_on = ICollection(collection_object).sort_on
+            next_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=new_start, sort_on=sort_on)
+            next_items = next_batch._sequence
+
+            collection_total_size = next_items.actual_result_count
+            items = self.build_json_with_list(next_items, 0, False, False, collection_total_size)
+            return json.dumps(items)
+
+        return json.dumps({'list':[], 'object_idx':0, 'total':False})
+
     def _getJSON(self):
         
         buffer_size = 10
@@ -1460,7 +1490,7 @@ class get_nav_objects(BrowserView):
 
             return json.dumps(items)
 
-        return json.dumps([])
+        return json.dumps({'list':[], 'object_idx':0, 'total':False})
         
 
     def getJSON(self):
@@ -2681,7 +2711,7 @@ class CollectionSlideshow(BrowserView):
         if item.portal_type == "Image":
             return item.getObject()
 
-        if item.hasMedia and item.leadMedia != None:
+        if item.leadMedia != None:
             uuid = item.leadMedia
             media_object = uuidToObject(uuid)
             if media_object:
@@ -2697,7 +2727,7 @@ class CollectionSlideshow(BrowserView):
             results = list(brains)
             
             for item in results[1:]:
-                if item.portal_type == "Link" and item.hasMedia:
+                if item.portal_type == "Link" and item.leadMedia != None:
                     image = self.getImageObject(item)
                     obj_id = obj.getId()
                     obj = item.getObject()
@@ -2716,7 +2746,7 @@ class CollectionSlideshow(BrowserView):
                         "image_path": image
                     });
 
-                elif item.portal_type == "Link" and not item.hasMedia:
+                elif item.portal_type == "Link" and not item.leadMedia != None:
                     obj = item.getObject()
                     obj_id = obj.getId()
                     data_description = obj.Description()

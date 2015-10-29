@@ -1264,16 +1264,12 @@ slickSlideshow.addBulkElements = function(index) {
 	current_url = location_query_split[0];
 
 	// Set request URL
-	var add_object = slickSlideshow.slides[index-1];
-
-	if (add_object == undefined) {
-		add_object = slickSlideshow.slides[index];
-	}
+	var add_object = slickSlideshow.slides[index];
 
 	if (slickSlideshow.query != "") {
-		URL = current_url + "/" + request_url + slickSlideshow.query + "&object_id="+add_object.object_id;
+		URL = current_url + "/" + request_url + slickSlideshow.query + "&object_id="+slickSlideshow.slides.length;
 	} else {
-		URL = current_url + "/" + request_url + "?object_id="+add_object.object_id;
+		URL = current_url + "/" + request_url + "?object_id="+slickSlideshow.slides.length;
 	}
 
 	if ($("body").hasClass('template-multiple_view')) {
@@ -1286,7 +1282,7 @@ slickSlideshow.addBulkElements = function(index) {
 	$.getJSON(URL, function(data) {
 		if (data.list != undefined) {
 			slickSlideshow.total = data.total;
-			slickSlideshow.addSlideInIndex(data.list, index);
+			slickSlideshow.addSlideInIndex(data.list, index-1);
 		}
 	});
 };
