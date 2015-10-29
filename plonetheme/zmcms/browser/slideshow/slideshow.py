@@ -1477,13 +1477,19 @@ class get_nav_objects(BrowserView):
 
             if real_object_index - buffer_size < 0:
                 new_size = buffer_size - abs(real_object_index-buffer_size)
-                prev_batch = collection_object.queryCatalog(batch=True, b_size=new_size, b_start=0, sort_on=sort_on)
-                prev_items = prev_batch._sequence
+                if new_size:
+                    prev_batch = collection_object.queryCatalog(batch=True, b_size=new_size, b_start=0, sort_on=sort_on)
+                    prev_items = prev_batch._sequence
+                else:
+                    prev_items = []
 
             elif real_object_index - buffer_size >= 0:
                 new_start = real_object_index - buffer_size
-                prev_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=new_start, sort_on=sort_on)
-                prev_items = prev_batch._sequence
+                if buffer_size:
+                    prev_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=new_start, sort_on=sort_on)
+                    prev_items = prev_batch._sequence
+                else:
+                    prev_items = []
 
             next_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=real_object_index, sort_on=sort_on)
             next_items = next_batch._sequence
