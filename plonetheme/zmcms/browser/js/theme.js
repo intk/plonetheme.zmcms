@@ -451,6 +451,10 @@ var fix_textareas_height = function(elem) {
             var height = $(this)[0].scrollHeight;
 
             if (height != 0) {
+                if (height == 38) {
+                    height = 37;
+                }
+                
                 if (height != 37) {
                     height = height + 3;
                     $(this).attr("style", "height: "+height+"px;");
