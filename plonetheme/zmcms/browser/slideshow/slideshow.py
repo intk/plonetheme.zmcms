@@ -1441,6 +1441,10 @@ class get_nav_objects(BrowserView):
 
         if collection_object.portal_type == "Collection":
             new_start = dangerous_entries
+
+            if int(b_start) > buffer_size:
+                new_start = int(b_start) + 5
+            
             sort_on = ICollection(collection_object).sort_on
             next_batch = collection_object.queryCatalog(batch=True, b_size=buffer_size, b_start=new_start, sort_on=sort_on)
             next_items = next_batch._sequence
