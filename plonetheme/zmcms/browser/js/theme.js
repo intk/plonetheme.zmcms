@@ -30,7 +30,7 @@ var enable_selecttab = function() {
 };
 
 var show_ajax_error = function(textStatus, errorThrown) {
-    var message = "<span>Status: "+textStatus+"<br>Error: "+errorThrown+"</span>"
+    var message = "<span>Status: "+textStatus+"<br>Message: "+errorThrown+"</span>"
     $("#ajax-error-msg").html(message);
     $("#ajax-error-msg").show();
 };
@@ -229,14 +229,14 @@ var ajaxLoadTabs = function(fieldset_id) {
                         
                         /* Init datagrid */
                         if ($("body").hasClass("template-edit")) {
-                            dataGridField2Functions.init();
+                            //dataGridField2Functions.init();
                             create_taxonomic_events();
                         }
                     }, 50);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     if (errorThrown == "") {
-                        errorThrown = "Unable to get tabs. Please <a href='+"+window.location.href+"+'>refresh</a> the page."
+                        errorThrown = "Unable to get tabs. Please <a href='"+window.location.href+"'>refresh</a> the page."
                     } else {
                         errorThrown = errorThrown + " - Unable to get tabs."
                     }
@@ -255,9 +255,20 @@ var change_tab_event = function(tab) {
         var data_id = tab.val().replace("fieldsetlegend-", "");
         var element = $("fieldset#fieldset-"+data_id);
         
-
         if (!element.hasClass('widgets-init') && data_id != "default") {
+            init_datagrid(element);
             init_widgets(element);
+            
+            var relateditems_elements = element.find('input.pat-relateditems');
+            if (relateditems_elements.length) {
+                related_input = relateditems_elements[0];
+                var select_container = $(related_input).data();
+                var patternRelateditems = select_container.patternRelateditems;
+                if (patternRelateditems == undefined) {
+                    errorThrown = "Interface was not properly initialised. Please <a href='"+window.location.href+"'>refresh</a> the page."
+                    show_ajax_error("Warning", errorThrown);
+                }
+            } 
             element.addClass('widgets-init');
         }
         //fix_textareas();
