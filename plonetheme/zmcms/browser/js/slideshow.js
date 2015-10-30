@@ -73,7 +73,7 @@ slickSlideshow.slideMouseMove = function() {
 
       if (slickSlideshow.moved) {
         if (slickSlideshow.playing != true) {
-          $("#slideshow-controls").fadeIn();
+          $("body:not(.template-collection_view.portaltype-folder) #slideshow-controls").fadeIn();
         }
       } else {
         if (slickSlideshow.$obj.slickCurrentSlide() == 0) {
@@ -1760,23 +1760,55 @@ slickSlideshow.afterChange = function(event) {
 		$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 		
 		if (slickSlideshow.editingMode) {
-			var object_nr = $("#form-widgets-identification_identification_objectNumber");
-			if (object_nr.length) {
-				var title = slide.reproduction_reference;
-				object_number = object_nr.val();
-				if (object_number != "") {
-					if (title != "" && title != null) {
+			if (slide != "") {
+				var object_nr = $("#form-widgets-identification_identification_objectNumber");
+				if (object_nr.length) {
+					var obj_title = document.title.split('—')[0];
+					var title = slide.reproduction_reference;
+					object_number = object_nr.val();
+					if (object_number != "") {
+						if (title != "" && title != null) {
+							var absolute_path = slide.absolute_path;
+							var absolute_path_view = absolute_path + "/view";
+							var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
 
-						var absolute_path = slide.absolute_path;
-						var absolute_path_view = absolute_path + "/view";
-						var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
-
-						var description = object_number + " - " + final_title;
+							if (obj_title != "") {
+								var description = object_number + " - " + obj_title + " "+final_title;
+							} else {
+								var description = object_number + " - " + final_title;
+							}
+						} else {
+							if (obj_title != "") {
+								var description = object_number + " - " + obj_title;
+							} else {
+								var description = object_number;
+							}
+						}
+						$("#slideshow-controls #slide-description").html(description);
 					} else {
-						var description = object_number;
+						var description = title;
+						if (title == null) {
+							if (obj_title != "") {
+								description = obj_title;
+							} else {
+								description = "";
+							}
+						} else {
+							var absolute_path = slide.absolute_path;
+							var absolute_path_view = absolute_path + "/view";
+							var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
+
+							if (obj_title != "") {
+								description = obj_title + " - " + final_title;
+							} else {
+								description = final_title;
+							}
+						}
+						$("#slideshow-controls #slide-description").html(description);
 					}
-					$("#slideshow-controls #slide-description").html(description);
 				} else {
+					var obj_title = document.title.split('—')[0];
+					var title = slide.reproduction_reference;
 					var description = title;
 					if (title == null) {
 						description = "";
@@ -1784,23 +1816,18 @@ slickSlideshow.afterChange = function(event) {
 						var absolute_path = slide.absolute_path;
 						var absolute_path_view = absolute_path + "/view";
 						var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
-						description = final_title;
+						if (obj_title != "") {
+							description = obj_title + " - " + final_title;
+						} else {
+							description = final_title;
+						}
 					}
 					$("#slideshow-controls #slide-description").html(description);
 				}
-			} else {
-				var title = slide.reproduction_reference;
-				var description = title;
-				if (title == null) {
-					description = "";
-				} else {
-					var absolute_path = slide.absolute_path;
-					var absolute_path_view = absolute_path + "/view";
-					var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
-					description = final_title;
-				}
-				$("#slideshow-controls #slide-description").html(description);
 			}
+			if ($("body").hasClass('template-edit')) {
+				//$("#slideshow-controls").show();
+			} 
 		}
 
 		if (!$("body").hasClass('template-book_view') && !$("body").hasClass('template-instrument_view')) {
@@ -2140,33 +2167,51 @@ slickSlideshow.addSlides = function(slickInited) {
 		if (slide != "") {
 			var object_nr = $("#form-widgets-identification_identification_objectNumber");
 			if (object_nr.length) {
+				var obj_title = document.title.split('—')[0];
 				var title = slide.reproduction_reference;
 				object_number = object_nr.val();
 				if (object_number != "") {
 					if (title != "" && title != null) {
-
 						var absolute_path = slide.absolute_path;
 						var absolute_path_view = absolute_path + "/view";
 						var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
 
-						var description = object_number + " - " + final_title;
+						if (obj_title != "") {
+							var description = object_number + " - " + obj_title + " "+final_title;
+						} else {
+							var description = object_number + " - " + final_title;
+						}
 					} else {
-						var description = object_number;
+						if (obj_title != "") {
+							var description = object_number + " - " + obj_title;
+						} else {
+							var description = object_number;
+						}
 					}
 					$("#slideshow-controls #slide-description").html(description);
 				} else {
 					var description = title;
 					if (title == null) {
-						description = "";
+						if (obj_title != "") {
+							description = obj_title;
+						} else {
+							description = "";
+						}
 					} else {
 						var absolute_path = slide.absolute_path;
 						var absolute_path_view = absolute_path + "/view";
 						var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
-						description = final_title;
+
+						if (obj_title != "") {
+							description = obj_title + " - " + final_title;
+						} else {
+							description = final_title;
+						}
 					}
 					$("#slideshow-controls #slide-description").html(description);
 				}
 			} else {
+				var obj_title = document.title.split('—')[0];
 				var title = slide.reproduction_reference;
 				var description = title;
 				if (title == null) {
@@ -2175,12 +2220,18 @@ slickSlideshow.addSlides = function(slickInited) {
 					var absolute_path = slide.absolute_path;
 					var absolute_path_view = absolute_path + "/view";
 					var final_title = "(<a href='"+absolute_path_view+"'>"+title+"</a>)";
-					description = final_title;
+					if (obj_title != "") {
+						description = obj_title + " - " + final_title;
+					} else {
+						description = final_title;
+					}
 				}
 				$("#slideshow-controls #slide-description").html(description);
 			}
 		}
-		$("#slideshow-controls").show();
+		if ($("body").hasClass('template-edit')) {
+			$("#slideshow-controls").show();
+		}
 	}
 
 	$(".slideshow").addClass("slideshow-loaded");
