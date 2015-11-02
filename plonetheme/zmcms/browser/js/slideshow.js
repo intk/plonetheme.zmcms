@@ -1957,7 +1957,7 @@ slickSlideshow.getRegularContent = function() {
 	}
 
 	if (slickInited) {
-		var lead_image_url = $("meta[property='og:image']").attr("content");
+		var lead_image_url = $("meta[property='zm:image']").attr("content");
 		var lead_image_scale = lead_image_url;
 
 		if (lead_image_scale != undefined) {
@@ -2018,10 +2018,10 @@ slickSlideshow.getContentListing = function(object_number) {
 		// Get lead media first
 		if ($("body").hasClass('template-drawing_view') || $("body").hasClass('template-view') || $("body").hasClass('template-instruments_view')) {
 			// DRAWINGS
-			var lead_image_url = $("meta[property='og:image']").attr("content");
+			var lead_image_url = $("meta[property='zm:image']").attr("content");
 			var lead_image_scale = lead_image_url;
-			var title = $("meta[property='og:title']").attr("content");
-			var description = $("meta[property='og:description']").attr("content");
+			var title = $("meta[property='zm:title']").attr("content");
+			var description = $("meta[property='zm:description']").attr("content");
 
 			if (lead_image_scale != undefined) { 
 				slickSlideshow.$obj.append("<div><div class='inner-bg'><img class='first-image' id='first-image' data-lazy='"+lead_image_scale+"'/></div></div>");
@@ -2056,10 +2056,10 @@ slickSlideshow.getContentListing = function(object_number) {
 			
 			var has_double_image = true;
 
-			var lead_image_url = $("meta[property='og:image']").attr("content");
+			var lead_image_url = $("meta[property='zm:image']").attr("content");
 			var lead_image_scale = lead_image_url;
-			var title = $("meta[property='og:title']").attr("content");
-			var description = $("meta[property='og:description']").attr("content");
+			var title = $("meta[property='zm:title']").attr("content");
+			var description = $("meta[property='zm:description']").attr("content");
 
 			var double_lead_image_url = $("meta[property='teylers:double_image']").attr("content");
 			
@@ -2235,7 +2235,7 @@ slickSlideshow.addSlides = function(slickInited) {
 	}
 
 	$(".slideshow").addClass("slideshow-loaded");
+	$(".slideshowWrapper").addClass("slick-init");
 	$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 };
-
 
