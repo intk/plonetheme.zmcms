@@ -2235,7 +2235,6 @@ slickSlideshow.addSlides = function(slickInited) {
 	}
 
 	$(".slideshow").addClass("slideshow-loaded");
-	$(".slideshowWrapper").addClass("slick-init");
 	$("#slideshow-controls #slide-count").html((slickSlideshow.slideCount) + "/" + slickSlideshow.total_items);
 };
 
