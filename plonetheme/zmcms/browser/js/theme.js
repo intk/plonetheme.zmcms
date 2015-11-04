@@ -494,15 +494,14 @@ $(document).ready(function() {
         }, 500);
     }
 
-    if ($("body").hasClass("template-edit")) {
-        $(SELECT_TAB_QUERY).change(function() {
-            change_tab_event($(this));
-        });
-    }
-
     // Load all tabs
     if ($("body").hasClass("portaltype-object") || ($("body:not(.template-edit) div.template-edit").length > 0)) {
-        
+        if (!$("body").hasClass("portaltype-book")) {
+            $(SELECT_TAB_QUERY).change(function() {
+                change_tab_event($(this));
+            });
+        }
+
         if (!$("body").hasClass("template-edit")) {
             disable_inputs();
             setTimeout(function() {
@@ -510,7 +509,7 @@ $(document).ready(function() {
             }, 600);   
         } 
 
-        if ($("body").hasClass("template-edit")) {
+        if (!$("body").hasClass("portaltype-book")) {
             disable_selecttab();
             ajaxLoadTabs("all");
         }
