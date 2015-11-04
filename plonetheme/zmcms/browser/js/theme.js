@@ -379,6 +379,7 @@ var initiate_first_tab = function(timeout) {
                 init_widgets($('body'));
                 fix_textareas_height("body");
             } else {
+                return true;
                 if ($("body").hasClass("portaltype-object")) {
                     init_widgets($("fieldset#fieldset-identification"));
                 } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial') || $("body").hasClass("portaltype-article")) {
@@ -482,26 +483,38 @@ var fix_textareas_height = function(elem) {
 $(document).ready(function() {
 
     if (in_allowed_portaltypes()) {
-        initiate_first_tab(500)
+        //initiate_first_tab(500)
+        setTimeout(function() {
+            if (($("body:not(.template-edit) div.template-edit").length > 0) && !$("body").hasClass("pat-plone-widgets")) {
+                init_widgets($("body"));
+            }
+        }, 1000);
     }
 
-    $(SELECT_TAB_QUERY).change(function() {
-        change_tab_event($(this));
-    });
+    if ($("body").hasClass("template-edit")) {
+        $(SELECT_TAB_QUERY).change(function() {
+            change_tab_event($(this));
+        });
+    }
 
     // Load all tabs
     if ($("body").hasClass("portaltype-object") || ($("body:not(.template-edit) div.template-edit").length > 0)) {
-        disable_selecttab();
+        
         if (!$("body").hasClass("template-edit")) {
             disable_inputs();
             setTimeout(function() {
                 fix_textareas_height("body");
             }, 600);   
         } 
-        ajaxLoadTabs("all");
+
+        if ($("body").hasClass("template-edit")) {
+            disable_selecttab();
+            ajaxLoadTabs("all");
+        }
     } else {
 
     }
+    
     // NEEDS FIX
     if ($("body").hasClass("template-collective-taxonomie-taxonomie") || $("body[class^='template-collective-']").length > 0 || $("body.template-edit.portaltype-collection").length > 0 || $("body").hasClass("template-collection")) {
         setTimeout(function() {
