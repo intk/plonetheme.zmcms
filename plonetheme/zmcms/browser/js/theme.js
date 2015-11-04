@@ -496,7 +496,7 @@ $(document).ready(function() {
 
     // Load all tabs
     if ($("body").hasClass("portaltype-object") || ($("body:not(.template-edit) div.template-edit").length > 0)) {
-        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass("portaltype-object")) {
+        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass("portaltype-object") && !$("body").hasClass('portaltype-audiovisual') && !$("body").hasClass('portaltype-article') && !$("body").hasClass('portaltype-serial') && !$("body").hasClass('portaltype-resource')) {
             $(SELECT_TAB_QUERY).change(function() {
                 change_tab_event($(this));
             });
@@ -509,7 +509,7 @@ $(document).ready(function() {
             }, 600);   
         } 
 
-        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass("portaltype-object")) {
+        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass("portaltype-object") && !$("body").hasClass('portaltype-audiovisual') && !$("body").hasClass('portaltype-article') && !$("body").hasClass('portaltype-serial') && !$("body").hasClass('portaltype-resource')) {
             disable_selecttab();
             ajaxLoadTabs("all");
         }
