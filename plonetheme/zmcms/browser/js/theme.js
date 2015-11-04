@@ -487,8 +487,11 @@ $(document).ready(function() {
         setTimeout(function() {
             if (($("body:not(.template-edit) div.template-edit").length > 0) && !$("body").hasClass("pat-plone-widgets")) {
                 init_widgets($("body"));
+            } else if (!$("body").hasClass("pat-plone-widgets") && $("body").hasClass('template-edit')) {
+                init_widgets($('body'));
+                fix_textareas_height("body");
             }
-        }, 1000);
+        }, 500);
     }
 
     if ($("body").hasClass("template-edit")) {
