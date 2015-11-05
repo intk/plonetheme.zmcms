@@ -526,7 +526,7 @@ $(document).ready(function() {
         }, 1000);
     }
 
-    if (!$("body").hasClass('template-edit')) {
+    if ($("body").hasClass('template-edit')) {
         create_taxonomic_events();
     }
 });
