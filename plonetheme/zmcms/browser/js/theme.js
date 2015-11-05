@@ -420,25 +420,27 @@ var change_taxonomic_query = function(option) {
     var select_container = $(related_input).data();
 
     var patternRelateditems = select_container.patternRelateditems;
-    var criterias = select_container.patternRelateditems.query.getCriterias();
-    var attributes = select_container.patternRelateditems.options.attributes;
+    if (patternRelateditems != undefined) {
+        var criterias = select_container.patternRelateditems.query.getCriterias();
+        var attributes = select_container.patternRelateditems.options.attributes;
 
-    $(related_input).val('');
-    parent.find('.pattern-relateditems-container li.select2-search-choice').remove();
+        $(related_input).val('');
+        parent.find('.pattern-relateditems-container li.select2-search-choice').remove();
 
-    select_container.select2.opts.ajax.data = function(term, page) {
-        var data = {
-            query: JSON.stringify({
-              criteria: criterias,
-              taxonomic_rank: rank_value
-            }),
-            attributes: JSON.stringify(attributes),
+        select_container.select2.opts.ajax.data = function(term, page) {
+            var data = {
+                query: JSON.stringify({
+                  criteria: criterias,
+                  taxonomic_rank: rank_value
+                }),
+                attributes: JSON.stringify(attributes),
+            };
+            if (page) {
+                data.batch = JSON.stringify(patternRelateditems.query.getBatch(page));
+            }
+            return data;
         };
-        if (page) {
-            data.batch = JSON.stringify(patternRelateditems.query.getBatch(page));
-        }
-        return data;
-    };
+    }
 }
 
 var create_taxonomic_events = function() {
