@@ -421,7 +421,7 @@ var change_taxonomic_query = function(option) {
 
     var patternRelateditems = select_container.patternRelateditems;
     if (patternRelateditems != undefined) {
-        var criterias = select_container.patternRelateditems.query.getCriterias();
+        //var criterias = select_container.patternRelateditems.query.getCriterias();
         var attributes = select_container.patternRelateditems.options.attributes;
 
         $(related_input).val('');
@@ -430,7 +430,7 @@ var change_taxonomic_query = function(option) {
         select_container.select2.opts.ajax.data = function(term, page) {
             var data = {
                 query: JSON.stringify({
-                  criteria: criterias,
+                  criteria: select_container.patternRelateditems.query.getCriterias(term);,
                   taxonomic_rank: rank_value
                 }),
                 attributes: JSON.stringify(attributes),
