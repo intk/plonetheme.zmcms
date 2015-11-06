@@ -379,10 +379,12 @@ var initiate_first_tab = function(timeout) {
                 init_widgets($('body'));
                 fix_textareas_height("body");
             } else {
-                return true;
+                
                 if ($("body").hasClass("portaltype-object")) {
                     init_widgets($("fieldset#fieldset-identification"));
-                } else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial') || $("body").hasClass("portaltype-article")) {
+                } 
+
+                /*else if ($("body").hasClass("portaltype-book") || $("body").hasClass("portaltype-audiovisual") || $("body").hasClass('portaltype-serial') || $("body").hasClass("portaltype-article")) {
                     init_widgets($("fieldset#fieldset-title_author"));
                 } else if ($("body").hasClass("portaltype-personorinstitution")) {
                     init_widgets($("fieldset#fieldset-name_information"));
@@ -400,7 +402,7 @@ var initiate_first_tab = function(timeout) {
                     init_widgets($("fieldset#fieldset-taxonomic_term_details"));
                 } else if ($("body").hasClass("portaltype-image")) {
                     init_widgets($("fieldset#fieldset-reproduction_data"));
-                }
+                }*/
             }
         } else {
             // Widgets already created
@@ -498,7 +500,7 @@ $(document).ready(function() {
 
     // Load all tabs
     if ($("body").hasClass("portaltype-object") || ($("body:not(.template-edit) div.template-edit").length > 0)) {
-        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass("portaltype-object") && !$("body").hasClass('portaltype-audiovisual') && !$("body").hasClass('portaltype-article') && !$("body").hasClass('portaltype-serial') && !$("body").hasClass('portaltype-resource')) {
+        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass('portaltype-audiovisual') && !$("body").hasClass('portaltype-article') && !$("body").hasClass('portaltype-serial') && !$("body").hasClass('portaltype-resource')) {
             $(SELECT_TAB_QUERY).change(function() {
                 change_tab_event($(this));
             });
@@ -511,7 +513,7 @@ $(document).ready(function() {
             }, 600);   
         } 
 
-        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass("portaltype-object") && !$("body").hasClass('portaltype-audiovisual') && !$("body").hasClass('portaltype-article') && !$("body").hasClass('portaltype-serial') && !$("body").hasClass('portaltype-resource')) {
+        if (!$("body").hasClass("portaltype-book") && !$("body").hasClass('portaltype-audiovisual') && !$("body").hasClass('portaltype-article') && !$("body").hasClass('portaltype-serial') && !$("body").hasClass('portaltype-resource')) {
             disable_selecttab();
             ajaxLoadTabs("all");
         }
@@ -528,7 +530,7 @@ $(document).ready(function() {
         }, 1000);
     }
 
-    if ($("body").hasClass('template-edit')) {
+    if (!$("body").hasClass('template-edit')) {
         create_taxonomic_events();
     }
 });
