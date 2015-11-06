@@ -533,5 +533,15 @@ $(document).ready(function() {
     if (!$("body").hasClass('template-edit')) {
         create_taxonomic_events();
     }
+
+    // Content history popup
+    $('#content-history-versions a').prepOverlay({
+       subtype: 'ajax',
+       filter: '#content-core',
+       cssclass: 'overlay-history',
+       urlmatch: 'versions_history_form',
+       urlreplace: 'versions_history_form'
+    });
+
 });
 
