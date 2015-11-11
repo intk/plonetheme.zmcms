@@ -9893,3 +9893,8 @@ body[class^="template-collective-"] #formfield-form-widgets-productionDating_pro
     display: none !important;
 }
 
+body.template-folder_contents #portal-logo img {
+    content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
+}
+
+
