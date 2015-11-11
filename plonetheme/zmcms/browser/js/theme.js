@@ -587,7 +587,7 @@ $(document).ready(function() {
     });
 
     if ($("body").hasClass('template-advancedsearch')) {
-        init_widgets($("#template-advancedsearch"));
+        init_widgets($("body"));
     }
 
 });
