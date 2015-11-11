@@ -231,6 +231,7 @@ var ajaxLoadTabs = function(fieldset_id) {
                         if ($("body").hasClass("template-edit")) {
                             //dataGridField2Functions.init();
                             create_taxonomic_events();
+                            create_person_events();
                         }
                     }, 50);
                 },
@@ -445,6 +446,37 @@ var change_taxonomic_query = function(option) {
     }
 }
 
+var change_persons_query = function(option) {
+    var name_type = option.val();
+
+    var parent = $(option).parents('.datagridwidget-block-edit-cell');
+    var related_input = parent.find('input.pat-relateditems');
+    var select_container = $(related_input).data();
+
+    var patternRelateditems = select_container.patternRelateditems;
+    if (patternRelateditems != undefined) {
+        //var criterias = select_container.patternRelateditems.query.getCriterias();
+        var attributes = select_container.patternRelateditems.options.attributes;
+
+        $(related_input).val('');
+        parent.find('.pattern-relateditems-container li.select2-search-choice').remove();
+
+        select_container.select2.opts.ajax.data = function(term, page) {
+            var data = {
+                query: JSON.stringify({
+                  criteria: select_container.patternRelateditems.query.getCriterias(term),
+                  name_type: name_type
+                }),
+                attributes: JSON.stringify(attributes),
+            };
+            if (page) {
+                data.batch = JSON.stringify(patternRelateditems.query.getBatch(page));
+            }
+            return data;
+        };
+    }
+}
+
 var create_taxonomic_events = function() {
     $("#formfield-form-widgets-identification_taxonomy .datagridwidget-widget-rank select").change(function() {
         change_taxonomic_query($(this));
@@ -456,6 +488,12 @@ var create_taxonomic_events = function() {
 
     $("#formfield-form-widgets-associations_associatedSubjects .datagridwidget-widget-taxonomicRank select").change(function() {
         change_taxonomic_query($(this));
+    });
+}
+
+var create_person_events = function() {
+    $("#formfield-form-widgets-iconography_contentPersonInstitution .datagridwidget-widget-nameType select").change(function() {
+        change_persons_query($(this));
     });
 }
 
@@ -532,6 +570,7 @@ $(document).ready(function() {
 
     if (!$("body").hasClass('template-edit')) {
         create_taxonomic_events();
+        create_person_events();
     }
 
     // Content history popup
