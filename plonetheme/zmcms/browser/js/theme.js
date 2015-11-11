@@ -528,6 +528,12 @@ var fix_textareas_height = function(elem) {
 
 $(document).ready(function() {
 
+    if ($("body").hasClass('template-advancedsearch')) {
+        setTimeout(function(){
+            init_widgets($("body"));
+        }, 1000)
+    }
+
     if (in_allowed_portaltypes()) {
         //initiate_first_tab(500)
         setTimeout(function() {
@@ -586,9 +592,7 @@ $(document).ready(function() {
        urlreplace: 'versions_history_form'
     });
 
-    if ($("body").hasClass('template-advancedsearch')) {
-        init_widgets($("body"));
-    }
+    
 
 });
 
