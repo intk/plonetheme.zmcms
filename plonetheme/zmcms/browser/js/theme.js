@@ -531,7 +531,7 @@ $(document).ready(function() {
     if ($("body").hasClass('template-advancedsearch')) {
         setTimeout(function(){
             init_widgets($("body"));
-        }, 1000)
+        }, 200);
     }
 
     if (in_allowed_portaltypes()) {
