@@ -586,5 +586,9 @@ $(document).ready(function() {
        urlreplace: 'versions_history_form'
     });
 
+    if ($("body").hasClass('template-advancedsearch')) {
+        init_widgets($("#template-advancedsearch"));
+    }
+
 });
 
