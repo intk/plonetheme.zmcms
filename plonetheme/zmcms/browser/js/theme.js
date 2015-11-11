@@ -495,6 +495,10 @@ var create_person_events = function() {
     $("#formfield-form-widgets-iconography_contentPersonInstitution .datagridwidget-widget-nameType select").change(function() {
         change_persons_query($(this));
     });
+
+    $("#formfield-form-widgets-associations_associatedPersonInstitutions .datagridwidget-widget-nameType select").change(function() {
+        change_persons_query($(this));
+    });
 }
 
 var fix_textareas_height = function(elem) {
