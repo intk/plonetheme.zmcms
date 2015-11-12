@@ -529,6 +529,14 @@ var fix_textareas_height = function(elem) {
 $(document).ready(function() {
 
     if ($("body").hasClass('template-advancedsearch')) {
+        $("#advanced_search_form").submit(function() {
+            $('input').each(function() {
+                if ($(this).val() == '') {
+                    $(this).attr("name", '');
+                }
+            });
+        });
+
         setTimeout(function(){
             init_widgets($("body"));
         }, 200);
