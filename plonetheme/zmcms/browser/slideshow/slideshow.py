@@ -998,20 +998,26 @@ class get_nav_objects(BrowserView):
 
                                 if organisators:
                                     for organiser in organisators:
-                                        name = organiser['name']
-                                        if name:
-                                            if name != 'Zeeuws Museum':
-                                                orgs.append(name)
+                                        try:
+                                            name = organiser['name']
+                                            if name:
+                                                if name != 'Zeeuws Museum':
+                                                    orgs.append(name)
+                                        except:
+                                            pass
 
-                                        l = organiser['address']
-                                        if l:
-                                            if l != 'Zeeuws Museum':
-                                                locations.append(l)
+                                        try:
+                                            l = organiser['address']
+                                            if l:
+                                                if l != 'Zeeuws Museum':
+                                                    locations.append(l)
 
-                                        p = organiser['place']
-                                        if p:
-                                            if p != 'Zeeuws Museum':
-                                                places.append(p)
+                                            p = organiser['place']
+                                            if p:
+                                                if p != 'Zeeuws Museum':
+                                                    places.append(p)
+                                        except:
+                                            pass
 
                                     final_orgs = ', '.join(orgs)
                                     if final_orgs:
@@ -2269,20 +2275,26 @@ class get_fields(BrowserView):
 
                                 if organisators:
                                     for organiser in organisators:
-                                        name = organiser['name']
-                                        if name:
-                                            if name != 'Zeeuws Museum':
-                                                orgs.append(name)
+                                        try:
+                                            name = organiser['name']
+                                            if name:
+                                                if name != 'Zeeuws Museum':
+                                                    orgs.append(name)
+                                        except:
+                                            pass
 
-                                        l = organiser['address']
-                                        if l:
-                                            if l != 'Zeeuws Museum':
-                                                locations.append(l)
+                                        try:
+                                            l = organiser['address']
+                                            if l:
+                                                if l != 'Zeeuws Museum':
+                                                    locations.append(l)
 
-                                        p = organiser['place']
-                                        if p:
-                                            if p != 'Zeeuws Museum':
-                                                places.append(p)
+                                            p = organiser['place']
+                                            if p:
+                                                if p != 'Zeeuws Museum':
+                                                    places.append(p)
+                                        except:
+                                            pass
 
                                     final_orgs = ', '.join(orgs)
                                     if final_orgs:
