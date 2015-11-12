@@ -19,10 +19,13 @@ from zope.security import checkPermission
 from plone import api
 from plone.app.uuid.utils import uuidToCatalogBrain, uuidToObject
 from plone.app.contenttypes.behaviors.collection import ICollection
+from z3c.relationfield.interfaces import IRelationValue
+
 
 MessageFactory = msgfactory('collective.object')
 _book = msgfactory('collective.bibliotheek')
 
+NOT_ALLOWED = [None, '', ' ', 'None']
 
 class get_nav_objects(BrowserView):
     """
@@ -605,7 +608,9 @@ class get_nav_objects(BrowserView):
                 taxonomy = self.get_field_from_object(field, object)
                 if len(taxonomy) > 0:
                     taxonomy_elem = taxonomy[0]
-                    #scientific_name = taxonomy_elem['scientific_name']
+
+                    scientific_name = taxonomy_elem['scientific_name']
+                    print scientific_name
                     #common_name = taxonomy_elem['common_name']
 
                     #if scientific_name != "" and scientific_name != " ":
@@ -644,19 +649,19 @@ class get_nav_objects(BrowserView):
 
         production = self.create_maker(maker, url)
 
-        if qualifier != "" and qualifier != None and qualifier != " ":
+        if qualifier not in NOT_ALLOWED:
             if production:
                 production = "%s, %s" %(qualifier, production)
             else:
                 production = "%s" %(qualifier)
 
-        if role != "" and role != None and role != " ":
+        if role not in NOT_ALLOWED:
             if production:
                 production = "(%s) %s" %(role, production)
             else:
                 production = "(%s)" %(role)
 
-        if place != "" and place != None and place != " ":
+        if place not in NOT_ALLOWED:
             if production:
                 production = "%s, %s" %(production, place)
             else:
@@ -736,12 +741,26 @@ class get_nav_objects(BrowserView):
                 production['place'] = ""
 
             result = self.create_production_field(production, url)
-            if result != "" and result != None and result != " ":
+            if result not in NOT_ALLOWED:
                 production_result.append(result)
 
         if len(production_result) > 0:
             production_value = '<p>'.join(production_result)
             object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
+
+
+        ## Generate Period
+        period_field = self.get_field_from_object('productionDating_dating_period', object)
+
+        period = []
+        for field in period_field:
+            result = self.create_period_field(field)
+            if result not in NOT_ALLOWED:
+                period.append(result)
+
+        if len(period) > 0:
+            period_value = ', '.join(period)
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
 
     def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object, field_schema):
 
@@ -750,7 +769,7 @@ class get_nav_objects(BrowserView):
         production = []
         for field in production_field:
             result = self.create_production_field(field)
-            if result != "" and result != None and result != " ":
+            if result not in NOT_ALLOWED:
                 production.append(result)
 
         if len(production) > 0:
@@ -763,7 +782,7 @@ class get_nav_objects(BrowserView):
         period = []
         for field in period_field:
             result = self.create_period_field(field)
-            if result != "" and result != None and result != " ":
+            if result not in NOT_ALLOWED:
                 period.append(result)
 
         if len(period) > 0:
@@ -911,13 +930,14 @@ class get_nav_objects(BrowserView):
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
     def generate_exhibition_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+
         relations = []
         related_exhibitions = []
 
         def get_url_by_uid(context, uid):
-            brains = uuidToCatalogBrain(uid)
-            if brains:
-                return brains.getURL()
+            brain = uuidToCatalogBrain(uid)
+            if brain:
+                return brain.getURL()
 
             return ""
 
@@ -930,82 +950,85 @@ class get_nav_objects(BrowserView):
                     for val in value:
                         exhibition = val['exhibitionName']
                         if exhibition:
-                            rel_obj = exhibition[0]
-                            rel_url = get_url_by_uid(self.context, rel_obj.UID())
-                            rel_title = rel_obj.title
-                            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+                            rel = exhibition[0]
+                            rel_obj = None
+                            if IRelationValue.providedBy(rel):
+                                rel_obj = rel.to_object
+                            else:
+                                rel_obj = rel
 
-                            rel_date_start = ""
-                            rel_date_end = ""
-                            if hasattr(rel_obj, 'start_date'):
-                                rel_date_start = rel_obj.start_date
+                            if rel_obj:
+                                rel_url = get_url_by_uid(self.context, rel_obj.UID())
+                                rel_title = rel_obj.title
+                                related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
 
-                            if hasattr(rel_obj, 'end_date'):
-                                rel_date_end = rel_obj.end_date
+                                rel_date_start = ""
+                                rel_date_end = ""
+                                if hasattr(rel_obj, 'start_date'):
+                                    rel_date_start = rel_obj.start_date
 
-                            if rel_date_start != "":
-                                try:
-                                    date_start = rel_date_start.strftime('%Y-%m-%d')
-                                except:
-                                    rel_date_start = ""
+                                if hasattr(rel_obj, 'end_date'):
+                                    rel_date_end = rel_obj.end_date
 
-                            if rel_date_end != "":
-                                try:
-                                    date_end = rel_date_end.strftime('%Y-%m-%d')
-                                except:
-                                    rel_date_end = ""
+                                if rel_date_start != "":
+                                    try:
+                                        date_start = rel_date_start.strftime('%Y-%m-%d')
+                                    except:
+                                        rel_date_start = ""
 
-
-                            final_date = ""
-                            if rel_date_start != "" and rel_date_end != "":
-                                final_date = "%s t/m %s" %(date_start, date_end)
-
-                            if final_date != "":
-                                related_exhibitions.append(final_date)
-
-                            # organisator
-                            orgs = []
-                            locations = []
-                            places = []
-                            organisators = rel_obj.exhibitionsDetails_organizingInstitutions
-
-                            if organisators:
-                                for organiser in organisators:
-                                    name = organiser['name']
-                                    if name:
-                                        if name != 'Zeeuws Museum':
-                                            orgs.append(name)
-
-                                    l = organiser['address']
-                                    if l:
-                                        if l != 'Zeeuws Museum':
-                                            locations.append(l)
-
-                                    p = organiser['place']
-                                    if p:
-                                        if p != 'Zeeuws Museum':
-                                            places.append(p)
-
-                                final_orgs = ', '.join(orgs)
-                                if final_orgs:
-                                    related_exhibitions.append(final_orgs)
-                                
-                                final_locations = ', '.join(locations)
-                                if final_locations:
-                                    related_exhibitions.append(final_locations)
-
-                                final_places = ', '.join(places)
-                                if final_places:
-                                    related_exhibitions.append(final_places)
-
-                                
+                                if rel_date_end != "":
+                                    try:
+                                        date_end = rel_date_end.strftime('%Y-%m-%d')
+                                    except:
+                                        rel_date_end = ""
 
 
+                                final_date = ""
+                                if rel_date_start != "" and rel_date_end != "":
+                                    final_date = "%s t/m %s" %(date_start, date_end)
 
+                                if final_date != "":
+                                    related_exhibitions.append(final_date)
+
+                                # organisator
+                                orgs = []
+                                locations = []
+                                places = []
+                                organisators = rel_obj.exhibitionsDetails_organizingInstitutions
+
+                                if organisators:
+                                    for organiser in organisators:
+                                        name = organiser['name']
+                                        if name:
+                                            if name != 'Zeeuws Museum':
+                                                orgs.append(name)
+
+                                        l = organiser['address']
+                                        if l:
+                                            if l != 'Zeeuws Museum':
+                                                locations.append(l)
+
+                                        p = organiser['place']
+                                        if p:
+                                            if p != 'Zeeuws Museum':
+                                                places.append(p)
+
+                                    final_orgs = ', '.join(orgs)
+                                    if final_orgs:
+                                        related_exhibitions.append(final_orgs)
+                                    
+                                    final_locations = ', '.join(locations)
+                                    if final_locations:
+                                        related_exhibitions.append(final_locations)
+
+                                    final_places = ', '.join(places)
+                                    if final_places:
+                                        related_exhibitions.append(final_places)
 
         if len(related_exhibitions) > 0:
             related_exhibitions_value = '<p>'.join(related_exhibitions)
             object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibition name')), 'value': related_exhibitions_value})
+
 
     def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
         intids = getUtility(IIntIds)
@@ -1171,7 +1194,7 @@ class get_nav_objects(BrowserView):
 
         identification_tab = [('identification_identification_collections', None), ('identification_identification_objectNumber', None),
                                 ('identification_objectName_category', None), ('identification_objectName_objectname', 'name'),
-                                ('title', None), ('identification_taxonomy', None), ('text', None)]
+                                ('title', None), ('identification_taxonomy', 'scientific_name'), ('text', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 
@@ -1832,14 +1855,38 @@ class get_fields(BrowserView):
             else:
                 taxonomy = self.get_field_from_object(field, object)
                 if len(taxonomy) > 0:
-                    taxonomy_elem = taxonomy[0]
-                    #scientific_name = taxonomy_elem['scientific_name']
-                    #common_name = taxonomy_elem['common_name']
+                    scientific_names = []
+                    common_names_list = []
 
-                    #if scientific_name != "" and scientific_name != " ":
-                    #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": scientific_name})
-                    #if common_name != "" and common_name != " ":
-                    #    object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": common_name})
+                    for taxonomy_elem in taxonomy:
+                        scientific_name = taxonomy_elem['scientific_name']
+                        if scientific_name:
+                            tax = scientific_name[0]
+                            tax_obj = None
+                            if IRelationValue.providedBy(tax):
+                                tax_obj = tax.to_object
+                            else:
+                                tax_obj = tax
+
+                            if tax_obj:
+                                tax_title = getattr(tax_obj, 'title', '')
+                                if tax_title:
+                                    scientific_names.append(tax_title)
+
+                                common_name = getattr(tax_obj, 'taxonomicTermDetails_commonName', '')
+                                if common_name:
+                                    common_names = []
+                                    for line in common_name:
+                                        if line['commonName'] not in [None, '', ' ']:
+                                            common_names.append(line['commonName'])
+
+                                    common_names_list.extend(common_names)
+                    
+                    if scientific_names:     
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Scient. name')), "value": ', '.join(scientific_names)})
+                    
+                    if common_names_list:
+                        object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Common name')), "value": ', '.join(common_names_list)})
 
 
     def create_maker(self, name, url=False):
@@ -1872,19 +1919,19 @@ class get_fields(BrowserView):
 
         production = self.create_maker(maker, url)
 
-        if qualifier != "" and qualifier != None and qualifier != " ":
+        if qualifier not in NOT_ALLOWED:
             if production:
                 production = "%s, %s" %(qualifier, production)
             else:
                 production = "%s" %(qualifier)
 
-        if role != "" and role != None and role != " ":
+        if role not in NOT_ALLOWED:
             if production:
                 production = "(%s) %s" %(role, production)
             else:
                 production = "(%s)" %(role)
 
-        if place != "" and place != None and place != " ":
+        if place not in NOT_ALLOWED:
             if production:
                 production = "%s, %s" %(production, place)
             else:
@@ -1966,12 +2013,25 @@ class get_fields(BrowserView):
                 production['place'] = ""
 
             result = self.create_production_field(production, url)
-            if result != "" and result != None and result != " ":
+            if result not in NOT_ALLOWED:
                 production_result.append(result)
 
         if len(production_result) > 0:
             production_value = '<p>'.join(production_result)
             object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Maker')), "value": production_value})
+
+        ## Generate Period
+        period_field = self.get_field_from_object('productionDating_dating_period', object)
+
+        period = []
+        for field in period_field:
+            result = self.create_period_field(field)
+            if result not in NOT_ALLOWED:
+                period.append(result)
+
+        if len(period) > 0:
+            period_value = ', '.join(period)
+            object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory('Period')), "value": period_value})
 
     def generate_production_dating_tab(self, production_dating_tab, object_schema, fields, object, field_schema):
 
@@ -1980,7 +2040,7 @@ class get_fields(BrowserView):
         production = []
         for field in production_field:
             result = self.create_production_field(field)
-            if result != "" and result != None and result != " ":
+            if result not in NOT_ALLOWED:
                 production.append(result)
 
         if len(production) > 0:
@@ -1993,7 +2053,7 @@ class get_fields(BrowserView):
         period = []
         for field in period_field:
             result = self.create_period_field(field)
-            if result != "" and result != None and result != " ":
+            if result not in NOT_ALLOWED:
                 period.append(result)
 
         if len(period) > 0:
@@ -2141,6 +2201,7 @@ class get_fields(BrowserView):
                     object_schema[field_schema]['fields'].append({"title": self.context.translate(MessageFactory(title)), "value": schema_value})
 
     def generate_exhibition_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
+
         relations = []
         related_exhibitions = []
 
@@ -2160,116 +2221,122 @@ class get_fields(BrowserView):
                     for val in value:
                         exhibition = val['exhibitionName']
                         if exhibition:
-                            rel_obj = exhibition[0]
-                            rel_url = get_url_by_uid(self.context, rel_obj.UID())
-                            rel_title = rel_obj.title
-                            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+                            rel = exhibition[0]
+                            rel_obj = None
+                            if IRelationValue.providedBy(rel):
+                                rel_obj = rel.to_object
+                            else:
+                                rel_obj = rel
 
-                            rel_date_start = ""
-                            rel_date_end = ""
-                            if hasattr(rel_obj, 'start_date'):
-                                rel_date_start = rel_obj.start_date
+                            if rel_obj:
+                                rel_url = get_url_by_uid(self.context, rel_obj.UID())
+                                rel_title = rel_obj.title
+                                related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
 
-                            if hasattr(rel_obj, 'end_date'):
-                                rel_date_end = rel_obj.end_date
+                                rel_date_start = ""
+                                rel_date_end = ""
+                                if hasattr(rel_obj, 'start_date'):
+                                    rel_date_start = rel_obj.start_date
 
-                            if rel_date_start != "":
-                                try:
-                                    date_start = rel_date_start.strftime('%Y-%m-%d')
-                                except:
-                                    rel_date_start = ""
+                                if hasattr(rel_obj, 'end_date'):
+                                    rel_date_end = rel_obj.end_date
 
-                            if rel_date_end != "":
-                                try:
-                                    date_end = rel_date_end.strftime('%Y-%m-%d')
-                                except:
-                                    rel_date_end = ""
+                                if rel_date_start != "":
+                                    try:
+                                        date_start = rel_date_start.strftime('%Y-%m-%d')
+                                    except:
+                                        rel_date_start = ""
 
-
-                            final_date = ""
-                            if rel_date_start != "" and rel_date_end != "":
-                                final_date = "%s t/m %s" %(date_start, date_end)
-
-                            if final_date != "":
-                                related_exhibitions.append(final_date)
-
-                            # organisator
-                            orgs = []
-                            locations = []
-                            places = []
-                            organisators = rel_obj.exhibitionsDetails_organizingInstitutions
-
-                            if organisators:
-                                for organiser in organisators:
-                                    name = organiser['name']
-                                    if name:
-                                        if name != 'Zeeuws Museum':
-                                            orgs.append(name)
-
-                                    l = organiser['address']
-                                    if l:
-                                        if l != 'Zeeuws Museum':
-                                            locations.append(l)
-
-                                    p = organiser['place']
-                                    if p:
-                                        if p != 'Zeeuws Museum':
-                                            places.append(p)
-
-                                final_orgs = ', '.join(orgs)
-                                if final_orgs:
-                                    related_exhibitions.append(final_orgs)
-                                
-                                final_locations = ', '.join(locations)
-                                if final_locations:
-                                    related_exhibitions.append(final_locations)
-
-                                final_places = ', '.join(places)
-                                if final_places:
-                                    related_exhibitions.append(final_places)
-
-                                
+                                if rel_date_end != "":
+                                    try:
+                                        date_end = rel_date_end.strftime('%Y-%m-%d')
+                                    except:
+                                        rel_date_end = ""
 
 
+                                final_date = ""
+                                if rel_date_start != "" and rel_date_end != "":
+                                    final_date = "%s t/m %s" %(date_start, date_end)
 
+                                if final_date != "":
+                                    related_exhibitions.append(final_date)
+
+                                # organisator
+                                orgs = []
+                                locations = []
+                                places = []
+                                organisators = rel_obj.exhibitionsDetails_organizingInstitutions
+
+                                if organisators:
+                                    for organiser in organisators:
+                                        name = organiser['name']
+                                        if name:
+                                            if name != 'Zeeuws Museum':
+                                                orgs.append(name)
+
+                                        l = organiser['address']
+                                        if l:
+                                            if l != 'Zeeuws Museum':
+                                                locations.append(l)
+
+                                        p = organiser['place']
+                                        if p:
+                                            if p != 'Zeeuws Museum':
+                                                places.append(p)
+
+                                    final_orgs = ', '.join(orgs)
+                                    if final_orgs:
+                                        related_exhibitions.append(final_orgs)
+                                    
+                                    final_locations = ', '.join(locations)
+                                    if final_locations:
+                                        related_exhibitions.append(final_locations)
+
+                                    final_places = ', '.join(places)
+                                    if final_places:
+                                        related_exhibitions.append(final_places)
 
         if len(related_exhibitions) > 0:
             related_exhibitions_value = '<p>'.join(related_exhibitions)
             object_schema[field_schema]['fields'].append({'title': self.context.translate(MessageFactory('Exhibition name')), 'value': related_exhibitions_value})
 
+
     def generate_exhibitions_tab(self, exhibitions_tab, object_schema, fields, object, field_schema):
-        intids = getUtility(IIntIds)
-        catalog = getUtility(ICatalog)
+        relations = getattr(object, 'exhibitions_exhibition', None)
 
-        relations = sorted(catalog.findRelations({'to_id': intids.getId(object), 'from_attribute':'linkedObjects_relatedItems'}))
+        if relations:
+            related_exhibitions = []
+            for rel in relations:
+                rel_obj = None
+                if IRelationValue.providedBy(rel):
+                    rel_obj = rel.to_object
+                else:
+                    rel_obj = rel
 
-        related_exhibitions = []
-        for rel in relations:
-            rel_obj = rel.from_object
-            rel_url = rel_obj.absolute_url()
-            rel_title = rel_obj.title
-            related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
+                rel_url = rel_obj.absolute_url()
+                rel_title = rel_obj.title
+                related_exhibitions.append("<a href='%s'>%s</a>"%(rel_url, rel_title))
 
-            rel_date_start = ""
-            rel_date_end = ""
-            if hasattr(rel_obj, 'start_date'):
-                rel_date_start = rel_obj.start_date
+                rel_date_start = ""
+                rel_date_end = ""
+                if hasattr(rel_obj, 'start_date'):
+                    rel_date_start = rel_obj.start_date
 
-            if hasattr(rel_obj, 'end_date'):
-                rel_date_end = rel_obj.end_date
+                if hasattr(rel_obj, 'end_date'):
+                    rel_date_end = rel_obj.end_date
 
-            if rel_date_start != "":
-                date_start = rel_date_start.strftime('%Y-%m-%d')
+                if rel_date_start != "":
+                    date_start = rel_date_start.strftime('%Y-%m-%d')
 
-            if rel_date_end != "":
-                date_end = rel_date_start.strftime('%Y-%m-%d')
+                if rel_date_end != "":
+                    date_end = rel_date_start.strftime('%Y-%m-%d')
 
-            final_date = ""
-            if rel_date_start != "" and rel_date_end != "":
-                final_date = "%s t/m %s" %(date_start, date_end)
+                final_date = ""
+                if rel_date_start != "" and rel_date_end != "":
+                    final_date = "%s t/m %s" %(date_start, date_end)
 
-            if final_date != "":
-                related_exhibitions.append(final_date)
+                if final_date != "":
+                    related_exhibitions.append(final_date)
 
         if len(related_exhibitions) > 0:
             related_exhibitions_value = '<p>'.join(related_exhibitions)
@@ -2401,7 +2468,7 @@ class get_fields(BrowserView):
 
         identification_tab = [('identification_identification_collections', None), ('identification_identification_objectNumber', None),
                                 ('identification_objectName_category', None), ('identification_objectName_objectname', 'name'),
-                                ('title', None), ('identification_taxonomy', None), ('text', None)]
+                                ('title', None), ('identification_taxonomy', 'scientific_name'), ('text', None)]
 
         production_dating_tab = ['productionDating_production', 'productionDating_dating_period']
 
