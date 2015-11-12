@@ -2271,7 +2271,7 @@ class get_fields(BrowserView):
                                 orgs = []
                                 locations = []
                                 places = []
-                                organisators = rel_obj.exhibitionsDetails_organizingInstitutions
+                                """organisators = rel_obj.exhibitionsDetails_organizingInstitutions
 
                                 if organisators:
                                     for organiser in organisators:
@@ -2306,7 +2306,7 @@ class get_fields(BrowserView):
 
                                     final_places = ', '.join(places)
                                     if final_places:
-                                        related_exhibitions.append(final_places)
+                                        related_exhibitions.append(final_places)"""
 
         if len(related_exhibitions) > 0:
             related_exhibitions_value = '<p>'.join(related_exhibitions)
