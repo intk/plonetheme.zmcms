@@ -9902,7 +9902,8 @@ body.template-vocabularytool_view  #portal-logo img,
 body.template-overview-controlpanel #portal-logo img,
 body.template-simplevocabulary_view #portal-logo img,
 body.template-base_edit.portaltype-simplevocabularyterm #portal-logo img,
-body.template-base_view.portaltype-simplevocabularyterm #portal-logo img {
+body.template-base_view.portaltype-simplevocabularyterm #portal-logo img,
+body.template-base_edit.portaltype-simplevocabulary #portal-logo img {
     content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
