@@ -530,9 +530,10 @@ var fix_textareas_height = function(elem) {
 function replaceCollectionTable(overrides) {
     var defaults = {
         "sort_on": "sortable_title",
-        "b_start:": "int:"+$("input[name=b_start]").first().val(),
+        "b_start:int": $("input[name=b_start]").first().val(),
     };
-    $.get(window.location.href, $.extend(defaults, overrides), function(data) {
+    var URL = window.location.href.split('?')[0];
+    $.get(URL, $.extend(defaults, overrides), function(data) {
         var table_collection = $(data).find('#table-collection');
         $("#table-collection").replaceWith(table_collection);
     });
@@ -556,11 +557,11 @@ $(document).ready(function() {
 
     if ($("body").hasClass('template-detailed_tabular_view')) {
         var ccore = $("#content-core");
-        ccore.enableTableCollectionReload("#author-column", { "sort_on": "library_author", "ajax_load": true});
-        ccore.enableTableCollectionReload("#title-column", { "sort_on": "sortable_title", "ajax_load": true});
-        ccore.enableTableCollectionReload("#year-column", { "sort_on": "titleAuthorImprintCollation_imprint_year", "ajax_load": true});
+        ccore.enableTableCollectionReload("#author-column", { "sort_on": "library_author"});
+        ccore.enableTableCollectionReload("#title-column", { "sort_on": "sortable_title"});
+        ccore.enableTableCollectionReload("#year-column", { "sort_on": "titleAuthorImprintCollation_imprint_year"});
     }
-    
+
     if ($("body").hasClass('template-advancedsearch')) {
         $("#advanced_search_form").submit(function() {
             $('input').each(function() {
