@@ -533,9 +533,12 @@ function replaceCollectionTable(overrides) {
         "b_start:int": $("input[name=b_start]").first().val(),
     };
     var URL = window.location.href.split('?')[0];
+
+    $("#ajax-spinner").attr("style": "display: block !important;")
     $.get(URL, $.extend(defaults, overrides), function(data) {
         var table_collection = $(data).find('#table-collection');
         $("#table-collection").replaceWith(table_collection);
+        $("#ajax-spinner").attr("style": "display: none !important;")
     });
 }
 

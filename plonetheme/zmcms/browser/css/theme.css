@@ -9907,5 +9907,11 @@ body.template-base_edit.portaltype-simplevocabulary #portal-logo img {
     content: url('++resource++plonetheme.zmcms.images/logo-preto.png') !important;
 }
 
-
+#ajax-spinner {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+}
 
