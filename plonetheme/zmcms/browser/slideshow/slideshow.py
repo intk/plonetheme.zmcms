@@ -610,7 +610,6 @@ class get_nav_objects(BrowserView):
                     taxonomy_elem = taxonomy[0]
 
                     scientific_name = taxonomy_elem['scientific_name']
-                    print scientific_name
                     #common_name = taxonomy_elem['common_name']
 
                     #if scientific_name != "" and scientific_name != " ":
@@ -1401,14 +1400,11 @@ class get_nav_objects(BrowserView):
 
 
     def get_next_objects(self):
-        print "get next objects"
         bulk = 10
         b_start = self.request.get('b_start')
         collection_id = self.request.get('collection_id')
         object_id = self.request.get('object_id')
         req_bulk = self.request.get('bulk')
-
-        print b_start, collection_id, object_id, req_bulk
 
         if req_bulk != None:
             buffer_size = int(req_bulk)
