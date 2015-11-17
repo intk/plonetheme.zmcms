@@ -27,6 +27,7 @@ _book = msgfactory('collective.bibliotheek')
 
 NOT_ALLOWED = [None, '', ' ', 'None']
 
+
 class get_nav_objects(BrowserView):
     """
     Utils
