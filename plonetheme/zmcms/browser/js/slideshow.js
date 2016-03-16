@@ -442,6 +442,7 @@ slickSlideshow.resizeImage = function(current) {
 
 slickSlideshow.addSlideInIndex = function(slides, index) {
 	_logger.log("Add new bulk on index: "+index);
+	
 	for (var i = 0; i < slides.length; i++) {
 		item = slides[i];
 		slide_item = {

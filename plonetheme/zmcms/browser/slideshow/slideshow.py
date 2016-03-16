@@ -20,6 +20,8 @@ from plone import api
 from plone.app.uuid.utils import uuidToCatalogBrain, uuidToObject
 from plone.app.contenttypes.behaviors.collection import ICollection
 from z3c.relationfield.interfaces import IRelationValue
+from zope.component import getMultiAdapter, getUtility
+from Products.CMFCore.utils import getToolByName
 
 
 MessageFactory = msgfactory('collective.object')

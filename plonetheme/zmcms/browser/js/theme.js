@@ -42,7 +42,7 @@ var in_allowed_portaltypes = function() {
     return false;
 };
 
-(function(history){
+(function(history) {
     var replaceState = history.replaceState;
     history.replaceState = function(state, title, url) {
         if (typeof history.onpushstate == "function") {

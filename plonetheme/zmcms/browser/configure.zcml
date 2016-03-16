@@ -81,4 +81,12 @@
       permission="zope2.View"
     />
 
+    <browser:page
+      name="generate_word_document"
+      for="*"
+      class=".word_templating.views.WordDocumentGenerator"
+      layer=".interfaces.IThemeSpecific"
+      permission="zope2.View"
+    />
+
 </configure>
