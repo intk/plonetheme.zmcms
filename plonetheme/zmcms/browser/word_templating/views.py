@@ -23,7 +23,7 @@ IMAGE_SIZE = {
 	"a": 1.7,
 	"b": 6.0
 }
-ENV = "dev"
+ENV = "prod"
 
 class WordDocumentGenerator(BrowserView):
 	"""

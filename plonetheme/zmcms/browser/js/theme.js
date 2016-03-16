@@ -636,8 +636,5 @@ $(document).ready(function() {
        urlmatch: 'versions_history_form',
        urlreplace: 'versions_history_form'
     });
-
-    
-
 });
 

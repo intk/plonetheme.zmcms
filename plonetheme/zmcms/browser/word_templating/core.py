@@ -5,12 +5,6 @@ import datetime
 
 NOT_ALLOWED = ['', ' ', None]
 
-
-TEMPLATES = {
-    "a":"",
-    "b":""
-}
-
 CORE = {
     "IN":"identification_identification_objectNumber",
     "OB":'identification_objectName_objectname-name',
@@ -114,6 +108,9 @@ class WordGeneratorCore:
             if elem not in NOT_ALLOWED:
                 if getattr(elem, 'portal_type', None) != None:
                     self.transform_object(elem, values)
+                elif IRelationValue.providedBy(elem):
+                    to_object = elem.to_object
+                    self.transform_object(to_object, values)
                 else:
                     values.append(elem)
         
