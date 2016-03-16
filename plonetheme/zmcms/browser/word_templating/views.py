@@ -7,6 +7,7 @@ from zope.component import getMultiAdapter, getUtility
 from Products.CMFCore.utils import getToolByName
 from plone import api
 from cStringIO import StringIO
+from z3c.relationfield.interfaces import IRelationList, IRelationValue
 import datetime
 import csv
 
