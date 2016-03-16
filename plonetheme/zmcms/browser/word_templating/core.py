@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from z3c.relationfield.interfaces import IRelationList, IRelationValue
 
 NOT_ALLOWED = ['', ' ', None]
 
