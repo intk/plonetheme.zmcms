@@ -24,7 +24,7 @@ IMAGE_SIZE = {
 	"a": 1.7,
 	"b": 6.0
 }
-ENV = "prod"
+ENV = "dev"
 
 class WordDocumentGenerator(BrowserView):
 	"""
@@ -91,14 +91,7 @@ class WordDocumentGenerator(BrowserView):
 
 		item = {}
 		for key, value in CORE.iteritems():
-			repeatable = self.core.is_repeatable(value)
-			if repeatable:
-				fieldname, subfieldname = self.core.get_fields_names(value)
-				field_value = self.core.get_subfield(obj, fieldname, subfieldname, 0)
-				item[key] = field_value
-			else:
-				field_value = self.core.get_field(obj, value)
-				item[key] = field_value
+			self.core.transform_field(key, value, item, obj)
 
 		media = self.get_image_file(brain)
 		item['image'] = media
