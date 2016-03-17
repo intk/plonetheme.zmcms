@@ -22,7 +22,14 @@ from .generator import generate_docx
 DEFAULT_LIST_NUMBERS = 'M62-099,M62-100,M62-101,M62-126'
 IMAGE_SIZE = {
 	"a": 1.7,
-	"b": 6.0
+	"b": 6.0,
+	"b-template-shortnames.docx": 6.0,
+	"b-template-jinja.docx": 6.0,
+	"b-template.docx": 6.0,
+	"a-template-shortnames.docx": 1.7,
+	"a-template-jinja.docx": 1.7,
+	"a-template.docx": 1.7,
+	"default": 6.0
 }
 ENV = "dev"
 
@@ -53,6 +60,18 @@ class WordDocumentGenerator(BrowserView):
 		if not self.template:
 			return None
 		else:
+
+			## Check if template in Plone folder
+			doc_folder = self.catalog(path={"query": "/zm/nl/word-templates", "depth": 1})
+			for doc in doc_folder:
+				doc_id = doc.getId
+				if doc_id == self.template:
+					file_obj = doc.getObject()
+					data = file_obj.file.data
+					rawfile = StringIO(data)
+					return rawfile
+
+			## If not in Plone folder - check HD
 			if self.template.lower() in TEMPLATE_PATH[ENV]:
 				path = TEMPLATE_PATH[ENV][self.template.lower()]
 				return path
@@ -79,7 +98,10 @@ class WordDocumentGenerator(BrowserView):
 				image = image_brain.getObject()
 				rawimage = StringIO(image.image.data)
 				subdoc = self.tpl.new_subdoc()
-				subdoc.add_picture(rawimage, width=Inches(IMAGE_SIZE[self.template]))
+				if self.template in IMAGE_SIZE:
+					subdoc.add_picture(rawimage, width=Inches(IMAGE_SIZE[self.template]))
+				else:
+					subdoc.add_picture(rawimage, width=Inches(IMAGE_SIZE["default"]))
 				return subdoc
 			else:
 				return DEFAULT_VALUE
@@ -105,7 +127,6 @@ class WordDocumentGenerator(BrowserView):
 		f = StringIO()
 		tpl.save(f)
 		tpl.save(self.export_path %(filename))
-
 		ret = f.getvalue()
 		f.close()
 
