@@ -9915,3 +9915,7 @@ body.template-base_edit.portaltype-simplevocabulary #portal-logo img {
     height: 16px;
 }
 
+body.template-file span.named-file-widget {
+    display: initial !important;
+}
+
