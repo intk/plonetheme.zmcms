@@ -26,11 +26,18 @@ IMAGE_SIZE = {
 	"b-template-shortnames.docx": 6.0,
 	"b-template-jinja.docx": 6.0,
 	"b-template.docx": 6.0,
+	"template-b.docx": 6.0,
+	"template b": 6.0,
+	"template-b": 6.0,
 	"a-template-shortnames.docx": 1.7,
 	"a-template-jinja.docx": 1.7,
 	"a-template.docx": 1.7,
+	"template-a.docx": 1.7,
+	"template a": 1.7,
+	"template-a": 1.7,
 	"default": 6.0
 }
+
 ENV = "dev"
 
 class WordDocumentGenerator(BrowserView):
@@ -64,8 +71,9 @@ class WordDocumentGenerator(BrowserView):
 			## Check if template in Plone folder
 			doc_folder = self.catalog(path={"query": "/zm/nl/word-templates", "depth": 1})
 			for doc in doc_folder:
-				doc_id = doc.getId
-				if doc_id == self.template:
+				doc_id = getattr(doc, 'getId', '')
+				title = getattr(doc, 'Title', '')
+				if doc_id.lower() == self.template.lower() or title.lower() == self.template.lower():
 					file_obj = doc.getObject()
 					data = file_obj.file.data
 					rawfile = StringIO(data)

@@ -18,5 +18,7 @@ def generate_docx(tpl, items):
         'pagebreak': sd
     }
 
+    print context['items']
+
     tpl.render(context)
     return tpl
