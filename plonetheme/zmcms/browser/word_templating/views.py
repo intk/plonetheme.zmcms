@@ -91,9 +91,10 @@ class WordDocumentGenerator(BrowserView):
 
 	def get_template_path(self):
 		if not self.template:
-			return None
+			self.template = "b"
+			path = TEMPLATE_PATH[ENV]["b"]
+			return path
 		else:
-
 			## Check if template in Plone folder
 			doc_folder = self.catalog(path={"query": "/zm/nl/collectie/word-templates", "depth": 1})
 			for doc in doc_folder:
