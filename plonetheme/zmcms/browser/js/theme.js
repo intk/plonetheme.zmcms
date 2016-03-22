@@ -578,6 +578,12 @@ $(document).ready(function() {
         }, 200);
     }
 
+    if ($("body").hasClass('template-export-word-document')) {
+        setTimeout(function(){
+            init_widgets($("body"));
+        }, 200);
+    }
+
     if (in_allowed_portaltypes()) {
         //initiate_first_tab(500)
         setTimeout(function() {
