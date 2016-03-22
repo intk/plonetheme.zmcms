@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  lang="en"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="plone">
+
+  <head>
+    <metal:block metal:fill-slot="head_slot">
+    </metal:block>
+
+    <metal:block fill-slot="top_slot"
+       tal:define="dummy python:request.set('disable_border',1);
+       disable_column_one python:request.set('disable_plone.leftcolumn',1);
+       disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+  </head>
+
+  <body>
+    
+
+    <div id="content-core" metal:fill-slot="main">
+
+      <div id="word-export-header">
+        <h1 class="documentFirstHeading" i18n:translate="">Exporteren naar Word</h1>         
+      </div>
+
+      <div id="document-inputs" class="input-wrapper"
+      tal:define="objects python: request.get('objects', '');
+                  template python: request.get('template', '');
+                  template_select_data python: view.get_templates()">
+        
+
+        <form name="" action="generate_word_document" method="get" class="form-horizontal">
+        <div class="container-fluid">
+          <div class="form-group field">
+            <label class="col-sm-2 control-label" i18n:translate="" for="objects">Objectnummer</label>
+              <div class="col-sm-10">
+              <input type="text" name="objects" class="pat-select2 form-control"
+              data-pat-select2="separator:,;
+                                tags:;
+                                initialValues:"
+              value=""
+              tal:attributes="value objects"/>
+              </div>
+            </div>
+
+            <div class="form-group field">
+            
+            <label class="col-sm-2 control-label" for="template" i18n:translate="">Sjabloon</label>
+            <div class="col-sm-10">
+              <input type="text" name="template" class="pat-select2 form-control"
+              data-pat-select2="separator:,;
+                                tags:A,B;
+                                maximumSelectionSize:1;
+                                initialValues:A:A,B:B"
+              tal:attributes="value template;data-pat-select2 template_select_data"/>
+              </div>
+              </div>
+
+              <div class="col-sm-12">
+                <input class="btn btn-inverse"
+                  type="submit"
+                  value="Exporteren"
+                  />
+              </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </body>
+</html>

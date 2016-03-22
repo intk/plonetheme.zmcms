@@ -81,12 +81,23 @@
       permission="zope2.View"
     />
 
+    <!-- Word export generator endpoint -->
     <browser:page
       name="generate_word_document"
       for="*"
       class=".word_templating.views.WordDocumentGenerator"
       layer=".interfaces.IThemeSpecific"
       permission="zope2.View"
+    />
+
+    <!-- Word export View -->
+    <browser:page
+        name="export-word-document"
+        class=".word_templating.views.WordExportView"
+        permission="zope2.View"
+        for="*"
+        layer=".interfaces.IThemeSpecific"
+        template="word_templating/templates/word_export.pt"
     />
 
 </configure>

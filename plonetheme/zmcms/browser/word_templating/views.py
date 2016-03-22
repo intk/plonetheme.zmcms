@@ -8,6 +8,8 @@ from Products.CMFCore.utils import getToolByName
 from plone import api
 from cStringIO import StringIO
 from z3c.relationfield.interfaces import IRelationList, IRelationValue
+from plonetheme.museumbase.browser.views import CommonBrowserView
+
 import datetime
 import csv
 
@@ -38,7 +40,31 @@ IMAGE_SIZE = {
 	"default": 6.0
 }
 
-ENV = "prod"
+ENV = "dev"
+
+
+class WordExportView(CommonBrowserView):
+	"""
+	View with input forms for word export
+	"""
+
+	def get_templates(self):
+		catalog = getToolByName(self.context, 'portal_catalog')
+		doc_folder = catalog(path={"query": "/zm/nl/collectie/word-templates", "depth": 1})
+		templates = []
+		tags = []
+		for doc in doc_folder:
+			title = getattr(doc, 'Title', '')
+			doc_id = getattr(doc, 'getId', '')
+			tags.append(title)
+			new_template = "%s:%s" %(doc_id, title)
+			templates.append(new_template)
+
+		final_templates = ",".join(templates)
+		final_tags = ",".join(tags)
+		select_data = "separator:,;tags:%s;maximumSelectionSize:1;initialValues:%s" %(final_tags, final_templates)
+
+		return select_data
 
 class WordDocumentGenerator(BrowserView):
 	"""
@@ -106,8 +132,8 @@ class WordDocumentGenerator(BrowserView):
 				image = image_brain.getObject()
 				rawimage = StringIO(image.image.data)
 				subdoc = self.tpl.new_subdoc()
-				if self.template in IMAGE_SIZE:
-					subdoc.add_picture(rawimage, width=Inches(IMAGE_SIZE[self.template]))
+				if self.template.lower() in IMAGE_SIZE:
+					subdoc.add_picture(rawimage, width=Inches(IMAGE_SIZE[self.template.lower()]))
 				else:
 					subdoc.add_picture(rawimage, width=Inches(IMAGE_SIZE["default"]))
 				return subdoc
