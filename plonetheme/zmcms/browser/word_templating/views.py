@@ -40,7 +40,7 @@ IMAGE_SIZE = {
 	"default": 6.0
 }
 
-ENV = "dev"
+ENV = "prod"
 
 
 class WordExportView(CommonBrowserView):
