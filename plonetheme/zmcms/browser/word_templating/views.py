@@ -42,7 +42,6 @@ IMAGE_SIZE = {
 
 ENV = "prod"
 
-
 class WordExportView(CommonBrowserView):
 	"""
 	View with input forms for word export
